@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cedrus Architecture Studio Works — Ghazal Lahooti</title>
+
+  <style>
+    :root {
+      --canvas-bg: #ebebeb;
+      --sheet-bg: #ffffff;
+      --text-dark: #1b1b1b;
+      --text-muted: #757575;
+      --border-line: #ececec;
+      --font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text-dark);
+      font-family: var(--font-family);
+      font-weight: 400;
+      line-height: 1.65;
+      padding: 2.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .portfolio-sheet {
+      background: var(--sheet-bg);
+      width: 100%;
+      max-width: 960px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    /* Top Nav */
+    .sheet-nav {
+      padding: 1.5rem 3.5rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .sheet-nav-brand {
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .sheet-nav-links a {
+      color: var(--text-muted);
+      text-decoration: none;
+      margin-left: 1.8rem;
+      transition: color 0.2s ease;
+    }
+
+    .sheet-nav-links a:hover {
+      color: var(--text-dark);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      font-weight: bold;
+      transition: color 0.2s ease;
+    }
+
+    .back-link:hover {
+      color: var(--text-dark);
+    }
+
+    .back-link svg {
+      width: 14px;
+      height: 14px;
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+    }
+
+    /* Project Hero Header */
+    .project-hero {
+      padding: 3.5rem 4.5rem 2.2rem;
+      text-align: left;
+    }
+
+    .project-category {
+      font-size: 0.76rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: bold;
+      margin-bottom: 0.5rem;
+    }
+
+    .project-title {
+      font-size: 2.8rem;
+      font-weight: bold;
+      letter-spacing: -0.02em;
+      color: var(--text-dark);
+      line-height: 1.15;
+      margin-bottom: 0.85rem;
+    }
+
+    .project-subtitle {
+      font-size: 1.05rem;
+      color: #4a4a4a;
+      line-height: 1.5;
+      max-width: 780px;
+    }
+
+    /* Metadata Bar */
+    .project-meta-grid {
+      padding: 1.8rem 4.5rem;
+      border-top: 1px solid var(--border-line);
+      border-bottom: 1px solid var(--border-line);
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      background: #fafafa;
+      text-align: left;
+    }
+
+    .meta-item-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+
+    .meta-item-value {
+      font-size: 0.82rem;
+      color: var(--text-dark);
+      font-weight: 500;
+      line-height: 1.4;
+    }
+
+    /* Split Introductory Section with Image Placeholder */
+    .cedrus-intro-section {
+      padding: 3.5rem 4.5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 3.5rem;
+      align-items: center;
+      text-align: left;
+      border-bottom: 1px solid var(--border-line);
+    }
+
+    .cedrus-intro-text {
+      font-size: 0.88rem;
+      color: #3b3b3b;
+      line-height: 1.85;
+    }
+
+    .cedrus-intro-text p {
+      margin-bottom: 1.25rem;
+    }
+
+    .cedrus-intro-text p:last-child {
+      margin-bottom: 0;
+    }
+
+    .cedrus-hero-image-box {
+      width: 100%;
+      background: #f7f7f7;
+      border: 1px solid var(--border-line);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .cedrus-hero-image-box img {
+      width: 100%;
+      max-height: 420px;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Phase Details Section */
+    .sheet-details-section {
+      padding: 3.5rem 4.5rem 4.5rem;
+      background: #ffffff;
+      text-align: left;
+    }
+
+    .section-headline {
+      font-size: 1.25rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+      color: var(--text-dark);
+    }
+
+    .phase-list {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      margin-top: 2rem;
+    }
+
+    /* Balanced Row for Portrait Slider Layout */
+    .phase-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      background: #fafafa;
+      border: 1px solid var(--border-line);
+      padding: 2.2rem;
+      border-radius: 2px;
+    }
+
+    .phase-info h4 {
+      font-size: 1.15rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      margin-bottom: 0.6rem;
+    }
+
+    .phase-info p {
+      font-size: 0.85rem;
+      color: #4a4a4a;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .phase-bullets {
+      list-style: none;
+      font-size: 0.82rem;
+      color: #555555;
+      line-height: 1.8;
+    }
+
+    .phase-bullets li {
+      position: relative;
+      padding-left: 1.2rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .phase-bullets li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: var(--text-muted);
+    }
+
+    /* PORTRAIT RATIO (3:4) FRAME FOR SLIDERS */
+    .phase-image-frame {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      background: #111111;
+      border-radius: 2px;
+      overflow: hidden;
+      border: 1px solid var(--border-line);
+      position: relative;
+    }
+
+    /* Embedded Detail Sliders Styles */
+    .detail-slider-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .detail-slides-wrapper {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+
+    .detail-slide {
+      min-width: 100%;
+      height: 100%;
+      position: relative;
+      background: #000;
+    }
+
+    .detail-slide img,
+    .detail-slide video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .detail-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 34px;
+      height: 34px;
+      background: rgba(20, 20, 20, 0.75);
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s ease, background 0.2s ease;
+      z-index: 6;
+      backdrop-filter: blur(4px);
+    }
+
+    .detail-arrow:hover {
+      opacity: 1;
+      background: rgba(0, 0, 0, 0.95);
+    }
+
+    .detail-arrow.prev {
+      left: 12px;
+    }
+
+    .detail-arrow.next {
+      right: 12px;
+    }
+
+    .detail-arrow svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .detail-dots {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 7px;
+      z-index: 6;
+    }
+
+    .detail-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.45);
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .detail-dot.active {
+      background: #ffffff;
+      transform: scale(1.25);
+    }
+
+    /* Footer */
+    .sheet-footer {
+      border-top: 1px solid var(--border-line);
+      padding: 2.2rem 4.5rem;
+      text-align: left;
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      background: #f7f7f7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    @media (max-width: 840px) {
+      body {
+        padding: 0;
+      }
+      .portfolio-sheet {
+        box-shadow: none;
+      }
+      .sheet-nav, .project-hero, .project-meta-grid, .cedrus-intro-section, .sheet-details-section, .sheet-footer {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+      .cedrus-intro-section {
+        grid-template-columns: 1fr;
+        gap: 2.5rem;
+      }
+      .project-meta-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.2rem;
+      }
+      .phase-row {
+        grid-template-columns: 1fr;
+        gap: 1.8rem;
+        padding: 1.5rem;
+      }
+      .project-title {
+        font-size: 2.1rem;
+      }
+      .sheet-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="portfolio-sheet">
+    <!-- Top Nav -->
+    <header class="sheet-nav">
+      <a href="index.html" class="sheet-nav-brand">Ghazal Lahooti</a>
+      <a href="index.html#projects" class="back-link">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Back to Projects
+      </a>
+    </header>
+
+    <!-- Project Hero Header -->
+    <section class="project-hero">
+      <div class="project-category">Professional Practice · Architecture &amp; Spatial Design</div>
+      <h1 class="project-title">Cedrus Architecture Studio</h1>
+      <p class="project-subtitle">
+        Selected work from my time as a junior architect at Cedrus Architecture Studio in Tehran: site and environmental analysis, precedent research, presentation graphics, concept animations and residential interiors.
+      </p>
+    </section>
+
+    <!-- 1. Metadata Bar -->
+    <section class="project-meta-grid">
+      <div>
+        <div class="meta-item-label">Studio &amp; Period</div>
+        <div class="meta-item-value">Cedrus Architecture Studio · Jan 2023 – Aug 2024</div>
+      </div>
+      <div>
+        <div class="meta-item-label">Role</div>
+        <div class="meta-item-value">Junior Architect (intern Jan – Feb 2023)</div>
+      </div>
+      <div>
+        <div class="meta-item-label">Focus Areas</div>
+        <div class="meta-item-value">Site Analysis, Visualisation, Animation, Interiors</div>
+      </div>
+      <div>
+        <div class="meta-item-label">Tools &amp; Stack</div>
+        <div class="meta-item-value">Rhino, AutoCAD, Adobe CC, Enscape</div>
+      </div>
+    </section>
+
+    <!-- 2. Two-Column Intro Section: Text + Image Placeholder -->
+    <section class="cedrus-intro-section">
+      <div class="cedrus-intro-text">
+        <p>
+          At Cedrus Architecture Studio I worked on housing and building projects, mostly in the early design phases. I started as an intern, building physical models, and stayed on as a junior architect.
+        </p>
+        <p>
+          My work covered site and environmental analysis and precedent research before design, the graphics and animations that explained each project to clients, and the interior design of residential bedrooms. It taught me how design decisions are actually made in practice, which shapes how I now try to make research useful to designers.
+        </p>
+      </div>
+
+      <div class="cedrus-hero-image-box">
+        <img src="cedrus-hero.jpg" alt="Cedrus Architecture Studio Environment and Works" />
+      </div>
+    </section>
+
+    <!-- 3. Detailed Phase Breakdowns (Sliders Active in Phases 2, 3, & 4) -->
+    <section class="sheet-details-section">
+      <h2 class="section-headline">What I Did</h2>
+
+      <div class="phase-list">
+        <!-- Phase 1 Detail -->
+        <div class="phase-row" id="phase-research">
+          <div class="phase-info">
+            <h4>01. Predesign Research &amp; Case Study</h4>
+            <p>
+              Before massing, I analysed each site and its surroundings and gathered precedents, so that early design decisions started from the context rather than from form.
+            </p>
+            <ul class="phase-bullets">
+              <li>Precedent research across comparable residential projects</li>
+              <li>Site and environmental analysis, including sun path and orientation</li>
+              <li>Programme studies for early-stage design</li>
+            </ul>
+          </div>
+          <div class="phase-image-frame">
+            <img src="cedrus-research-detail.jpg" alt="Predesign Research Deep Dive" style="width: 100%; height: 100%; object-fit: cover;" />
+          </div>
+        </div>
+
+        <!-- Phase 2 Detail (Portrait Image Slider — 2 Media Holders) -->
+        <div class="phase-row" id="phase-graphics">
+          <div class="phase-info">
+            <h4>02. Illustration &amp; Graphic</h4>
+            <p>
+              I produced the presentation documents that explained each project: diagrams, drawings and visualisations prepared for client reviews.
+            </p>
+            <ul class="phase-bullets">
+              <li>Isometric and explanatory diagrams</li>
+              <li>Zoning and programme diagrams for client reviews</li>
+              <li>Site and context maps</li>
+            </ul>
+          </div>
+          <div class="phase-image-frame">
+            <div class="detail-slider-container" data-slider="detail-graphics">
+              <div class="detail-slides-wrapper">
+                <div class="detail-slide"><img src="cedrus-graphics-detail-1.jpg" alt="Isometric Diagram Portrait" /></div>
+                <div class="detail-slide"><img src="cedrus-graphics-detail-2.jpg" alt="Program Scheme Detailed" /></div>
+              </div>
+              <button class="detail-arrow prev" aria-label="Previous Slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+              <button class="detail-arrow next" aria-label="Next Slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+              <div class="detail-dots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 3 Detail (Portrait Video Slider — 2 Media Holders) -->
+        <div class="phase-row" id="phase-animation">
+          <div class="phase-info">
+            <h4>03. Design Development &amp; Concept Animation</h4>
+            <p>
+              I made short animations to explain design concepts to clients, showing how the form was developed step by step and how sunlight moves through the building.
+            </p>
+            <ul class="phase-bullets">
+              <li>Step-by-step form development animations</li>
+              <li>Walkthrough camera paths</li>
+              <li>Sun path animations</li>
+            </ul>
+          </div>
+          <div class="phase-image-frame">
+            <div class="detail-slider-container" data-slider="detail-animation">
+              <div class="detail-slides-wrapper">
+                <div class="detail-slide">
+                  <video src="cedrus-animation-morphogenesis.mp4" controls loop muted playsinline poster="cedrus-anim-thumb-1.jpg"></video>
+                </div>
+                <div class="detail-slide">
+                  <video src="cedrus-animation-sunpath.mp4" controls loop muted playsinline poster="cedrus-anim-thumb-2.jpg"></video>
+                </div>
+              </div>
+              <button class="detail-arrow prev" aria-label="Previous Video"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+              <button class="detail-arrow next" aria-label="Next Video"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+              <div class="detail-dots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 4 Detail (Portrait Image Slider) -->
+        <div class="phase-row" id="phase-interior">
+          <div class="phase-info">
+            <h4>04. Interior Design</h4>
+            <p>
+              I designed the interiors of residential bedrooms, from layout to materials and lighting.
+            </p>
+            <ul class="phase-bullets">
+              <li>Bedroom layouts and furniture</li>
+              <li>Material and colour selection</li>
+              <li>Lighting placement</li>
+            </ul>
+          </div>
+          <div class="phase-image-frame">
+            <div class="detail-slider-container" data-slider="detail-interior">
+              <div class="detail-slides-wrapper">
+                <div class="detail-slide"><img src="cedrus-interior-detail-1.jpg" alt="Detailed Millwork Section" /></div>
+                <div class="detail-slide"><img src="cedrus-interior-detail-2.jpg" alt="Interior Scene Materiality" /></div>
+                <div class="detail-slide"><img src="cedrus-interior-detail-3.jpg" alt="Joinery Detail Drawing" /></div>
+              </div>
+              <button class="detail-arrow prev" aria-label="Previous Slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+              <button class="detail-arrow next" aria-label="Next Slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+              <div class="detail-dots"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="sheet-footer">
+      <div>© 2026 Ghazal Lahooti · Urban Design &amp; Research · Lund, Sweden</div>
+      <a href="index.html#projects" class="back-link">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Return to Portfolio
+      </a>
+    </footer>
+  </main>
+
+  <script>
+    // --- DETAILED BREAKDOWN PORTRAIT SLIDER LOGIC ---
+    document.querySelectorAll('.detail-slider-container').forEach(slider => {
+      const wrapper = slider.querySelector('.detail-slides-wrapper');
+      const slides = slider.querySelectorAll('.detail-slide');
+      const prev = slider.querySelector('.detail-arrow.prev');
+      const next = slider.querySelector('.detail-arrow.next');
+      const dotsContainer = slider.querySelector('.detail-dots');
+      
+      let currentIndex = 0;
+      const totalSlides = slides.length;
+
+      // Populate dots
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, i) => {
+        const dot = document.createElement('span');
+        dot.className = `detail-dot ${i === 0 ? 'active' : ''}`;
+        dot.addEventListener('click', (e) => {
+          e.stopPropagation();
+          goToSlide(i);
+        });
+        dotsContainer.appendChild(dot);
+      });
+
+      const dots = dotsContainer.querySelectorAll('.detail-dot');
+
+      function goToSlide(index) {
+        const currentVideo = slides[currentIndex].querySelector('video');
+        if (currentVideo) currentVideo.pause();
+
+        currentIndex = (index + totalSlides) % totalSlides;
+        wrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+        dots.forEach((d, i) => d.classList.toggle('active', i === currentIndex));
+
+        const newVideo = slides[currentIndex].querySelector('video');
+        if (newVideo) {
+          newVideo.currentTime = 0;
+          newVideo.play().catch(() => {});
+        }
+      }
+
+      prev.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentIndex - 1);
+      });
+
+      next.addEventListener('click', (e) => {
+        e.stopPropagation();
+        goToSlide(currentIndex + 1);
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dar es Salaam — Ghazal Lahooti</title>
+
+  <style>
+    :root {
+      --canvas-bg: #ebebeb;
+      --sheet-bg: #ffffff;
+      --text-dark: #1b1b1b;
+      --text-muted: #757575;
+      --border-line: #ececec;
+      --font-family: Arial, Helvetica, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text-dark);
+      font-family: var(--font-family);
+      font-weight: 400;
+      line-height: 1.65;
+      padding: 2.5rem 1rem;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+    .portfolio-sheet {
+      background: var(--sheet-bg);
+      width: 100%;
+      max-width: 960px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+    .sheet-nav {
+      padding: 1.5rem 3.5rem 1.2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--border-line);
+    }
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--text-dark);
+      text-decoration: none;
+      font-weight: bold;
+      transition: opacity 0.2s ease;
+    }
+    .back-link:hover { opacity: 0.6; }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .sheet-nav-brand { color: var(--text-muted); text-decoration: none; }
+    .project-header { padding: 3.5rem 4.5rem 2rem; text-align: left; }
+    .project-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: bold;
+      display: block;
+      margin-bottom: 0.4rem;
+    }
+    .project-title {
+      font-size: 2.6rem;
+      font-weight: bold;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+      color: var(--text-dark);
+    }
+    .project-subtitle { font-size: 1.05rem; color: #555555; margin-bottom: 2rem; line-height: 1.5; }
+    .project-meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding: 1.5rem 0;
+      border-top: 1px solid var(--border-line);
+      border-bottom: 1px solid var(--border-line);
+    }
+    .meta-col { display: flex; flex-direction: column; }
+    .meta-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      font-weight: bold;
+      margin-bottom: 0.3rem;
+    }
+    .meta-val { font-size: 0.85rem; color: var(--text-dark); line-height: 1.4; }
+    .project-hero-wrap { width: 100%; height: 480px; background: #ececec; overflow: hidden; }
+    .project-hero-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .project-body { padding: 3.5rem 4.5rem; text-align: left; }
+    .editorial-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 3.5rem; margin-bottom: 3.5rem; }
+    .editorial-heading { font-size: 1.2rem; font-weight: bold; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-dark); }
+    .editorial-content { font-size: 0.9rem; line-height: 1.85; color: #3b3b3b; }
+    .editorial-content p { margin-bottom: 1.25rem; }
+    .drawings-section-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-line);
+    }
+    .drawings-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+    .drawing-card { background: #fafafa; border: 1px solid var(--border-line); border-radius: 2px; overflow: hidden; cursor: pointer; }
+    .drawing-card.full-width { grid-column: 1 / -1; }
+    .drawing-img-box { width: 100%; aspect-ratio: 16 / 10; background: #ececec; overflow: hidden; }
+    .drawing-card.full-width .drawing-img-box { aspect-ratio: 21 / 9; }
+    .drawing-img-box img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .drawing-card:hover .drawing-img-box img { transform: scale(1.03); }
+    .drawing-caption { padding: 0.9rem 1.1rem; font-size: 0.75rem; color: #555555; line-height: 1.4; border-top: 1px solid var(--border-line); background: #ffffff; }
+    .project-nav-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 2.2rem 4.5rem;
+      border-top: 1px solid var(--border-line);
+      background: #fafafa;
+    }
+    .p-nav-btn { display: inline-flex; flex-direction: column; text-decoration: none; color: var(--text-dark); transition: opacity 0.2s ease; }
+    .p-nav-btn:hover { opacity: 0.6; }
+    .p-nav-sub { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
+    .p-nav-title { font-size: 0.95rem; font-weight: bold; }
+    .p-nav-btn.next { text-align: right; }
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(10, 10, 10, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2rem;
+      cursor: zoom-out;
+    }
+    .lightbox.active { display: flex; }
+    .lightbox img { max-width: 90vw; max-height: 85vh; object-fit: contain; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+    @media (max-width: 840px) {
+      body { padding: 0; }
+      .portfolio-sheet { box-shadow: none; }
+      .sheet-nav, .project-header, .project-body, .project-nav-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .project-meta-grid { grid-template-columns: repeat(2, 1fr); gap: 1.2rem; }
+      .project-hero-wrap { height: 280px; }
+      .editorial-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+      .drawings-grid { grid-template-columns: 1fr; }
+      .drawing-card.full-width .drawing-img-box { aspect-ratio: 16 / 10; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="portfolio-sheet">
+    <header class="sheet-nav">
+      <a href="index.html#projects" class="back-link">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Back to Projects
+      </a>
+      <span class="sheet-nav-brand">Ghazal Lahooti</span>
+    </header>
+
+    <section class="project-header">
+      <span class="project-eyebrow">Urban Studio · Informal Urbanism &amp; Climate</span>
+      <h1 class="project-title">Dar es Salaam</h1>
+      <p class="project-subtitle">
+        Context-Responsive Urban Strategies for Coastal Urban Growth in Tanzania.
+      </p>
+
+      <div class="project-meta-grid">
+        <div class="meta-col">
+          <span class="meta-label">Typology</span>
+          <span class="meta-val">Urban Design &amp; Flood Resilience</span>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Location</span>
+          <span class="meta-val">Dar es Salaam, Tanzania</span>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Tools Used</span>
+          <span class="meta-val">QGIS, Rhino, Illustrator, InDesign</span>
+        </div>
+        <div class="meta-col">
+          <span class="meta-label">Timeline</span>
+          <span class="meta-val">2024</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="project-hero-wrap">
+      <img src="dar-es-salaam.jpg" alt="Dar es Salaam Urban Strategy" />
+    </div>
+
+    <section class="project-body">
+      <div class="editorial-grid">
+        <h2 class="editorial-heading">Context &amp; Pressures</h2>
+        <div class="editorial-content">
+          <p>
+            Dar es Salaam is among the fastest-growing coastal metropolises in Africa, facing dual pressures of rapid informal settlement expansion and intense monsoon flood vulnerabilities along its river valleys (Msimbazi basin).
+          </p>
+          <p>
+            The project explores human-centred spatial strategies that integrate social livelihoods, market networks, and ecological flood corridors rather than displacing informal communities.
+          </p>
+        </div>
+      </div>
+
+      <div class="editorial-grid">
+        <h2 class="editorial-heading">Spatial Proposal</h2>
+        <div class="editorial-content">
+          <p>
+            Co-designing ecological and economic resilience:
+          </p>
+          <p>
+            <strong>1. Water Retention Basins:</strong> Transforming low-lying flood-prone zones into productive wetland parks during dry seasons.<br>
+            <strong>2. Elevated Mobility Spines:</strong> All-weather pedestrian and light-transit causeways connecting settlement clusters to arterial transit lines.<br>
+            <strong>3. Decentralized Sanitation &amp; Waste:</strong> Modular infrastructure hubs combined with neighbourhood public spaces.
+          </p>
+        </div>
+      </div>
+
+      <h3 class="drawings-section-title">Masterplan &amp; Urban Sections</h3>
+      <div class="drawings-grid">
+        <div class="drawing-card full-width" onclick="openLightbox(this)">
+          <div class="drawing-img-box">
+            <img src="dar-masterplan.jpg" alt="Dar es Salaam Urban Resilience Masterplan" />
+          </div>
+          <p class="drawing-caption">Figure 01: Overall flood corridor framework, green buffers, and elevated circulation spines.</p>
+        </div>
+        <div class="drawing-card" onclick="openLightbox(this)">
+          <div class="drawing-img-box">
+            <img src="dar-section.jpg" alt="Riparian Edge Transformation Section" />
+          </div>
+          <p class="drawing-caption">Figure 02: Transverse section across the Msimbazi floodplain showing wet-dry season adaptation.</p>
+        </div>
+        <div class="drawing-card" onclick="openLightbox(this)">
+          <div class="drawing-img-box">
+            <img src="dar-community.jpg" alt="Community Market & Infrastructure Hub" />
+          </div>
+          <p class="drawing-caption">Figure 03: Axonometric view of decentralized modular service hub and public market.</p>
+        </div>
+      </div>
+    </section>
+
+    <nav class="project-nav-footer">
+      <a href="lindholmen.html" class="p-nav-btn">
+        <span class="p-nav-sub">← Previous Project</span>
+        <span class="p-nav-title">Lindholmen</span>
+      </a>
+      <a href="damavand-mountain-refuge.html" class="p-nav-btn next">
+        <span class="p-nav-sub">Next Project →</span>
+        <span class="p-nav-title">Damavand Mountain Refuge</span>
+      </a>
+    </nav>
+  </main>
+
+  <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <img id="lightboxImg" src="" alt="Enlarged drawing" />
+  </div>
+
+  <script>
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    function openLightbox(el) { lightboxImg.src = el.querySelector('img').src; lightbox.classList.add('active'); }
+    function closeLightbox() { lightbox.classList.remove('active'); }
+  </script>
+</body>
+</html>
