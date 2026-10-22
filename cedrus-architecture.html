@@ -268,6 +268,22 @@
       color: var(--text-muted);
     }
 
+    .phase-link {
+      display: inline-block;
+      margin-top: 0.8rem;
+      font-size: 0.78rem;
+      font-weight: bold;
+      color: var(--text-dark);
+      text-decoration: none;
+      border-bottom: 1px solid var(--text-dark);
+      padding-bottom: 1px;
+    }
+
+    .phase-link:hover {
+      color: var(--text-muted);
+      border-bottom-color: var(--text-muted);
+    }
+
     /* PORTRAIT RATIO (3:4) FRAME FOR SLIDERS */
     .phase-image-frame {
       width: 100%;
@@ -558,7 +574,7 @@
       </div>
     </section>
 
-    <!-- 3. Detailed Phase Breakdowns (Sliders Active in Phases 2, 3, & 4) -->
+    <!-- 3. Detailed Phase Breakdowns (Sliders Active in Phases 2, 4 & 5) -->
     <section class="sheet-details-section">
       <h2 class="section-headline">What I Did</h2>
 
@@ -704,6 +720,34 @@
                 <div class="detail-slide"><img src="cedrus-interior-detail-1.jpg" alt="Detailed Millwork Section" /></div>
                 <div class="detail-slide"><img src="cedrus-interior-detail-2.jpg" alt="Interior Scene Materiality" /></div>
                 <div class="detail-slide"><img src="cedrus-interior-detail-3.jpg" alt="Joinery Detail Drawing" /></div>
+              </div>
+              <button class="detail-arrow prev" aria-label="Previous Slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
+              <button class="detail-arrow next" aria-label="Next Slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+              <div class="detail-dots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase 5 Detail (Portrait Image + Video Slider) -->
+        <div class="phase-row" id="phase-models">
+          <div class="phase-info">
+            <h4>05. Physical Model Making</h4>
+            <p>
+              I started at Cedrus as an intern building physical models of two of the studio's residential projects, a residential apartment building in Sepinoud and Villa No.2 in Zibadasht. Every part was cut and assembled by hand.
+            </p>
+            <ul class="phase-bullets">
+              <li>White foam board, cardboard, plexiglass, plastic sheet and balsa wood</li>
+              <li>Hand-cut balsa facade louvres, fitted bay by bay</li>
+              <li>Interior lighting so the model reads like the built building at night</li>
+            </ul>
+            <a href="physical-models.html" class="phase-link">See both models in detail &rarr;</a>
+          </div>
+          <div class="phase-image-frame">
+            <div class="detail-slider-container" data-slider="detail-models">
+              <div class="detail-slides-wrapper">
+                <div class="detail-slide"><img src="physical-model-making.jpg" alt="Hand-made model of the Sepinoud residential apartment, lit from inside" /></div>
+                <div class="detail-slide"><img src="sepinoud-model-perspectives.jpg" alt="Sepinoud model facade bays during assembly and the finished model" /></div>
+                <div class="detail-slide"><video src="sepinoud-walkthrough.mp4" muted loop playsinline preload="metadata"></video></div>
               </div>
               <button class="detail-arrow prev" aria-label="Previous Slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
               <button class="detail-arrow next" aria-label="Next Slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
