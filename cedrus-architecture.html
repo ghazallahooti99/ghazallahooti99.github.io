@@ -374,6 +374,83 @@
       transform: scale(1.25);
     }
 
+    /* Hover project info on graphics slides */
+    .slide-info {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 2.4rem 1.2rem 2.4rem;
+      background: linear-gradient(to top, rgba(18, 24, 20, 0.93) 0%, rgba(18, 24, 20, 0.93) calc(100% - 2rem), rgba(18, 24, 20, 0) 100%);
+      color: #ffffff;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+    .detail-slide:hover .slide-info,
+    .detail-slide:focus-within .slide-info,
+    .detail-slide.show-info .slide-info {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .slide-info-kicker {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #b9cbbf;
+      display: block;
+      margin-bottom: 0.3rem;
+    }
+    .slide-info h5 {
+      font-size: 0.95rem;
+      font-weight: bold;
+      margin-bottom: 0.4rem;
+    }
+    .slide-info p {
+      font-size: 0.76rem;
+      line-height: 1.55;
+      color: #e4e4e4;
+      margin-bottom: 0.7rem;
+    }
+    .slide-info a {
+      font-size: 0.72rem;
+      font-weight: bold;
+      color: #ffffff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.6);
+      padding-bottom: 1px;
+    }
+    .slide-info a:hover { border-bottom-color: #ffffff; }
+    .slide-info-toggle {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      z-index: 6;
+      font: bold 0.62rem Arial, Helvetica, sans-serif;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #ffffff;
+      background: rgba(20, 20, 20, 0.7);
+      border: none;
+      border-radius: 999px;
+      padding: 0.4rem 0.75rem;
+      cursor: pointer;
+    }
+    .detail-slider-container:has(.show-info) .detail-arrow {
+      opacity: 0;
+      pointer-events: none;
+    }
+    @media (max-width: 840px) {
+      .slide-info { padding: 2rem 1rem 2.2rem; }
+      .slide-info h5 { font-size: 0.88rem; }
+      .slide-info p { font-size: 0.72rem; line-height: 1.5; }
+    }
+    @media (hover: hover) {
+      .slide-info-toggle { opacity: 0.85; }
+      .detail-slide:hover .slide-info-toggle { opacity: 0; }
+    }
+
     /* Footer */
     .sheet-footer {
       border-top: 1px solid var(--border-line);
@@ -457,11 +534,11 @@
       </div>
       <div>
         <div class="meta-item-label">Focus Areas</div>
-        <div class="meta-item-value">Site Analysis, Visualisation, Animation, Interiors</div>
+        <div class="meta-item-value">Predesign research, presentation graphics, concept animation, interior design, physical models</div>
       </div>
       <div>
         <div class="meta-item-label">Tools &amp; Stack</div>
-        <div class="meta-item-value">Rhino, AutoCAD, Adobe CC, Enscape</div>
+        <div class="meta-item-value">Rhino, SketchUp, AutoCAD, Adobe CC, Enscape</div>
       </div>
     </section>
 
@@ -499,8 +576,50 @@
               <li>Programme studies for early-stage design</li>
             </ul>
           </div>
-          <div class="phase-image-frame">
-            <img src="cedrus-research-detail.jpg" alt="Predesign Research Deep Dive" style="width: 100%; height: 100%; object-fit: cover;" />
+          <div class="phase-image-frame" style="background:#ffffff;">
+            <svg viewBox="0 0 300 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="cdr-t cdr-d" style="width:100%;height:100%;display:block;background:#ffffff;font-family:Arial, Helvetica, sans-serif">
+              <title id="cdr-t">Cedrus design process</title><desc id="cdr-d">Seven stages from client brief to construction and site observation, with lessons from construction feeding the next project. My work covered context analysis, precedent research and programme studies.</desc>
+              <defs><filter id="cdr-sh" x="-10%" y="-20%" width="120%" height="150%"><feDropShadow dx="0" dy="1" stdDeviation="1.2" flood-color="#000" flood-opacity="0.08"/></filter><marker id="cdr-a" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M1,1 L8,5 L1,9" fill="none" stroke="#b5b5b5" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+              <rect x="22" y="63" width="266" height="158" rx="10" fill="#f6f1e8" stroke="#e6d9c3" stroke-width="0.8"/>
+              <text transform="translate(268,142.0) rotate(90)" text-anchor="middle" font-size="7.6" letter-spacing="1.2" font-weight="bold" fill="#a8834f">MY ROLE · PREDESIGN</text>
+              <rect x="30" y="18" width="214" height="40" rx="7" fill="#ffffff" stroke="#e4e4e4" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="38.0" r="8.5" fill="#ffffff" stroke="#cfcfcf" stroke-width="0.8"/><text x="46" y="41.0" text-anchor="middle" font-size="8" fill="#8a8a8a">1</text>
+              <text x="61" y="35" font-size="10" font-weight="bold" fill="#2b2b2b">Client brief</text>
+              <text x="61" y="48" font-size="7.9" fill="#8a8a8a">Each client's needs, wishes, differences</text>
+              <line x1="137.0" y1="60" x2="137.0" y2="67" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="70" width="214" height="40" rx="7" fill="#ffffff" stroke="#e6d9c3" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="90.0" r="8.5" fill="#a8834f"/><text x="46" y="93.0" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">2</text>
+              <text x="61" y="87" font-size="10" font-weight="bold" fill="#2b2b2b">Context analysis</text>
+              <text x="61" y="100" font-size="7.9" fill="#8a8a8a">Climate, society, economy, sun path</text>
+              <line x1="137.0" y1="112" x2="137.0" y2="119" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="122" width="214" height="40" rx="7" fill="#ffffff" stroke="#e6d9c3" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="142.0" r="8.5" fill="#a8834f"/><text x="46" y="145.0" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">3</text>
+              <text x="61" y="139" font-size="10" font-weight="bold" fill="#2b2b2b">Precedent research</text>
+              <text x="61" y="152" font-size="7.9" fill="#8a8a8a">Comparable residential case studies</text>
+              <line x1="137.0" y1="164" x2="137.0" y2="171" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="174" width="214" height="40" rx="7" fill="#ffffff" stroke="#e6d9c3" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="194.0" r="8.5" fill="#a8834f"/><text x="46" y="197.0" text-anchor="middle" font-size="8" font-weight="bold" fill="#ffffff">4</text>
+              <text x="61" y="191" font-size="10" font-weight="bold" fill="#2b2b2b">Programme studies</text>
+              <text x="61" y="204" font-size="7.9" fill="#8a8a8a">Early options for space and use</text>
+              <line x1="137.0" y1="216" x2="137.0" y2="223" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="226" width="214" height="40" rx="7" fill="#ffffff" stroke="#e4e4e4" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="246.0" r="8.5" fill="#ffffff" stroke="#cfcfcf" stroke-width="0.8"/><text x="46" y="249.0" text-anchor="middle" font-size="8" fill="#8a8a8a">5</text>
+              <text x="61" y="243" font-size="10" font-weight="bold" fill="#2b2b2b">Team discussion</text>
+              <text x="61" y="256" font-size="7.9" fill="#8a8a8a">Concepts debated across the team</text>
+              <line x1="137.0" y1="268" x2="137.0" y2="275" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="278" width="214" height="40" rx="7" fill="#ffffff" stroke="#e4e4e4" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="298.0" r="8.5" fill="#ffffff" stroke="#cfcfcf" stroke-width="0.8"/><text x="46" y="301.0" text-anchor="middle" font-size="8" fill="#8a8a8a">6</text>
+              <text x="61" y="295" font-size="10" font-weight="bold" fill="#2b2b2b">Design &amp; materials</text>
+              <text x="61" y="308" font-size="7.9" fill="#8a8a8a">Material character, climate, culture</text>
+              <line x1="137.0" y1="320" x2="137.0" y2="327" stroke="#c9c9c9" stroke-width="0.9" marker-end="url(#cdr-a)"/>
+              <rect x="30" y="330" width="214" height="40" rx="7" fill="#ffffff" stroke="#e4e4e4" stroke-width="0.8" filter="url(#cdr-sh)"/>
+              <circle cx="46" cy="350.0" r="8.5" fill="#ffffff" stroke="#cfcfcf" stroke-width="0.8"/><text x="46" y="353.0" text-anchor="middle" font-size="8" fill="#8a8a8a">7</text>
+              <text x="61" y="347" font-size="10" font-weight="bold" fill="#2b2b2b">Construction &amp; site observation</text>
+              <text x="61" y="360" font-size="7.9" fill="#8a8a8a">Site visits secure the final look</text>
+              <path d="M29,350.0 C12,350.0 12,336.0 12,324.0 V64.0 C12,52.0 12,38.0 28,38.0" fill="none" stroke="#c4c4c4" stroke-width="0.9" stroke-dasharray="3 2.5" marker-end="url(#cdr-a)"/>
+              <rect x="4" y="132.0" width="16" height="124" fill="#ffffff"/>
+              <text transform="translate(14.6,194.0) rotate(-90)" text-anchor="middle" font-size="7.2" fill="#9a9a9a" font-style="italic">lessons from site feed the next project</text>
+              </svg>
           </div>
         </div>
 
@@ -520,8 +639,26 @@
           <div class="phase-image-frame">
             <div class="detail-slider-container" data-slider="detail-graphics">
               <div class="detail-slides-wrapper">
-                <div class="detail-slide"><img src="cedrus-graphics-detail-1.jpg" alt="Isometric Diagram Portrait" /></div>
-                <div class="detail-slide"><img src="cedrus-graphics-detail-2.jpg" alt="Program Scheme Detailed" /></div>
+                <div class="detail-slide">
+                  <img src="cedrus-graphics-detail-1.jpg" alt="Exploded isometric of the three floors of A House Looking to a Cedrus Tree" />
+                  <button class="slide-info-toggle" type="button" aria-label="Show project information">Project info</button>
+                  <div class="slide-info">
+                    <span class="slide-info-kicker">Residential renovation · Alborz Province · 2024</span>
+                    <h5>A House Looking to a Cedrus Tree</h5>
+                    <p>Exploded isometric of the three floors: the parents' floor, the daughters' floor and a shared gathering floor. The project renovated a half-finished villa by a river, opening it to the sky, the water and the cedrus tree beside it.</p>
+                    <a href="https://www.cedrus-architects.com/projects/a-house-looking-to-a-cedrus-tree/" target="_blank" rel="noopener">View project on Cedrus &#8599;</a>
+                  </div>
+                </div>
+                <div class="detail-slide">
+                  <img src="cedrus-graphics-detail-2.jpg" alt="Layer diagram of the Paramis Tower office fit-out" />
+                  <button class="slide-info-toggle" type="button" aria-label="Show project information">Project info</button>
+                  <div class="slide-info">
+                    <span class="slide-info-kicker">Office interior · Paramis Tower, Tehran · 2024</span>
+                    <h5>Paramis Tower, Office Unit 403</h5>
+                    <p>Layer diagram of the 200 m&sup2; office fit-out, from the existing slab, beams and false ceiling to the redesigned air-conditioning, the new ceiling and the final layout.</p>
+                    <a href="https://www.cedrus-architects.com/projects/paramis-tower-office-unit-403/" target="_blank" rel="noopener">View project on Cedrus &#8599;</a>
+                  </div>
+                </div>
               </div>
               <button class="detail-arrow prev" aria-label="Previous Slide"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
               <button class="detail-arrow next" aria-label="Next Slide"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
@@ -544,19 +681,7 @@
             </ul>
           </div>
           <div class="phase-image-frame">
-            <div class="detail-slider-container" data-slider="detail-animation">
-              <div class="detail-slides-wrapper">
-                <div class="detail-slide">
-                  <video src="cedrus-animation-morphogenesis.mp4" controls loop muted playsinline poster="cedrus-anim-thumb-1.jpg"></video>
-                </div>
-                <div class="detail-slide">
-                  <video src="cedrus-animation-sunpath.mp4" controls loop muted playsinline poster="cedrus-anim-thumb-2.jpg"></video>
-                </div>
-              </div>
-              <button class="detail-arrow prev" aria-label="Previous Video"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></button>
-              <button class="detail-arrow next" aria-label="Next Video"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
-              <div class="detail-dots"></div>
-            </div>
+            <video src="cedrus-animation-morphogenesis.mp4" controls loop muted playsinline preload="metadata" poster="cedrus-anim-cover.jpg" style="width:100%;height:100%;object-fit:cover;display:block;background:#67806f;"></video>
           </div>
         </div>
 
@@ -649,6 +774,13 @@
       next.addEventListener('click', (e) => {
         e.stopPropagation();
         goToSlide(currentIndex + 1);
+      });
+    });
+    // Tap to show project info on touch screens
+    document.querySelectorAll('.slide-info-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        btn.closest('.detail-slide').classList.toggle('show-info');
       });
     });
   </script>
