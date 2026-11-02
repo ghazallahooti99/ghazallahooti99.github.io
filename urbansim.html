@@ -434,6 +434,32 @@
       letter-spacing: 0.08em;
     }
 
+    /* Explanatory Diagrams */
+    .diagram-frame {
+      padding: 2.8rem 3.5rem 2.4rem;
+      overflow-x: auto;
+      background: #ffffff;
+    }
+
+    .diagram-frame svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      min-width: 760px;
+    }
+
+    .dg text { font-family: var(--font-sans); font-weight: 400; fill: #1f2b2e; }
+    .dg .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; fill: #6e6e73; }
+    .dg .h { font-size: 15px; font-weight: 600; }
+    .dg .b { font-size: 13px; fill: #5f5f64; }
+    .dg .s { font-size: 12px; fill: #6e6e73; }
+    .dg .w { fill: #ffffff; }
+    .dg .warm { fill: #c4532b; }
+
+    @media (max-width: 860px) {
+      .diagram-frame { padding: 1.6rem 1.5rem; }
+    }
+
     /* Interactive Simulation Terminal & App Holder */
     .simulator-app-section {
       padding: 4.5rem 3.5rem 5rem;
@@ -947,10 +973,13 @@
       <div class="narrative-title">02 / From Proposal to Concept</div>
       <div class="narrative-content">
         <p>
-          The original proposal was broad: an online platform where anyone could pick a location on a 3D map, run environmental simulations without specialist software, and get AI recommendations of nature-based solutions adapted to local conditions.
+          UrbanSim grew out of a step I had to leave outside my MSc thesis. My original thesis proposal also aimed to test how the chosen nature-based solutions would perform under future climate conditions, but the scope and time of a master's thesis did not allow it. The question stayed with me: will the solutions we choose today still work, and at what cost, in the years ahead?
         </p>
         <p>
-          After the summer I reviewed it from the seat of a municipal climate adaptation planner. Four changes followed:
+          The first UrbanSim proposal was therefore broad: an online platform where anyone could pick a location on a 3D map, run environmental simulations without specialist software, and get AI recommendations of nature-based solutions for a range of urban challenges.
+        </p>
+        <p>
+          To find out what was actually missing, I met relevant departments at Lund and Malmö municipalities and reviewed the proposal from the seat of a municipal climate adaptation planner. I also narrowed the scope to one challenge, urban heat, so that a working MVP was possible; flooding is the next challenge to add. Four changes followed:
         </p>
         <p>
           <strong>1. Screening, not simulation.</strong> Fast wind and thermal comfort simulation already exists in tools such as Autodesk Forma and Infrared City. UrbanSim does the step before: where to act first and what fits there, flagging the streets that need detailed modelling.<br>
@@ -961,13 +990,56 @@
       </div>
     </section>
 
-    <!-- Landscape Break 01 -->
+    <!-- Diagram 01: Where UrbanSim sits -->
     <div class="section-landscape-break">
-      <div class="landscape-frame" onclick="openLightbox(this)">
-        <img src="urbansim-mvp-brief.jpg" alt="UrbanSim street brief with street profile and matched nature-based solutions" />
+      <div class="diagram-frame">
+        <svg class="dg" viewBox="0 0 1200 420" role="img" aria-labelledby="dg1-t dg1-d">
+          <title id="dg1-t">Where UrbanSim sits in the planning process</title>
+          <desc id="dg1-d">Four stages: strategic planning, concept design, detailed design, and construction and upkeep. NBS catalogues span all stages but list measures without reference to place or people. UrbanSim covers strategic planning and concept design: where to act first and what fits each street. Microclimate simulation tools test a design once it exists. Long-term upkeep is rarely tracked. UrbanSim flags high-priority streets for detailed simulation.</desc>
+          <defs>
+            <marker id="dg1-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#6e6e73" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          </defs>
+          <g stroke="#e5e5e7" stroke-width="1" stroke-dasharray="3 4">
+            <line x1="330" y1="20" x2="330" y2="320"/><line x1="600" y1="20" x2="600" y2="320"/><line x1="870" y1="20" x2="870" y2="320"/>
+          </g>
+
+          <rect x="60" y="24" width="1080" height="58" rx="8" fill="none" stroke="#b9b9be" stroke-dasharray="5 4"/>
+          <text class="mono" x="80" y="49">NBS catalogues</text>
+          <text class="b" x="80" y="69">List what exists, without reference to place or people.</text>
+
+          <rect x="60" y="110" width="530" height="104" rx="10" fill="#1f2b2e"/>
+          <text class="mono" x="82" y="140" style="fill:#9fb3ab">UrbanSim · screening</text>
+          <text class="h w" x="82" y="168" style="font-size:19px">Where to act first, and what fits there</text>
+          <text class="b" x="82" y="194" style="fill:#c9d1cf">Heat × everyday destinations × street profile</text>
+
+          <rect x="610" y="110" width="250" height="104" rx="10" fill="#f4f4f6" stroke="#d8d8dc"/>
+          <text class="mono" x="628" y="140">Microclimate simulation</text>
+          <text class="h" x="628" y="166">Tests a design once it exists</text>
+          <text class="s" x="628" y="190">e.g. Autodesk Forma, Infrared City</text>
+
+          <rect x="880" y="110" width="260" height="104" rx="10" fill="#fdf1ec" stroke="#e8673c" stroke-dasharray="5 4"/>
+          <text class="mono warm" x="898" y="140">Gap · long-term upkeep</text>
+          <text class="h" x="898" y="166">Rarely tracked after delivery</text>
+          <text class="s" x="898" y="190">Next phase: an NBS library that</text>
+          <text class="s" x="898" y="206">records upkeep and performance</text>
+
+          <path d="M480 216 C 480 262, 735 262, 735 220" fill="none" stroke="#6e6e73" stroke-width="1.3" marker-end="url(#dg1-a)"/>
+          <text class="s" x="607" y="276" text-anchor="middle">flags high-priority streets for detailed modelling (UTCI, PET)</text>
+
+          <line x1="60" y1="320" x2="1140" y2="320" stroke="#1f2b2e" stroke-width="2"/>
+          <g fill="#1f2b2e"><circle cx="60" cy="320" r="5"/><circle cx="330" cy="320" r="5"/><circle cx="600" cy="320" r="5"/><circle cx="870" cy="320" r="5"/><circle cx="1140" cy="320" r="5"/></g>
+          <text class="mono" x="60" y="354">01 Strategic planning</text>
+          <text class="mono" x="340" y="354">02 Concept design</text>
+          <text class="mono" x="610" y="354">03 Detailed design</text>
+          <text class="mono" x="880" y="354">04 Construction &amp; upkeep</text>
+          <text class="b" x="60" y="380">Where should cooling start?</text>
+          <text class="b" x="340" y="380">Which NBS fit each street?</text>
+          <text class="b" x="610" y="380">How well does the design perform?</text>
+          <text class="b" x="880" y="380">Does it still work years later?</text>
+        </svg>
       </div>
       <div class="landscape-caption-strip">
-        <span>Street brief: profile, priority drivers and the nature-based solutions that fit, each with its evidence grade. Sample data is synthetic.</span>
+        <span>Where UrbanSim sits: the screening step before design, which neither NBS catalogues nor simulation tools cover.</span>
         <span class="landscape-fig-tag">Fig. 01</span>
       </div>
     </div>
@@ -991,6 +1063,143 @@
       </div>
     </section>
 
+    <!-- Diagram 02: MVP pipeline -->
+    <div class="section-landscape-break">
+      <div class="diagram-frame">
+        <svg class="dg" viewBox="0 0 1200 520" role="img" aria-labelledby="dg2-t dg2-d">
+          <title id="dg2-t">How the UrbanSim MVP works</title>
+          <desc id="dg2-d">Four steps. Data: OpenStreetMap buildings, streets, tram lines, destinations and trees, plus optional surface heat from a ten-summer Landsat median. Priorities: streets are cut into 50 metre segments and scored on sun exposure (weight 40), destinations within 100 metres (35) and surface heat percentile (25); segments in sun less than 30 percent of the day are self-shaded and kept low; the top 15 percent are high priority. Street brief: width, enclosure, orientation and function give one of four typologies, and seven NBS tools are checked with written rules as recommended, possible or not suitable, each with an evidence grade. Export: GeoJSON, CSV and a text brief, with high-priority streets flagged for simulation before design.</desc>
+          <defs>
+            <marker id="dg2-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#1f2b2e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
+          </defs>
+
+          <!-- Column headers -->
+          <g>
+            <circle cx="54" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="54" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">1</text>
+            <text class="h" x="78" y="46" style="font-size:17px">Data</text>
+            <circle cx="344" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="344" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">2</text>
+            <text class="h" x="368" y="46" style="font-size:17px">Priorities</text>
+            <circle cx="644" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="644" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">3</text>
+            <text class="h" x="668" y="46" style="font-size:17px">Street brief</text>
+            <circle cx="954" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="954" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">4</text>
+            <text class="h" x="978" y="46" style="font-size:17px">Export</text>
+          </g>
+
+          <!-- Arrows -->
+          <g stroke="#1f2b2e" stroke-width="1.4" marker-end="url(#dg2-a)">
+            <line x1="250" y1="40" x2="318" y2="40"/><line x1="550" y1="40" x2="618" y2="40"/><line x1="860" y1="40" x2="928" y2="40"/>
+          </g>
+
+          <!-- 1 Data -->
+          <g>
+            <rect x="40" y="80" width="250" height="54" rx="6" fill="#f7f7f8"/><rect x="40" y="80" width="4" height="54" fill="#1f2b2e"/>
+            <text class="h" x="56" y="103" style="font-size:14px">Buildings &amp; heights</text><text class="s" x="56" y="122">OpenStreetMap</text>
+            <rect x="40" y="144" width="250" height="54" rx="6" fill="#f7f7f8"/><rect x="40" y="144" width="4" height="54" fill="#1f2b2e"/>
+            <text class="h" x="56" y="167" style="font-size:14px">Streets &amp; tram lines</text><text class="s" x="56" y="186">OpenStreetMap</text>
+            <rect x="40" y="208" width="250" height="54" rx="6" fill="#f7f7f8"/><rect x="40" y="208" width="4" height="54" fill="#7b5ea7"/>
+            <text class="h" x="56" y="231" style="font-size:14px">Everyday destinations</text><text class="s" x="56" y="250">pharmacies, markets, tram stops…</text>
+            <rect x="40" y="272" width="250" height="54" rx="6" fill="#f7f7f8"/><rect x="40" y="272" width="4" height="54" fill="#3f8f5a"/>
+            <text class="h" x="56" y="295" style="font-size:14px">Trees</text><text class="s" x="56" y="314">OpenStreetMap</text>
+            <rect x="40.5" y="336.5" width="249" height="53" rx="6" fill="#ffffff" stroke="#c8362b" stroke-dasharray="4 3"/>
+            <text class="h" x="56" y="359" style="font-size:14px">Surface heat (optional)</text><text class="s" x="56" y="378">10-summer Landsat median, GEE</text>
+            <text class="mono" x="40" y="420" style="font-size:10px">Sample district: synthetic,</text>
+            <text class="mono" x="40" y="436" style="font-size:10px">street sizes from the thesis</text>
+          </g>
+
+          <!-- 2 Priorities -->
+          <g>
+            <line x1="330" y1="92" x2="590" y2="92" stroke="#d8d8dc" stroke-width="8" stroke-linecap="round"/>
+            <line x1="434" y1="92" x2="486" y2="92" stroke="#e8673c" stroke-width="8"/>
+            <g stroke="#ffffff" stroke-width="2"><line x1="382" y1="86" x2="382" y2="98"/><line x1="434" y1="86" x2="434" y2="98"/><line x1="486" y1="86" x2="486" y2="98"/><line x1="538" y1="86" x2="538" y2="98"/></g>
+            <text class="mono" x="330" y="120" style="font-size:10px">street cut into ~50 m segments</text>
+
+            <circle cx="336" cy="152" r="5" fill="#f3a03a"/>
+            <text class="h" x="350" y="157" style="font-size:14px">Sun on pavements, 09–18 h</text><text class="mono" x="590" y="157" text-anchor="end" style="fill:#1f2b2e">40</text>
+            <text class="s" x="350" y="175">ray-traced against building heights</text>
+            <circle cx="336" cy="202" r="5" fill="#7b5ea7"/>
+            <text class="h" x="350" y="207" style="font-size:14px">Destinations within 100 m</text><text class="mono" x="590" y="207" text-anchor="end" style="fill:#1f2b2e">35</text>
+            <text class="s" x="350" y="225">everyday places of older adults</text>
+            <circle cx="336" cy="252" r="5" fill="#c8362b"/>
+            <text class="h" x="350" y="257" style="font-size:14px">Surface heat percentile</text><text class="mono" x="590" y="257" text-anchor="end" style="fill:#1f2b2e">25</text>
+            <text class="s" x="350" y="275">relative to the area</text>
+
+            <rect x="330" y="294" width="104" height="16" fill="#f3a03a"/><rect x="434" y="294" width="91" height="16" fill="#7b5ea7"/><rect x="525" y="294" width="65" height="16" fill="#c8362b"/>
+            <text class="mono" x="330" y="330" style="font-size:10px">weighted score 0–100</text>
+
+            <rect x="330" y="346" width="260" height="50" rx="6" fill="#f7f7f8"/>
+            <text class="h" x="344" y="367" style="font-size:13px">Sun under 30% of the day</text><text class="s" x="344" y="385">→ self-shaded, kept low</text>
+            <rect x="330" y="404" width="260" height="50" rx="6" fill="#fbe3dc"/>
+            <text class="h" x="344" y="425" style="font-size:13px">Top 15% of segments</text><text class="s" x="344" y="443" style="fill:#b8321f">→ high priority</text>
+          </g>
+
+          <!-- 3 Street brief -->
+          <g>
+            <rect x="660" y="78" width="46" height="96" fill="#e9e9ec" stroke="#c9c9ce"/>
+            <rect x="834" y="78" width="46" height="96" fill="#e9e9ec" stroke="#c9c9ce"/>
+            <line x1="640" y1="174" x2="900" y2="174" stroke="#1f2b2e" stroke-width="1.5"/>
+            <g stroke="#6e6e73" stroke-width="1"><line x1="706" y1="190" x2="834" y2="190"/><line x1="706" y1="184" x2="706" y2="196"/><line x1="834" y1="184" x2="834" y2="196"/>
+              <line x1="648" y1="78" x2="648" y2="174"/><line x1="642" y1="78" x2="654" y2="78"/></g>
+            <text class="mono" x="770" y="186" text-anchor="middle" style="font-size:10px;fill:#1f2b2e">W</text>
+            <text class="mono" x="770" y="208" text-anchor="middle" style="font-size:10px">façade to façade</text>
+            <text class="mono" x="640" y="130" text-anchor="end" style="font-size:10px;fill:#1f2b2e">H</text>
+            <text class="s" x="770" y="132" text-anchor="middle">H/W · orientation</text>
+            <text class="s" x="770" y="148" text-anchor="middle">function</text>
+
+            <g style="font-size:10px">
+              <rect x="630" y="222" width="64" height="30" rx="4" fill="#f7f7f8"/><rect x="698" y="222" width="64" height="30" rx="4" fill="#efeff1"/><rect x="766" y="222" width="64" height="30" rx="4" fill="#e4e4e7"/><rect x="834" y="222" width="66" height="30" rx="4" fill="#d6d6da"/>
+              <text class="mono" x="662" y="241" text-anchor="middle" style="font-size:9px;letter-spacing:0.04em">low &lt;0.5</text>
+              <text class="mono" x="730" y="241" text-anchor="middle" style="font-size:9px;letter-spacing:0.04em">mod. –1.4</text>
+              <text class="mono" x="798" y="241" text-anchor="middle" style="font-size:9px;letter-spacing:0.04em">high –2.0</text>
+              <text class="mono" x="867" y="241" text-anchor="middle" style="font-size:9px;letter-spacing:0.04em">v.high &gt;2</text>
+            </g>
+
+            <text class="h" x="630" y="282" style="font-size:13px">→ Typology</text>
+            <rect x="630" y="292" width="133" height="26" rx="4" fill="#efe9f6"/><rect x="630" y="292" width="4" height="26" fill="#7b5ea7"/>
+            <text class="s" x="639" y="309" style="fill:#1f2b2e;font-size:11px">1 Enclosed tram</text>
+            <rect x="767" y="292" width="133" height="26" rx="4" fill="#e6f2ed"/><rect x="767" y="292" width="4" height="26" fill="#2e8b6f"/>
+            <text class="s" x="777" y="309" style="fill:#1f2b2e;font-size:11px">2 Wide open</text>
+            <rect x="630" y="322" width="133" height="26" rx="4" fill="#fbefe3"/><rect x="630" y="322" width="4" height="26" fill="#d07a2b"/>
+            <text class="s" x="640" y="339" style="fill:#1f2b2e;font-size:11px">3 Enclosed car-shared</text>
+            <rect x="767" y="322" width="133" height="26" rx="4" fill="#e7effa"/><rect x="767" y="322" width="4" height="26" fill="#3a7bd5"/>
+            <text class="s" x="777" y="339" style="fill:#1f2b2e;font-size:11px">4 Pedestrian / square</text>
+
+            <text class="h" x="630" y="378" style="font-size:13px">→ 7 NBS tools × written rules</text>
+            <rect x="630" y="388" width="92" height="22" rx="11" fill="#3f8f5a"/><text class="w" x="676" y="403" text-anchor="middle" style="font-size:11px">Recommended</text>
+            <rect x="726.5" y="388.5" width="64" height="21" rx="10.5" fill="#fff8ec" stroke="#e0a43a"/><text x="758.5" y="403" text-anchor="middle" style="font-size:11px;fill:#8a5a12">Possible</text>
+            <rect x="795" y="388" width="84" height="22" rx="11" fill="#ececee"/><text x="837" y="403" text-anchor="middle" style="font-size:11px;fill:#6e6e73">Not suitable</text>
+
+            <text class="mono" x="630" y="436" style="font-size:10px">+ evidence grade per tool</text>
+            <g style="font-size:10px">
+              <rect x="630" y="444" width="66" height="20" rx="3" fill="#e6f2ed"/><text class="mono" x="663" y="458" text-anchor="middle" style="font-size:9px;fill:#2e6b4f">measured</text>
+              <rect x="700" y="444" width="66" height="20" rx="3" fill="#e7effa"/><text class="mono" x="733" y="458" text-anchor="middle" style="font-size:9px;fill:#2f5f99">modelled</text>
+              <rect x="770" y="444" width="64" height="20" rx="3" fill="#f4f4f6"/><text class="mono" x="802" y="458" text-anchor="middle" style="font-size:9px">guidance</text>
+              <rect x="838" y="444" width="62" height="20" rx="3" fill="#fdf1ec"/><text class="mono" x="869" y="458" text-anchor="middle" style="font-size:9px;fill:#c4532b">assumed</text>
+            </g>
+          </g>
+
+          <!-- 4 Export -->
+          <g>
+            <rect x="940" y="80" width="220" height="54" rx="6" fill="#f7f7f8"/>
+            <text class="h" x="956" y="103" style="font-size:14px">GeoJSON</text><text class="s" x="956" y="122">for QGIS or ArcGIS</text>
+            <rect x="940" y="144" width="220" height="54" rx="6" fill="#f7f7f8"/>
+            <text class="h" x="956" y="167" style="font-size:14px">CSV table</text><text class="s" x="956" y="186">scores and profile per segment</text>
+            <rect x="940" y="208" width="220" height="54" rx="6" fill="#f7f7f8"/>
+            <text class="h" x="956" y="231" style="font-size:14px">Text brief</text><text class="s" x="956" y="250">one per street</text>
+
+            <rect x="940.5" y="300.5" width="219" height="102" rx="6" fill="#fdf1ec" stroke="#e8673c"/>
+            <text class="mono warm" x="956" y="326">Simulate before design</text>
+            <text class="s" x="956" y="350" style="fill:#1f2b2e">High-priority streets with</text>
+            <text class="s" x="956" y="368" style="fill:#1f2b2e">new canopy go to UTCI or</text>
+            <text class="s" x="956" y="386" style="fill:#1f2b2e">PET modelling first</text>
+          </g>
+        </svg>
+      </div>
+      <div class="landscape-caption-strip">
+        <span>The MVP in four steps, in the order a planner works. Weights shown are the defaults.</span>
+        <span class="landscape-fig-tag">Fig. 02</span>
+      </div>
+    </div>
+
     <!-- Interactive Tool -->
     <section class="simulator-app-section">
       <div class="simulator-header">
@@ -1012,7 +1221,7 @@
         </div>
 
         <div class="sim-preview-frame" onclick="openLightbox(this)">
-          <img src="urbansim-mvp-sun.jpg" alt="Sun exposure layer with building shadows at 16:30" />
+          <img src="urbansim-mvp-detail.jpg" alt="UrbanSim street brief for the top-ranked street, beside the priority map" />
         </div>
 
         <div class="sim-control-footer">
@@ -1027,14 +1236,113 @@
       </div>
     </section>
 
-    <!-- Landscape Break 02 -->
+    <!-- Diagram 03: Worked street brief -->
     <div class="section-landscape-break">
-      <div class="landscape-frame" onclick="openLightbox(this)">
-        <img src="urbansim-mvp-typology.jpg" alt="Street typologies and the data quality panel" />
+      <div class="diagram-frame">
+        <svg class="dg" viewBox="0 0 1200 620" role="img" aria-labelledby="dg3-t dg3-d">
+          <title id="dg3-t">Street brief for Moda Street, segment 4</title>
+          <desc id="dg3-d">Moda Street segment 4 ranks 1 of 73 with a priority score of 77. It is an enclosed tram street, 10 metres wide with 14 metre buildings, H/W 1.44, moderate enclosure. Pavements are in direct sun 61 percent of the day, 17 everyday destinations lie within 100 metres, and surface heat is in the 72nd percentile. Recommended: tree in planter box, tree with bench, climbing plant and vegetated pergola. Possible: street tree and permeable surface. Not suitable: rain garden. The street is flagged for microclimate simulation before design.</desc>
+
+          <!-- Header -->
+          <text class="mono" x="40" y="36">Worked example · sample district</text>
+          <text class="h" x="40" y="70" style="font-size:26px">Moda Street · 4</text>
+          <rect x="40" y="88" width="132" height="26" rx="13" fill="#fbe3dc"/><text x="106" y="105" text-anchor="middle" style="font-size:12px;fill:#b8321f;font-weight:600">High priority · 77</text>
+          <rect x="178" y="88" width="96" height="26" rx="13" fill="#f4f4f6"/><text x="226" y="105" text-anchor="middle" style="font-size:12px">Rank 1 of 73</text>
+          <rect x="280" y="88" width="232" height="26" rx="13" fill="#efe9f6"/><text x="396" y="105" text-anchor="middle" style="font-size:12px;fill:#5a3f86">Typology 1 · enclosed tram street</text>
+
+          <!-- Section drawing -->
+          <circle cx="214" cy="140" r="18" fill="#e8673c"/>
+          <g stroke="#e8673c" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.7">
+            <line x1="219" y1="160" x2="278" y2="466"/><line x1="228" y1="157" x2="370" y2="466"/>
+          </g>
+          <polygon points="230,212 278,466 230,466" fill="#1f2b2e" opacity="0.08"/>
+          <rect x="150" y="212" width="80" height="254" fill="#e9e9ec" stroke="#c9c9ce"/>
+          <rect x="410" y="212" width="80" height="254" fill="#e9e9ec" stroke="#c9c9ce"/>
+          <rect x="230" y="458" width="45" height="8" fill="#d8d8dc"/>
+          <rect x="365" y="458" width="45" height="8" fill="#f6c27a"/>
+          <line x1="120" y1="466" x2="520" y2="466" stroke="#1f2b2e" stroke-width="1.5"/>
+          <rect x="290" y="402" width="60" height="54" rx="8" fill="none" stroke="#b9b9be" stroke-width="1.2"/>
+          <line x1="296" y1="420" x2="344" y2="420" stroke="#b9b9be" stroke-width="1"/>
+          <g fill="#1f2b2e"><rect x="300" y="463" width="6" height="3"/><rect x="334" y="463" width="6" height="3"/></g>
+
+          <!-- NBS in section -->
+          <path d="M233 452 q6 -10 0 -20 q-6 -10 0 -20 q6 -10 0 -20 q-6 -10 0 -20 q6 -10 0 -20" fill="none" stroke="#3f8f5a" stroke-width="3" stroke-linecap="round"/>
+          <rect x="381" y="440" width="22" height="18" fill="#c9c9ce"/>
+          <line x1="392" y1="440" x2="392" y2="414" stroke="#7a5b3e" stroke-width="2"/>
+          <circle cx="392" cy="404" r="18" fill="#3f8f5a"/>
+          <line x1="246" y1="300" x2="246" y2="382" stroke="#3f8f5a" stroke-width="1"/>
+          <text class="s" x="252" y="300" style="fill:#2e6b4f">climbing plant</text>
+          <line x1="392" y1="386" x2="392" y2="352" stroke="#3f8f5a" stroke-width="1"/>
+          <text class="s" x="392" y="344" text-anchor="middle" style="fill:#2e6b4f">tree in planter box</text>
+
+          <!-- Dimensions -->
+          <g stroke="#6e6e73" stroke-width="1">
+            <line x1="230" y1="494" x2="410" y2="494"/><line x1="230" y1="488" x2="230" y2="500"/><line x1="410" y1="488" x2="410" y2="500"/>
+            <line x1="512" y1="212" x2="512" y2="466"/><line x1="506" y1="212" x2="518" y2="212"/><line x1="506" y1="466" x2="518" y2="466"/>
+          </g>
+          <text class="mono" x="320" y="516" text-anchor="middle" style="fill:#1f2b2e">10.0 m</text>
+          <text class="mono" x="524" y="343" style="fill:#1f2b2e">14 m</text>
+          <text class="s" x="320" y="538" text-anchor="middle">H/W 1.44 · moderate enclosure · NE–SW</text>
+
+          <!-- Drivers -->
+          <rect x="40" y="566" width="96" height="28" rx="4" fill="#fdf0dc"/><text x="88" y="584" text-anchor="middle" style="font-size:12px">Sun 61%</text>
+          <rect x="142" y="566" width="180" height="28" rx="4" fill="#efe9f6"/><text x="232" y="584" text-anchor="middle" style="font-size:12px">17 destinations ≤ 100 m</text>
+          <rect x="328" y="566" width="196" height="28" rx="4" fill="#fbe3dc"/><text x="426" y="584" text-anchor="middle" style="font-size:12px">Surface heat P72 · 34.9 °C</text>
+
+          <!-- NBS list -->
+          <line x1="580" y1="24" x2="580" y2="600" stroke="#e5e5e7"/>
+          <text class="mono" x="610" y="36">Nature-based solutions for this street</text>
+          <g>
+            <text class="h" x="610" y="76">Tree in planter box</text>
+            <text class="b" x="610" y="96">Tram infrastructure blocks in-ground pits</text>
+            <rect x="1068" y="62" width="92" height="22" rx="11" fill="#3f8f5a"/><text class="w" x="1114" y="77" text-anchor="middle" style="font-size:11px">Recommended</text>
+            <text class="mono" x="1160" y="102" text-anchor="end" style="font-size:9px">guidance · assumed</text>
+            <line x1="610" y1="116" x2="1160" y2="116" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="144">Tree with bench</text>
+            <text class="b" x="610" y="164">17 everyday destinations within 100 m</text>
+            <rect x="1068" y="130" width="92" height="22" rx="11" fill="#3f8f5a"/><text class="w" x="1114" y="145" text-anchor="middle" style="font-size:11px">Recommended</text>
+            <text class="mono" x="1160" y="170" text-anchor="end" style="font-size:9px">guidance · measured</text>
+            <line x1="610" y1="184" x2="1160" y2="184" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="212">Climbing plant</text>
+            <text class="b" x="610" y="232">Façades dominate the street section</text>
+            <rect x="1068" y="198" width="92" height="22" rx="11" fill="#3f8f5a"/><text class="w" x="1114" y="213" text-anchor="middle" style="font-size:11px">Recommended</text>
+            <text class="mono" x="1160" y="238" text-anchor="end" style="font-size:9px">guidance</text>
+            <line x1="610" y1="252" x2="1160" y2="252" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="280">Vegetated pergola</text>
+            <text class="b" x="610" y="300">Tram stop within 25 m: shade where people wait</text>
+            <rect x="1068" y="266" width="92" height="22" rx="11" fill="#3f8f5a"/><text class="w" x="1114" y="281" text-anchor="middle" style="font-size:11px">Recommended</text>
+            <text class="mono" x="1160" y="306" text-anchor="end" style="font-size:9px">guidance · assumed</text>
+            <line x1="610" y1="320" x2="1160" y2="320" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="348">Street tree</text>
+            <text class="b" x="610" y="368">Outer pavement only, after a utilities check</text>
+            <rect x="1096.5" y="334.5" width="63" height="21" rx="10.5" fill="#fff8ec" stroke="#e0a43a"/><text x="1128" y="349" text-anchor="middle" style="font-size:11px;fill:#8a5a12">Possible</text>
+            <text class="mono" x="1160" y="374" text-anchor="end" style="font-size:9px">measured</text>
+            <line x1="610" y1="388" x2="1160" y2="388" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="416">Permeable surface</text>
+            <text class="b" x="610" y="436">In planted zones, not on the carriageway</text>
+            <rect x="1096.5" y="402.5" width="63" height="21" rx="10.5" fill="#fff8ec" stroke="#e0a43a"/><text x="1128" y="417" text-anchor="middle" style="font-size:11px;fill:#8a5a12">Possible</text>
+            <text class="mono" x="1160" y="442" text-anchor="end" style="font-size:9px">modelled · guidance</text>
+            <line x1="610" y1="456" x2="1160" y2="456" stroke="#eeeeef"/>
+
+            <text class="h" x="610" y="484" style="fill:#8e8e93">Rain garden</text>
+            <text class="b" x="610" y="504" style="fill:#8e8e93">No unpaved strip or parking bay to convert</text>
+            <rect x="1076" y="470" width="84" height="22" rx="11" fill="#ececee"/><text x="1118" y="485" text-anchor="middle" style="font-size:11px;fill:#6e6e73">Not suitable</text>
+            <text class="mono" x="1160" y="510" text-anchor="end" style="font-size:9px">modelled · guidance</text>
+          </g>
+
+          <rect x="610.5" y="530.5" width="549" height="64" rx="6" fill="#fdf1ec" stroke="#e8673c"/>
+          <text class="mono warm" x="626" y="554">Simulate before design</text>
+          <text class="s" x="626" y="577" style="fill:#1f2b2e">New canopy on a high-priority street: test it with UTCI or PET first.</text>
+        </svg>
       </div>
       <div class="landscape-caption-strip">
-        <span>Street typologies from the thesis, with the data panel that reports the quality of each layer.</span>
-        <span class="landscape-fig-tag">Fig. 02</span>
+        <span>One street brief: the profile that decides what fits, and each NBS tool with its rule and evidence grade.</span>
+        <span class="landscape-fig-tag">Fig. 03</span>
       </div>
     </div>
 
@@ -1048,8 +1356,73 @@
         <p>
           The core of the next phase is the NBS library. Many nature-based solutions still have only guidance-level or assumed evidence for pedestrian cooling, so the library has to be built as research: documented projects, their street conditions and their measured performance, graded by evidence. I aim to develop it with academic partners, building on my work in the AIM-NBS project, and then train a model on it that recommends suitable NBS for each street, while keeping every recommendation traceable to its sources.
         </p>
+        <p>
+          The library should also record what each solution needs over time: irrigation, maintenance and who is responsible for it. Whether a nature-based solution still performs after ten years depends as much on how it is managed as on how it was designed, and a decision-support tool only helps if the organisations that use it can act on its results. Recording long-term performance and upkeep is what would let UrbanSim answer its original question: whether today's choices will still work, and at what cost, in the future.
+        </p>
       </div>
     </section>
+
+    <!-- Diagram 04: Roadmap -->
+    <div class="section-landscape-break">
+      <div class="diagram-frame">
+        <svg class="dg" viewBox="0 0 1200 400" role="img" aria-labelledby="dg4-t dg4-d">
+          <title id="dg4-t">UrbanSim roadmap</title>
+          <desc id="dg4-d">Five steps: the heat-screening MVP of summer 2026; testing with planners in Skåne municipalities; broadening the screening to cloudburst flooding, municipal data and population layers; an evidence-graded NBS library that also records irrigation, maintenance and responsibility; and traceable recommendations from a model trained on that library. Together they lead back to the original question of whether today's solutions will still work, and at what cost.</desc>
+          <line x1="120" y1="110" x2="1080" y2="110" stroke="#d8d8dc" stroke-width="2"/>
+          <line x1="120" y1="110" x2="240" y2="110" stroke="#1f2b2e" stroke-width="2"/>
+
+          <g text-anchor="middle">
+            <text class="mono" x="120" y="74">Now · summer 2026</text>
+            <circle cx="120" cy="110" r="15" fill="#1f2b2e"/>
+            <path d="M113 110 l5 5 l9 -10" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <text class="h" x="120" y="160">Heat-screening MVP</text>
+            <text class="b" x="120" y="184">Sample district,</text>
+            <text class="b" x="120" y="202">runs in the browser</text>
+
+            <text class="mono" x="360" y="74">Next</text>
+            <circle cx="360" cy="110" r="14" fill="#ffffff" stroke="#1f2b2e" stroke-width="2"/>
+            <text x="360" y="115" style="font-size:13px;font-weight:600">2</text>
+            <text class="h" x="360" y="160">Test with planners</text>
+            <text class="b" x="360" y="184">Skåne municipalities,</text>
+            <text class="b" x="360" y="202">on their own districts</text>
+
+            <text class="mono" x="600" y="74">Then</text>
+            <circle cx="600" cy="110" r="14" fill="#ffffff" stroke="#1f2b2e" stroke-width="2"/>
+            <text x="600" y="115" style="font-size:13px;font-weight:600">3</text>
+            <text class="h" x="600" y="160">Broaden the screening</text>
+            <text class="b" x="600" y="184">Cloudburst flooding,</text>
+            <text class="b" x="600" y="202">municipal data uploads,</text>
+            <text class="b" x="600" y="220">population layers</text>
+
+            <text class="mono" x="840" y="74" style="fill:#2e6b4f">Core of next phase</text>
+            <circle cx="840" cy="110" r="15" fill="#3f8f5a"/>
+            <text class="w" x="840" y="115" style="font-size:13px;font-weight:600">4</text>
+            <text class="h" x="840" y="160">NBS evidence library</text>
+            <text class="b" x="840" y="184">Projects, street conditions,</text>
+            <text class="b" x="840" y="202">measured performance,</text>
+            <text class="b" x="840" y="220">plus irrigation, maintenance</text>
+            <text class="b" x="840" y="238">and who is responsible</text>
+
+            <text class="mono" x="1080" y="74">Goal</text>
+            <circle cx="1080" cy="110" r="14" fill="#ffffff" stroke="#1f2b2e" stroke-width="2"/>
+            <text x="1080" y="115" style="font-size:13px;font-weight:600">5</text>
+            <text class="h" x="1080" y="160">Traceable recommendations</text>
+            <text class="b" x="1080" y="184">A model trained on the library,</text>
+            <text class="b" x="1080" y="202">every suggestion linked</text>
+            <text class="b" x="1080" y="220">to its sources</text>
+          </g>
+
+          <rect x="40" y="290" width="1120" height="76" rx="10" fill="#f4f1ea"/>
+          <text class="mono" x="70" y="322">The original question</text>
+          <text x="70" y="348" style="font-size:17px">Will the solutions we choose today still work, and at what cost, in the years ahead?</text>
+          <path d="M840 252 L840 284" stroke="#3f8f5a" stroke-width="1.4" stroke-dasharray="3 3"/>
+        </svg>
+      </div>
+      <div class="landscape-caption-strip">
+        <span>Roadmap: from heat screening to an evidence library that can answer the original question.</span>
+        <span class="landscape-fig-tag">Fig. 04</span>
+      </div>
+    </div>
 
     <!-- Pagination Footer -->
     <nav class="project-footer-nav">

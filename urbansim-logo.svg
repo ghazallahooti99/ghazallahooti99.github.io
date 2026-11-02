@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1200" width="1000" height="1200">
+  <title>UrbanSim</title>
+  <rect width="1000" height="1200" fill="#f4f1ea"/>
+  <!-- Mark: four city blocks; the gaps are streets. Heat (sun) and NBS (leaf) take two of the blocks. -->
+  <g transform="translate(333 330)">
+    <rect x="0" y="0" width="150" height="150" rx="18" fill="#1f2b2e"/>
+    <circle cx="259" cy="75" r="70" fill="#e8673c"/>
+    <rect x="0" y="184" width="150" height="150" rx="18" fill="#1f2b2e"/>
+    <path d="M334 184 A150 150 0 0 1 184 334 A150 150 0 0 1 334 184 Z" fill="#3f8f5a"/>
+    <line x1="206" y1="312" x2="318" y2="200" stroke="#f4f1ea" stroke-width="7" stroke-linecap="round"/>
+  </g>
+  <text x="500" y="820" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="700" font-size="104" letter-spacing="-3" fill="#1f2b2e">UrbanSim</text>
+  <text x="500" y="884" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-size="25" letter-spacing="5" fill="#6f7774">HEAT SCREENING FOR CITY STREETS</text>
+</svg>
