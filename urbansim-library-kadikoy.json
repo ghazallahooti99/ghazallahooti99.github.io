@@ -1,0 +1,356 @@
+{
+  "status": "Sample library – illustrative, under verification",
+  "notes": "Fit thresholds reuse the existing UrbanSim street rules (matchNBS): trees need about 8 m width and at least 30% sun; pergolas at least 50% sun; rain gardens about 15 m width. Ground space is not in the data, so needs_ground_space is shown as 'not checked'. Species, precedents and effects are placeholders until verified.",
+  "nbs_types": [
+    {
+      "id": "street_trees",
+      "name": "Street trees",
+      "description": "Large-canopy trees in pits or planted strips along the pavement.",
+      "addresses": [
+        "shade",
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": 8,
+        "sun_share_min": 0.3,
+        "sun_share_max": null,
+        "needs_ground_space": true
+      },
+      "species_ids": [
+        "celtis_australis",
+        "platanus_orientalis",
+        "tilia_tomentosa"
+      ],
+      "precedent_ids": [
+        "p_barcelona_superilla"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "pergola_climbers",
+      "name": "Shade pergola with climbers",
+      "description": "A light frame over a waiting or resting area, covered by climbing plants.",
+      "addresses": [
+        "shade",
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": null,
+        "sun_share_min": 0.5,
+        "sun_share_max": null,
+        "needs_ground_space": true
+      },
+      "species_ids": [
+        "vitis_vinifera",
+        "wisteria_sinensis"
+      ],
+      "precedent_ids": [
+        "p_todo_pergola"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "parklet",
+      "name": "Pocket park / parklet",
+      "description": "A parking bay or leftover corner turned into a small planted seating space.",
+      "addresses": [
+        "shade",
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": 8,
+        "sun_share_min": 0.3,
+        "sun_share_max": null,
+        "needs_ground_space": false
+      },
+      "species_ids": [
+        "cercis_siliquastrum",
+        "thymus_spp"
+      ],
+      "precedent_ids": [
+        "p_sf_parklets"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "green_facade",
+      "name": "Green façade with climbers",
+      "description": "Climbing plants on wires or directly on walls, rooted in a narrow bed at the façade.",
+      "addresses": [
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": null,
+        "sun_share_min": 0.3,
+        "sun_share_max": null,
+        "needs_ground_space": false
+      },
+      "species_ids": [
+        "hedera_helix",
+        "parthenocissus_tricuspidata"
+      ],
+      "precedent_ids": [
+        "p_zurich_mfo"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "permeable_paving",
+      "name": "Permeable paving with planted joints",
+      "description": "Open-jointed pavers with planted joints in parking bays, tree surrounds and squares.",
+      "addresses": [
+        "sealed_surface"
+      ],
+      "fit": {
+        "min_street_width_m": null,
+        "sun_share_min": null,
+        "sun_share_max": null,
+        "needs_ground_space": false
+      },
+      "species_ids": [
+        "thymus_spp",
+        "sedum_spp"
+      ],
+      "precedent_ids": [
+        "p_todo_permeable"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "rain_garden",
+      "name": "Rain garden / bioswale",
+      "description": "A planted depression that collects runoff from the street and lets it soak in.",
+      "addresses": [
+        "sealed_surface",
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": 15,
+        "sun_share_min": null,
+        "sun_share_max": null,
+        "needs_ground_space": true
+      },
+      "species_ids": [
+        "iris_pseudacorus",
+        "juncus_effusus"
+      ],
+      "precedent_ids": [
+        "p_copenhagen_tasinge"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded"
+    },
+    {
+      "id": "green_roof",
+      "name": "Green roof",
+      "description": "Planted roof layer on the buildings along the street.",
+      "addresses": [
+        "vegetation"
+      ],
+      "fit": {
+        "min_street_width_m": null,
+        "sun_share_min": null,
+        "sun_share_max": null,
+        "needs_ground_space": false
+      },
+      "species_ids": [
+        "sedum_spp",
+        "thymus_spp"
+      ],
+      "precedent_ids": [
+        "p_basel_green_roofs"
+      ],
+      "effect_note": "TODO: verify – no effect size given until a source is checked",
+      "evidence_grade": "not graded",
+      "flag_only": true,
+      "flag_reason": "Roof load is unknown, so this is a flag for further study, not a recommendation."
+    }
+  ],
+  "species": [
+    {
+      "id": "celtis_australis",
+      "latin_name": "Celtis australis",
+      "common_name": "European nettle tree",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "tree",
+      "notes": "TODO: verify native range, drought tolerance and nursery availability in Istanbul."
+    },
+    {
+      "id": "platanus_orientalis",
+      "latin_name": "Platanus orientalis",
+      "common_name": "Oriental plane (çınar)",
+      "native_to_turkey": true,
+      "drought_tolerance": "TODO: verify",
+      "form": "tree",
+      "notes": "Very large tree; TODO: verify fit for narrow streets and pollen/allergy concerns."
+    },
+    {
+      "id": "tilia_tomentosa",
+      "latin_name": "Tilia tomentosa",
+      "common_name": "Silver lime",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "tree",
+      "notes": "TODO: verify native range and street-tree performance."
+    },
+    {
+      "id": "cercis_siliquastrum",
+      "latin_name": "Cercis siliquastrum",
+      "common_name": "Judas tree (erguvan)",
+      "native_to_turkey": true,
+      "drought_tolerance": "TODO: verify",
+      "form": "tree",
+      "notes": "Small tree; TODO: verify shade value for parklets."
+    },
+    {
+      "id": "hedera_helix",
+      "latin_name": "Hedera helix",
+      "common_name": "Common ivy",
+      "native_to_turkey": true,
+      "drought_tolerance": "TODO: verify",
+      "form": "climber",
+      "notes": "Evergreen, self-clinging; TODO: verify façade suitability and maintenance."
+    },
+    {
+      "id": "parthenocissus_tricuspidata",
+      "latin_name": "Parthenocissus tricuspidata",
+      "common_name": "Boston ivy",
+      "native_to_turkey": false,
+      "drought_tolerance": "TODO: verify",
+      "form": "climber",
+      "notes": "Non-native (East Asia), deciduous, self-clinging. TODO: verify invasiveness risk."
+    },
+    {
+      "id": "vitis_vinifera",
+      "latin_name": "Vitis vinifera",
+      "common_name": "Grapevine",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "climber",
+      "notes": "TODO: verify native status and use on public pergolas."
+    },
+    {
+      "id": "wisteria_sinensis",
+      "latin_name": "Wisteria sinensis",
+      "common_name": "Chinese wisteria",
+      "native_to_turkey": false,
+      "drought_tolerance": "TODO: verify",
+      "form": "climber",
+      "notes": "Non-native (China), heavy woody climber that needs strong support. TODO: verify."
+    },
+    {
+      "id": "thymus_spp",
+      "latin_name": "Thymus spp.",
+      "common_name": "Thyme",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "groundcover",
+      "notes": "Genus level; TODO: pick a species and verify native status and trampling tolerance."
+    },
+    {
+      "id": "sedum_spp",
+      "latin_name": "Sedum spp.",
+      "common_name": "Stonecrop",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "groundcover",
+      "notes": "Genus level; TODO: pick a species and verify."
+    },
+    {
+      "id": "iris_pseudacorus",
+      "latin_name": "Iris pseudacorus",
+      "common_name": "Yellow flag iris",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "groundcover",
+      "notes": "Herbaceous wetland perennial (form category approximate). TODO: verify native status and tolerance of dry spells."
+    },
+    {
+      "id": "juncus_effusus",
+      "latin_name": "Juncus effusus",
+      "common_name": "Soft rush",
+      "native_to_turkey": "verify",
+      "drought_tolerance": "TODO: verify",
+      "form": "groundcover",
+      "notes": "Wetland perennial (form category approximate). TODO: verify."
+    }
+  ],
+  "precedents": [
+    {
+      "id": "p_barcelona_superilla",
+      "name": "Superilla (Superblock) programme",
+      "city": "Barcelona",
+      "country": "Spain",
+      "climate": "Csa",
+      "nbs_type_id": "street_trees",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_sf_parklets",
+      "name": "Pavement to Parks parklet programme",
+      "city": "San Francisco",
+      "country": "USA",
+      "climate": "Csb",
+      "nbs_type_id": "parklet",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_zurich_mfo",
+      "name": "MFO-Park",
+      "city": "Zurich",
+      "country": "Switzerland",
+      "climate": "Cfb",
+      "nbs_type_id": "green_facade",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_copenhagen_tasinge",
+      "name": "Tåsinge Plads",
+      "city": "Copenhagen",
+      "country": "Denmark",
+      "climate": "Cfb",
+      "nbs_type_id": "rain_garden",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_basel_green_roofs",
+      "name": "Green roof requirement for new flat roofs",
+      "city": "Basel",
+      "country": "Switzerland",
+      "climate": "Cfb",
+      "nbs_type_id": "green_roof",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_todo_pergola",
+      "name": "TODO: find a vegetated pergola precedent (ideally Csa climate)",
+      "city": "TODO: verify",
+      "country": "TODO: verify",
+      "climate": "TODO: verify",
+      "nbs_type_id": "pergola_climbers",
+      "source_url": "TODO: verify",
+      "verified": false
+    },
+    {
+      "id": "p_todo_permeable",
+      "name": "TODO: find a permeable paving with planted joints precedent (ideally Csa climate)",
+      "city": "TODO: verify",
+      "country": "TODO: verify",
+      "climate": "TODO: verify",
+      "nbs_type_id": "permeable_paving",
+      "source_url": "TODO: verify",
+      "verified": false
+    }
+  ]
+}

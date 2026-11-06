@@ -177,6 +177,30 @@ button { cursor: pointer; }
 .weights input { width: 100%; accent-color: var(--accent); }
 .weights .num { text-align: right; color: var(--ink-2); }
 
+/* Score explanation, presets, breakdown */
+.how { margin: 0; padding-left: 1.1em; display: flex; flex-direction: column; gap: 4px; color: var(--ink-2); font-size: 12.5px; max-width: 65ch; }
+.how b { color: var(--ink); font-weight: 600; }
+.presets { display: inline-flex; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 2px; gap: 2px; align-self: flex-start; }
+.presets button { border: 0; background: none; padding: 5px 10px; border-radius: 4px; font-size: 12.5px; color: var(--ink-2); }
+.presets button:hover { background: var(--surface-2); }
+.presets button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.presets button small { font-family: var(--font-data); font-size: 10.5px; opacity: .75; margin-left: 4px; }
+.sbar { display: flex; height: 10px; background: var(--line); border-radius: 3px; overflow: hidden; }
+.sbar i { display: block; height: 100%; }
+.sbar i + i { box-shadow: inset 1px 0 0 var(--surface); }
+.sbar-scale { display: flex; justify-content: space-between; font-family: var(--font-data); font-size: 10.5px; color: var(--ink-3); }
+.bd { display: grid; grid-template-columns: minmax(0,1fr) auto; gap: 5px 10px; align-items: baseline; font-size: 12.5px; }
+.bd .f { display: flex; align-items: baseline; gap: 6px; min-width: 0; }
+.bd .f i { width: 9px; height: 9px; border-radius: 2px; flex: 0 0 9px; align-self: center; }
+.bd .f small { color: var(--ink-3); font-size: 11.5px; }
+.bd .calc { font-family: var(--font-data); font-size: 12px; text-align: right; white-space: nowrap; }
+.bd .calc b { font-weight: 600; color: var(--ink); }
+.bd .tot { border-top: 1px solid var(--line); padding-top: 5px; font-weight: 600; }
+.rb { font-style: normal; font-size: 10.5px; font-weight: 600; color: var(--accent); background: var(--accent-soft); border-radius: 3px; padding: 0 5px; margin-right: 5px; }
+.pill.robust { background: var(--accent-soft); color: var(--accent); border-color: transparent; }
+.gotop { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 6px 10px; font-size: 12.5px; color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.gotop:hover { background: var(--surface-2); }
+
 /* Ranked list */
 .rank { display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--r); overflow: hidden; }
 .rank button {
@@ -308,6 +332,7 @@ dialog::backdrop { background: rgba(10, 20, 16, .45); }
         <span class="mono" id="hourLabel">14:00</span>
         <label><input type="checkbox" id="destOn" checked> Destinations</label>
       </div>
+      <button type="button" class="gotop" id="goTop" title="Select and centre the highest-ranked street">Go to #1</button>
     </div>
     <div class="legend" id="legend"></div>
     <div class="zoom">
@@ -338,7 +363,7 @@ dialog::backdrop { background: rgba(10, 20, 16, .45); }
 <dialog id="method">
   <div class="dlg">
     <div class="row2" style="justify-content:space-between"><h2>Method and sources</h2><button class="btn" type="button" id="closeMethod">Close</button></div>
-    <p>UrbanSim screens a district for urban heat and suggests where nature-based solutions (NBS) should go first and which fit each street. It is a screening tool for the early, strategic phase. It does not simulate microclimate or predict temperature reductions; it shows where detailed simulation is worth doing. The method follows my MSc thesis, <em>A Context-Specific Nature-Based Framework for Heat Mitigation</em> (Lahooti, Lund University, 2026).</p>
+    <p>UrbanSim screens a district for urban heat and suggests where nature-based solutions (NBS) should go first and which fit each street. It is a screening tool for the early, strategic phase. It does not simulate microclimate or estimate temperature reductions. It shows where detailed simulation is worth doing; physics-based tools then evaluate the proposed options on the real site. The method follows my MSc thesis, <em>A Context-Specific Nature-Based Framework for Heat Mitigation</em> (Lahooti, Lund University, 2026).</p>
     <h3>What is computed</h3>
     <ol>
       <li><b>Street segments.</b> Streets are cut into segments of about 50 m.</li>
@@ -350,6 +375,17 @@ dialog::backdrop { background: rgba(10, 20, 16, .45); }
       <li><b>Typology.</b> 1 enclosed tram street, 2 wide open street, 3 enclosed car-shared street, 4 pedestrian street or square.</li>
       <li><b>NBS matching.</b> Seven street-scale tools derived from the World Bank catalogue in the thesis are checked against each street with written rules. Every suggestion shows the rule that fired and the evidence behind the tool.</li>
     </ol>
+    <h3>How the priority score is built</h3>
+    <ul>
+      <li><b>Sun exposure</b> is the share of 09:00–18:00 solar time that the segment's pavements are in direct sun on the chosen day. It is already a value from 0 to 1.</li>
+      <li><b>Destinations</b> counts everyday destinations within 100 m, divided by the 90th-percentile count of all segments in the area (at least 1) and capped at 1. The busiest tenth of streets all score 1.</li>
+      <li><b>Surface heat</b> is the segment's land surface temperature as a percentile within the area, from 0 (coolest) to 1 (hottest).</li>
+      <li><b>Score.</b> The three values are multiplied by their weights and added up, then divided by the sum of the weights and multiplied by 100, so the score runs from 0 to 100. A segment's breakdown shows each factor's points; they add up to its score.</li>
+      <li><b>Classes.</b> The top 15% of segments are high priority and the next 25% medium. Segments whose pavements are in sun less than 30% of the day are marked self-shaded and kept low priority, whatever their score.</li>
+      <li><b>No heat layer.</b> When no surface temperature is loaded, the heat weight is left out and the other two weights are rescaled to sum to 100.</li>
+    </ul>
+    <p>The default weights (sun 40, destinations 35, surface heat 25) are a judgement, not a calibrated model. Sun exposure is weighted highest because shade is the main thing nature-based solutions can change. Destinations reflect where older adults walk, following the method of the MSc thesis. Surface heat is weighted lowest because land surface temperature describes surfaces, not what pedestrians feel.</p>
+    <p>To test how much the result depends on that judgement, the tool also ranks every segment under four weightings: Default (40/35/25), Equal (33/33/33), People first (25/50/25) and Heat first (40/20/40). Segments that stay in the top 15% under all four are marked <em>robust</em>.</p>
     <h3>Evidence grades</h3>
     <ul>
       <li><span class="grade m">measured</span> field measurement or published evaluation</li>
@@ -369,12 +405,21 @@ dialog::backdrop { background: rgba(10, 20, 16, .45); }
   </div>
 </dialog>
 
+<dialog id="libDialog">
+  <div class="dlg">
+    <div class="row2" style="justify-content:space-between"><h2>About the sample library</h2><button class="btn" type="button" id="closeLib">Close</button></div>
+    <div id="libBody"></div>
+  </div>
+</dialog>
+
 <div class="toast" id="toast" hidden></div>
 
 <script>
 "use strict";
 const SAMPLE_URL = "urbansim-sample-kadikoy.json";
 const SAMPLE_LST_URL = "urbansim-sample-kadikoy-lst.json";
+const LIBRARY_URL = "urbansim-library-kadikoy.json";
+let LIB = null; // sample NBS library, loaded once at start
 
 /* ---------------- constants ---------------- */
 const CATS = {
@@ -398,6 +443,18 @@ const RAMPS = {
   sun: ["#2f5f99", "#8fb7d3", "#f2dc8a", "#f3a03a", "#d9581f"],
   heat: ["#4a7fb8", "#bcd9e4", "#fde3a0", "#f39a4a", "#c8362b"]
 };
+const PRESETS = [
+  { id: "default", label: "Default", w: { sun: 40, dest: 35, heat: 25 } },
+  { id: "equal", label: "Equal", w: { sun: 33, dest: 33, heat: 33 } },
+  { id: "people", label: "People first", w: { sun: 25, dest: 50, heat: 25 } },
+  { id: "heatfirst", label: "Heat first", w: { sun: 40, dest: 20, heat: 40 } }
+];
+const FACTORS = {
+  sun: { label: "Sun exposure", short: "Sun", color: RAMPS.sun[3] },
+  dest: { label: "Destinations", short: "Destinations", color: "var(--accent)" },
+  heat: { label: "Surface heat", short: "Heat", color: RAMPS.heat[4] }
+};
+const HIGH_SHARE = 0.15, MED_SHARE = 0.25, SHADED_BELOW = 0.3;
 const ROAD_W = { primary: 18, secondary: 14, tertiary: 11, residential: 9, unclassified: 8, living_street: 6.5, pedestrian: 7 };
 const HIGHWAYS = new Set(Object.keys(ROAD_W));
 const REFS = {
@@ -794,22 +851,38 @@ async function analyse(full) {
   score();
 }
 
+// Weighted score of one segment: each factor's points add up to the score (0–100).
+function weighted(parts, W) {
+  let den = 0; for (const k of ["sun", "dest", "heat"]) if (parts[k] != null) den += W[k];
+  const pts = {}, wEff = {}; let total = 0;
+  for (const k of ["sun", "dest", "heat"]) {
+    if (parts[k] == null || !den) { pts[k] = null; wEff[k] = null; continue; }
+    wEff[k] = 100 * W[k] / den; pts[k] = parts[k] * wEff[k]; total += pts[k];
+  }
+  return { score: total, pts, wEff };
+}
+function rankOrder(segs, key) { return [...segs].sort((a, b) => (a.selfShaded - b.selfShaded) || (key(b) - key(a))); }
 function score() {
   const segs = D.segs, W = S.weights, hasHeat = segs.some(g => g.heatPct != null);
   for (const g of segs) {
     const parts = { sun: g.sun, dest: Math.min(1, g.destCount / D.destRef), heat: hasHeat && g.heatPct != null ? g.heatPct : null };
-    let num = 0, den = 0, best = null;
-    for (const k of ["sun", "dest", "heat"]) {
-      if (parts[k] == null) continue; num += W[k] * parts[k]; den += W[k];
-      if (!best || W[k] * parts[k] > best.v) best = { k, v: W[k] * parts[k] };
-    }
-    g.parts = parts; g.score = den ? 100 * num / den : 0; g.driver = best ? best.k : "sun";
-    g.selfShaded = g.sun < 0.3;
+    const r = weighted(parts, W);
+    let best = null;
+    for (const k of ["sun", "dest", "heat"]) if (r.pts[k] != null && (!best || r.pts[k] > best.v)) best = { k, v: r.pts[k] };
+    g.parts = parts; g.pts = r.pts; g.wEff = r.wEff; g.score = r.score; g.driver = best ? best.k : "sun";
+    g.selfShaded = g.sun < SHADED_BELOW;
   }
-  const ranked = [...segs].sort((a, b) => (a.selfShaded - b.selfShaded) || (b.score - a.score));
+  const ranked = rankOrder(segs, g => g.score);
   ranked.forEach((g, i) => { g.rank = i + 1; });
-  const nHigh = Math.max(1, Math.round(segs.length * 0.15)), nMed = Math.round(segs.length * 0.25);
+  const nHigh = Math.max(1, Math.round(segs.length * HIGH_SHARE)), nMed = Math.round(segs.length * MED_SHARE);
   for (const g of segs) g.cls = g.selfShaded ? "low" : g.rank <= nHigh ? "high" : g.rank <= nHigh + nMed ? "medium" : "low";
+  // robustness: does the segment stay in the top 15% under every preset weighting?
+  for (const p of PRESETS) {
+    const sc = new Map(segs.map(g => [g, weighted(g.parts, p.w).score]));
+    rankOrder(segs, g => sc.get(g)).forEach((g, i) => { (g.presetRank || (g.presetRank = {}))[p.id] = i + 1; });
+  }
+  for (const g of segs) g.robust = !g.selfShaded && PRESETS.every(p => g.presetRank[p.id] <= nHigh);
+  D.nHigh = nHigh;
   D.ranked = ranked;
   for (const g of segs) g.nbs = matchNBS(g);
   for (const g of segs) g.simFlag = g.cls === "high" && g.nbs.some(t => t.status === "rec" && (t.id === "tree" || t.id === "planter"));
@@ -969,8 +1042,12 @@ function draw() {
   }
   if (sel) {
     const lw = Math.max(3, Math.min(sel.w * sc * 0.55, 26));
-    ctx.strokeStyle = colors["ink"]; ctx.lineWidth = lw + 6; ctx.globalAlpha = 0.9; path(sel.pl); ctx.stroke();
-    ctx.globalAlpha = 1; ctx.strokeStyle = segColor(sel); ctx.lineWidth = lw; path(sel.pl); ctx.stroke();
+    ctx.lineCap = "round";
+    ctx.strokeStyle = colors["accent"]; ctx.lineWidth = lw + 22; ctx.globalAlpha = 0.22; path(sel.pl); ctx.stroke();
+    ctx.strokeStyle = colors["surface"]; ctx.lineWidth = lw + 10; ctx.globalAlpha = 1; path(sel.pl); ctx.stroke();
+    ctx.strokeStyle = colors["ink"]; ctx.lineWidth = lw + 6; path(sel.pl); ctx.stroke();
+    ctx.strokeStyle = segColor(sel); ctx.lineWidth = lw; path(sel.pl); ctx.stroke();
+    ctx.lineCap = "butt";
   }
   // trees
   if (sc > 0.8) { ctx.fillStyle = colors["map-tree"]; for (const t of D.trees) { const q = toScreen(t[0], t[1], W, H); ctx.beginPath(); ctx.arc(q[0], q[1], Math.max(1.5, 2.2 * sc), 0, 7); ctx.fill(); } }
@@ -996,6 +1073,17 @@ function draw() {
       ctx.beginPath(); ctx.arc(0, 0, 1.9, 0, 7); ctx.fillStyle = colors["surface"]; ctx.fill();
       ctx.restore();
     }
+  }
+  // rank tag on the selected segment
+  if (sel) {
+    const m = sel.pl[Math.floor(sel.pl.length / 2)], q = toScreen(m[0], m[1], W, H);
+    const label = sel.selfShaded ? "Self-shaded" : `#${sel.rank} · ${sel.score.toFixed(0)}`;
+    ctx.font = `600 12px ${getComputedStyle(document.body).fontFamily}`;
+    const tw = ctx.measureText(label).width + 14, th = 22, x = q[0] - tw / 2, y = q[1] - th - 16;
+    ctx.fillStyle = colors["ink"]; ctx.beginPath(); ctx.roundRect ? ctx.roundRect(x, y, tw, th, 4) : ctx.rect(x, y, tw, th); ctx.fill();
+    ctx.beginPath(); ctx.moveTo(q[0] - 5, y + th); ctx.lineTo(q[0] + 5, y + th); ctx.lineTo(q[0], y + th + 6); ctx.closePath(); ctx.fill();
+    ctx.fillStyle = colors["surface"]; ctx.textAlign = "center"; ctx.textBaseline = "middle"; ctx.fillText(label, q[0], y + th / 2 + 0.5);
+    ctx.textAlign = "start"; ctx.textBaseline = "alphabetic";
   }
   // scale bar
   const target = 100 / sc > 120 ? 200 : 100 / sc > 60 ? 100 : 50;
@@ -1030,39 +1118,80 @@ function setTab(t) {
 }
 function clsLabel(c) { return { high: "High priority", medium: "Medium priority", low: "Low priority" }[c]; }
 
+function fmtNum(v) { return Number.isInteger(v) ? String(v) : v.toFixed(1); }
+function activePreset() { return PRESETS.find(p => ["sun", "dest", "heat"].every(k => p.w[k] === S.weights[k])); }
 function renderPrio() {
-  const segs = D.segs, hasHeat = segs.some(g => g.heatPct != null);
+  const pane = $("#pane-prio"), segs = D.segs, hasHeat = segs.some(g => g.heatPct != null);
   const top = D.ranked.slice(0, 15);
   const nHigh = segs.filter(g => g.cls === "high").length, nShaded = segs.filter(g => g.selfShaded).length;
-  $("#pane-prio").innerHTML = `
-    <div class="stack">
-      <h2>Where should cooling start?</h2>
-      <p>${segs.length} street segments in ${esc(D.name)} are ranked by how much their pavements sit in sun on ${fmtDate(S.date)}, how many everyday destinations lie within 100 m, and how hot the surface is. ${nHigh} are high priority; ${nShaded} are already self-shaded.</p>
-    </div>
-    <div class="stack">
-      <h3>Weights</h3>
-      <div class="weights">
-        <label for="w-sun">Sun exposure</label><input type="range" id="w-sun" min="0" max="100" value="${S.weights.sun}"><span class="num">${S.weights.sun}</span>
-        <label for="w-dest">Destinations</label><input type="range" id="w-dest" min="0" max="100" value="${S.weights.dest}"><span class="num">${S.weights.dest}</span>
-        <label for="w-heat">Surface heat</label><input type="range" id="w-heat" min="0" max="100" value="${S.weights.heat}" ${hasHeat ? "" : "disabled"}><span class="num">${hasHeat ? S.weights.heat : "—"}</span>
+  // controls are built once per dataset, so a slider being dragged is never replaced
+  if (pane._D !== D) {
+    pane._D = D;
+    pane.innerHTML = `
+      <div class="stack" id="prioHead"></div>
+      <div class="stack" id="prioHow"></div>
+      <div class="stack">
+        <h3>Weights</h3>
+        <div class="presets" role="group" aria-label="Weight presets">${PRESETS.map(p => `<button type="button" data-preset="${p.id}" aria-pressed="false">${p.label}<small>${p.w.sun}/${p.w.dest}/${p.w.heat}</small></button>`).join("")}</div>
+        <div class="weights">
+          <label for="w-sun">Sun exposure</label><input type="range" id="w-sun" min="0" max="100" value="${S.weights.sun}"><span class="num">${S.weights.sun}</span>
+          <label for="w-dest">Destinations</label><input type="range" id="w-dest" min="0" max="100" value="${S.weights.dest}"><span class="num">${S.weights.dest}</span>
+          <label for="w-heat">Surface heat</label><input type="range" id="w-heat" min="0" max="100" value="${S.weights.heat}" ${hasHeat ? "" : "disabled"}><span class="num">${hasHeat ? S.weights.heat : "—"}</span>
+        </div>
+        ${hasHeat ? "" : `<p class="muted">No surface heat layer is loaded, so the score uses sun exposure and destinations only. Presets keep their sun and destination weights and ignore heat.</p>`}
       </div>
-      ${hasHeat ? "" : `<p class="muted">No surface heat layer is loaded, so the score uses sun exposure and destinations only.</p>`}
-    </div>
-    <div class="stack">
+      <div class="stack" id="prioList"></div>`;
+    for (const k of ["sun", "dest", "heat"]) {
+      const el = $("#w-" + k);
+      el.addEventListener("input", () => { S.weights[k] = +el.value; score(); });
+    }
+  }
+  for (const k of ["sun", "dest", "heat"]) {
+    const el = $("#w-" + k); if (document.activeElement !== el) el.value = S.weights[k];
+    el.nextElementSibling.textContent = k === "heat" && !hasHeat ? "—" : S.weights[k];
+  }
+  const ap = activePreset();
+  pane.querySelectorAll("[data-preset]").forEach(b => b.setAttribute("aria-pressed", String(!!ap && b.dataset.preset === ap.id)));
+  $("#prioHead").innerHTML = `
+    <h2>Where should cooling start?</h2>
+    <p>${segs.length} street segments in ${esc(D.name)} are ranked by how much their pavements sit in sun on ${fmtDate(S.date)}, how many everyday destinations lie within 100 m, and how hot the surface is. ${nHigh} are high priority; ${nShaded} are already self-shaded. UrbanSim proposes nature-based solutions from evidence and transparent rules; physics-based tools evaluate them. No machine learning generates results.</p>
+    <p class="muted">Step 2 (new): click a street to see sample NBS options matched to its conditions. The library is illustrative and being verified.</p>`;
+  $("#prioHow").innerHTML = `
+    <h3>How the score works</h3>
+    <ul class="how">
+      <li><b>Sun exposure</b>: share of 09–18 h (solar time) the pavements are in direct sun, already 0–1.</li>
+      <li><b>Destinations</b>: everyday destinations within 100 m, divided by ${fmtNum(D.destRef)} (the 90th-percentile count in this area) and capped at 1.</li>
+      <li><b>Surface heat</b>: ${hasHeat ? "land surface temperature as a percentile within this area, 0 coolest to 1 hottest." : "not used, because no surface heat layer is loaded."}</li>
+      <li>The score is the weighted sum of these values, divided by the sum of the weights and multiplied by 100, so it runs 0–100. The top 15% (${D.nHigh} segments) are high priority, the next 25% medium. Segments in sun under 30% of the day are marked self-shaded and kept low.</li>
+    </ul>
+    <p class="muted">The default weights are a judgement, not a calibrated model. Sun exposure is weighted highest because shade is the main thing nature-based solutions can change. Destinations reflect where older adults walk, following the method of my MSc thesis. Surface heat is weighted lowest because land surface temperature describes surfaces, not what pedestrians feel.</p>`;
+  const highs = segs.filter(g => g.cls === "high"), nRobust = highs.filter(g => g.robust).length;
+  $("#prioList").innerHTML = `
       <h3>Top 15 segments</h3>
+      <p class="muted">${nRobust} of the ${highs.length} high-priority segments (${highs.length ? Math.round(100 * nRobust / highs.length) : 0}%) stay in the top 15% under all four weightings and are marked <em class="rb" style="margin:0">Robust</em>. The rest depend on how the factors are weighted.</p>
       <div class="rank">${top.map(g => `
         <button type="button" data-seg="${segs.indexOf(g)}" ${g === S.sel ? 'aria-current="true"' : ""}>
           <span class="pos">${g.rank}</span>
-          <span class="nm"><b>${esc(g.title)}</b><span>${TYPOLOGY[g.typ].name} · sun ${pct(g.sun)} · ${g.destCount} dest.${g.heatPct != null ? ` · heat P${Math.round(g.heatPct * 100)}` : ""}</span></span>
+          <span class="nm"><b>${esc(g.title)}</b><span>${g.robust ? `<em class="rb" title="Top 15% under all weightings">Robust</em>` : ""}${TYPOLOGY[g.typ].name} · sun ${pct(g.sun)} · ${g.destCount} dest.${g.heatPct != null ? ` · heat P${Math.round(g.heatPct * 100)}` : ""}</span></span>
           <span class="score"><i style="background:${ramp("priority", g.score / 100)}"></i>${g.score.toFixed(0)}</span>
         </button>`).join("")}
-      </div>
-    </div>`;
-  for (const k of ["sun", "dest", "heat"]) {
-    const el = $("#w-" + k); if (!el) continue;
-    el.addEventListener("input", () => { S.weights[k] = +el.value; el.nextElementSibling.textContent = el.value; score(); });
-  }
+      </div>`;
 }
+
+function selectSeg(g, centre) {
+  if (!g) return;
+  S.sel = g; if (centre) centreOn(g);
+  renderPrio(); renderBrief(); renderExport(); setTab("brief"); draw();
+}
+function centreOn(g) {
+  const r = canvas.getBoundingClientRect();
+  let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+  for (const p of g.pl) { x0 = Math.min(x0, p[0]); y0 = Math.min(y0, p[1]); x1 = Math.max(x1, p[0]); y1 = Math.max(y1, p[1]); }
+  S.view.scale = Math.min(20, Math.max(S.view.scale, 1.1));
+  const topPad = ($(".maptools").offsetHeight || 50) + 12;
+  S.view.cx = (x0 + x1) / 2; S.view.cy = (y0 + y1) / 2 + (topPad / 2) / S.view.scale;
+}
+function goTop() { if (D && D.ranked && D.ranked.length) selectSeg(D.ranked[0], true); }
 
 function renderBrief() {
   const g = S.sel; if (!g) { $("#pane-brief").innerHTML = `<p>Select a street on the map.</p>`; return; }
@@ -1079,14 +1208,13 @@ function renderBrief() {
   $("#pane-brief").innerHTML = `
     <div class="brief-head">
       <h2>${esc(g.title)}</h2>
-      <div class="pills"><span class="pill ${g.cls}">${clsLabel(g.cls)} · ${g.score.toFixed(0)}</span><span class="pill">Typology ${g.typ}: ${TYPOLOGY[g.typ].name}</span>${g.simFlag ? `<span class="pill medium">Simulate before design</span>` : ""}</div>
+      <div class="pills"><span class="pill ${g.cls}">${clsLabel(g.cls)} · ${g.score.toFixed(0)}</span>${g.robust ? `<span class="pill robust">Robust · top 15% under all weightings</span>` : ""}<span class="pill">Typology ${g.typ}: ${TYPOLOGY[g.typ].name}</span>${g.simFlag ? `<span class="pill medium">Simulate before design</span>` : ""}</div>
       <p>${why}</p>
     </div>
+    ${libCards(g)}
     <div class="stack">
-      <h3>Scores</h3>
-      ${meter("Sun exposure", g.sun, pct(g.sun))}
-      ${meter("Destinations", Math.min(1, g.destCount / D.destRef), g.destCount + " nearby")}
-      ${g.heatPct != null ? meter("Surface heat", g.heatPct, g.lst.toFixed(1) + " °C") : ""}
+      <h3>How the score is built</h3>
+      ${breakdown(g)}
     </div>
     <div class="stack">
       <h3>Street profile</h3>
@@ -1111,8 +1239,95 @@ function renderBrief() {
           <p class="muted">World Bank family: ${t.family}</p>
         </details>`).join("")}
     </div>
-    ${g.simFlag ? `<div class="note">High priority with new canopy proposed. Test the design with a microclimate model (UTCI or PET) before committing; this tool does not predict temperature change.</div>` : ""}
+    ${g.simFlag ? `<div class="note">High priority with new canopy proposed. Test the design with a microclimate model (UTCI or PET) before committing; this tool does not estimate temperature change.</div>` : ""}
     ${D.synthetic ? `<div class="note info">Sample district: geometry, destinations and surface temperatures are synthetic. Street dimensions follow the thesis typologies.</div>` : D.sample ? `<div class="note info">Sample area: Caferağa and Moda, Kadıköy, from OpenStreetMap. Building heights are satellite-derived estimates from GlobalBuildingAtlas, so sun exposure is indicative. Surface heat is the 2016–2025 median summer Landsat land surface temperature.</div>` : ""}`;
+}
+/* ---------------- sample NBS library: matching ----------------
+   For one street segment, keep the library types whose fit rules the segment meets,
+   then put first the types that address the segment's main driver. Rules that need
+   data we do not have are not used as filters; they are listed as "not checked". */
+function matchLibrary(g) {
+  if (!LIB) return [];
+  const need = { sun: "shade", dest: "shade", heat: "sealed_surface" }[g.driver];
+  const driverWhy = {
+    sun: `Pavement in sun ${pct(g.sun)} of the day – shade is the main driver`,
+    dest: `${g.destCount} everyday destinations within 100 m – shade for people walking is the main driver`,
+    heat: g.heatPct != null ? `Hot surface (${ordinal(Math.round(g.heatPct * 100))} percentile, ${g.lst.toFixed(1)} °C) – sealed surface is the main driver` : ""
+  }[g.driver];
+  const hasW = isFinite(g.w) && g.w > 0;
+  const out = [];
+  for (const t of LIB.nbs_types) {
+    const r = t.fit || {}, fits = [], unchecked = [];
+    if (r.sun_share_min != null) { if (g.sun < r.sun_share_min) continue; fits.push(`above the ${pct(r.sun_share_min)} sun minimum`); }
+    if (r.sun_share_max != null) { if (g.sun > r.sun_share_max) continue; fits.push(`below the ${pct(r.sun_share_max)} sun maximum`); }
+    if (r.min_street_width_m != null) {
+      if (!hasW) unchecked.push("width not checked");
+      else if (g.w < r.min_street_width_m) continue;
+      else fits.push(`${g.w.toFixed(1)} m wide (minimum ${r.min_street_width_m} m${g.wsrc === "measured façade to façade" ? "" : ", width " + g.wsrc})`);
+    }
+    if (r.needs_ground_space) unchecked.push("ground space not checked");
+    if (t.flag_only) unchecked.push(t.flag_reason || "flag only");
+    const hitsDriver = (t.addresses || []).includes(need);
+    const why = (hitsDriver && driverWhy ? driverWhy : "Fits the street's conditions but does not target the main driver") + (fits.length ? "; " + fits.join("; ") : "") + ".";
+    out.push({ t, why, unchecked, rank: (hitsDriver ? 0 : 2) + (t.flag_only ? 4 : 0) });
+  }
+  return out.sort((a, b) => a.rank - b.rank).slice(0, 3);
+}
+function libCards(g) {
+  if (!LIB) return "";
+  const sp = id => LIB.species.find(s => s.id === id), pr = id => LIB.precedents.find(p => p.id === id);
+  const todo = v => typeof v !== "string" || /^TODO/i.test(v);
+  const nat = s => s.native_to_turkey === true ? "native" : s.native_to_turkey === false ? "non-native" : "native status to verify";
+  const cards = matchLibrary(g).map(({ t, why, unchecked }) => {
+    const species = (t.species_ids || []).map(sp).filter(Boolean).slice(0, 3);
+    const p = (t.precedent_ids || []).map(pr).find(Boolean);
+    const prec = !p ? "none yet" : todo(p.city) ? "to be found" : `${esc(p.name)}, ${esc(p.city)}${todo(p.source_url) ? " · source to be verified" : ` · <a href="${esc(p.source_url)}" target="_blank" rel="noopener">source</a>`}`;
+    return `
+      <div class="tool">
+        <div class="tool-head"><b>${esc(t.name)}</b><span class="grade" title="Evidence grade">${t.evidence_grade === "not graded" ? "not graded" : "grade " + esc(t.evidence_grade)}</span></div>
+        <p class="why"><b>Why it fits:</b> ${esc(why)}</p>
+        <p>Species: ${species.map(s => `<i>${esc(s.latin_name)}</i> (${esc(s.common_name)}, ${nat(s)})`).join(", ") || "to be chosen"}</p>
+        <p>Precedent: ${prec}</p>
+        ${unchecked.length ? `<p class="muted">${esc(unchecked.join(" · "))}</p>` : ""}
+      </div>`;
+  });
+  return `
+    <div class="stack">
+      <div class="row2" style="justify-content:space-between"><h3>Suggested NBS for this street</h3><a href="#" id="libAbout">About the sample library</a></div>
+      <p class="muted">${esc(LIB.status)}.</p>
+      ${cards.join("") || `<p class="muted">No type in the sample library fits this street's conditions.</p>`}
+    </div>`;
+}
+function openLibDialog() {
+  if (!LIB) return;
+  const sp = id => LIB.species.find(s => s.id === id);
+  const v = x => x === true ? "yes" : x === false ? "no" : esc(String(x));
+  $("#libBody").innerHTML = `
+    <p class="note">${esc(LIB.status)}</p>
+    <p>${esc(LIB.notes || "")}</p>
+    <h3>NBS types</h3>
+    <ul>${LIB.nbs_types.map(t => `<li><b>${esc(t.name)}</b>: ${esc(t.description)} Addresses ${esc(t.addresses.join(", "))}. Species: ${t.species_ids.map(id => sp(id) ? `<i>${esc(sp(id).latin_name)}</i>` : esc(id)).join(", ")}. Effect: ${esc(t.effect_note)}. Evidence: ${esc(t.evidence_grade)}.${t.flag_only ? " " + esc(t.flag_reason) : ""}</li>`).join("")}</ul>
+    <h3>Species</h3>
+    <ul>${LIB.species.map(s => `<li><i>${esc(s.latin_name)}</i>, ${esc(s.common_name)} · ${esc(s.form)} · native to Turkey: ${v(s.native_to_turkey)} · drought tolerance: ${v(s.drought_tolerance)}. ${esc(s.notes || "")}</li>`).join("")}</ul>
+    <h3>Precedents</h3>
+    <ul>${LIB.precedents.map(p => `<li><b>${esc(p.name)}</b>, ${esc(p.city)}, ${esc(p.country)} · climate ${esc(p.climate)} · ${p.source_url && /^https?:/.test(p.source_url) ? `<a href="${esc(p.source_url)}" target="_blank" rel="noopener">source</a>` : "source: " + esc(p.source_url)} · ${p.verified ? "verified" : "not verified"}</li>`).join("")}</ul>`;
+  $("#libDialog").showModal();
+}
+function breakdown(g) {
+  const raw = { sun: `${pct(g.sun)} of 09–18 h`, dest: `${g.destCount} within 100 m ÷ ${fmtNum(D.destRef)}`, heat: g.lst != null ? `${g.lst.toFixed(1)} °C, P${Math.round(g.heatPct * 100)}` : "" };
+  const ks = ["sun", "dest", "heat"].filter(k => g.pts[k] != null);
+  const label = ks.map(k => `${FACTORS[k].short} ${g.pts[k].toFixed(0)}`).join(" + ") + ` = ${g.score.toFixed(0)} points`;
+  const rescaled = ks.reduce((s, k) => s + S.weights[k], 0) !== 100;
+  const ranks = PRESETS.map(p => `${p.label} ${g.presetRank[p.id]}`).join(" · ");
+  return `
+    <div class="sbar" role="img" aria-label="${label}">${ks.map(k => `<i style="width:${g.pts[k].toFixed(2)}%;background:${FACTORS[k].color}" title="${FACTORS[k].label}: ${g.pts[k].toFixed(1)} pts"></i>`).join("")}</div>
+    <div class="sbar-scale"><span>0</span><span>${g.score.toFixed(0)} of 100</span><span>100</span></div>
+    <div class="bd">
+      ${ks.map(k => `<span class="f"><i style="background:${FACTORS[k].color}"></i>${FACTORS[k].label} <small>${raw[k]}</small></span><span class="calc">${g.parts[k].toFixed(2)} × ${fmtNum(+g.wEff[k].toFixed(1))} = <b>${g.pts[k].toFixed(0)} pts</b></span>`).join("")}
+      <span class="f tot">Score</span><span class="calc tot"><b>${g.score.toFixed(0)} pts</b></span>
+    </div>
+    ${rescaled ? `<p class="muted">Weights are rescaled to sum to 100${g.pts.heat == null ? " because surface heat is not used" : ""}.</p>` : ""}
+    <p class="muted">${g.selfShaded ? "Self-shaded, so kept low priority whatever the score. " : ""}Rank under each weighting: ${ranks} (top 15% = rank ${D.nHigh} or better).</p>`;
 }
 function meter(label, v, txt) { return `<div class="meter"><span>${label}</span><span class="track"><div style="width:${Math.round(Math.max(0, Math.min(1, v)) * 100)}%"></div></span><span class="num">${txt}</span></div>`; }
 function ordinal(n) { const s = ["th", "st", "nd", "rd"], v = n % 100; return n + (s[(v - 20) % 10] || s[v] || s[0]); }
@@ -1239,19 +1454,23 @@ function renderExport() {
   $("#cpBrief").addEventListener("click", () => copyText(briefText(S.sel), "Brief copied"));
 }
 
+function fx(v, d) { return v == null ? null : +v.toFixed(d); }
 function toGeoJSON() {
   const mLat = 111320, mLon = 111320 * Math.cos(D.lat0 * Math.PI / 180);
   const back = (p) => [+(D.lon0 + p[0] / mLon).toFixed(7), +(D.lat0 + p[1] / mLat).toFixed(7)];
   return { type: "FeatureCollection", features: D.ranked.map(g => ({ type: "Feature", geometry: { type: "LineString", coordinates: g.pl.map(back) },
     properties: { rank: g.rank, street: g.title, osm_id: g.street.id, priority: g.cls, score: +g.score.toFixed(1), sun_share: +g.sun.toFixed(3),
-      destinations_100m: g.destCount, lst_c: g.lst != null ? +g.lst.toFixed(2) : null, heat_percentile: g.heatPct != null ? +g.heatPct.toFixed(3) : null,
+      destinations_100m: g.destCount,
+      sun_norm: +g.parts.sun.toFixed(3), dest_norm: +g.parts.dest.toFixed(3), heat_norm: g.parts.heat != null ? +g.parts.heat.toFixed(3) : null,
+      sun_pts: fx(g.pts.sun, 1), dest_pts: fx(g.pts.dest, 1), heat_pts: fx(g.pts.heat, 1),
+      robust_top15: g.robust, weights: `sun ${S.weights.sun} / destinations ${S.weights.dest} / heat ${g.pts.heat != null ? S.weights.heat : "not used"}`, lst_c: g.lst != null ? +g.lst.toFixed(2) : null, heat_percentile: g.heatPct != null ? +g.heatPct.toFixed(3) : null,
       width_m: +g.w.toFixed(1), width_source: g.wsrc, height_m: +g.H.toFixed(1), h_w: +g.hw.toFixed(2), enclosure: g.encl, orientation: g.orient,
       function: g.func, typology: g.typ, typology_name: TYPOLOGY[g.typ].name, self_shaded: g.selfShaded, simulate_first: g.simFlag,
       recommended: g.nbs.filter(t => t.status === "rec").map(t => t.name).join("; "), possible: g.nbs.filter(t => t.status === "pos").map(t => t.name).join("; "),
       analysis_day: S.date, synthetic: D.synthetic } })) };
 }
 function toCSV() {
-  const cols = ["rank", "street", "priority", "score", "sun_share", "destinations_100m", "lst_c", "width_m", "h_w", "enclosure", "orientation", "typology_name", "self_shaded", "simulate_first", "recommended", "possible"];
+  const cols = ["rank", "street", "priority", "score", "sun_norm", "dest_norm", "heat_norm", "sun_pts", "dest_pts", "heat_pts", "robust_top15", "sun_share", "destinations_100m", "lst_c", "width_m", "h_w", "enclosure", "orientation", "typology_name", "self_shaded", "simulate_first", "recommended", "possible"];
   const rows = toGeoJSON().features.map(f => cols.map(c => { const v = f.properties[c]; const s = v == null ? "" : String(v); return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(","));
   return [cols.join(","), ...rows].join("\n");
 }
@@ -1261,11 +1480,12 @@ function briefText(g) {
   return [`UrbanSim street brief: ${g.title}${D.synthetic ? " (synthetic sample data)" : D.sample ? " (sample: Kadıköy, OpenStreetMap)" : ""}`,
     `${clsLabel(g.cls)}, score ${g.score.toFixed(0)}, rank ${g.rank} of ${D.segs.length}. Analysis day ${fmtDate(S.date)}, 09–18 h solar time.`,
     `Profile: ${g.w.toFixed(1)} m wide (${g.wsrc}), buildings ${g.H.toFixed(0)} m, H/W ${g.hw.toFixed(2)} (${g.encl.toLowerCase()} enclosure), ${g.orient}, ${g.func.toLowerCase()}. Typology ${g.typ}: ${TYPOLOGY[g.typ].name}.`,
+    `Weights: sun ${S.weights.sun}, destinations ${S.weights.dest}, surface heat ${g.pts.heat != null ? S.weights.heat : "not used"} (a judgement, not a calibrated model). Score ${g.score.toFixed(0)} = ${["sun", "dest", "heat"].filter(k => g.pts[k] != null).map(k => `${FACTORS[k].short.toLowerCase()} ${g.pts[k].toFixed(0)}`).join(" + ")} points. ${g.robust ? "Stays in the top 15% under all four preset weightings." : "Not in the top 15% under all four preset weightings."}`,
     `Sun on pavements: ${pct(g.sun)} of the day. Destinations within 100 m: ${g.destCount}.${g.lst != null ? ` Surface temperature ${g.lst.toFixed(1)} °C (P${Math.round(g.heatPct * 100)}).` : ""}`,
     `Recommended: ${rec.map(t => `${t.name} (${t.why})`).join(" ") || "none"}`,
     `Possible: ${pos.map(t => t.name).join(", ") || "none"}.`,
     g.simFlag ? "Test with a microclimate model (UTCI or PET) before design." : "",
-    "Screening result only; no temperature reduction is predicted. Method: Lahooti (2026), MSc thesis, Lund University; NBS tools from the World Bank (2021) catalogue."].filter(Boolean).join("\n");
+    "Screening result only; no temperature reduction is estimated. Method: Lahooti (2026), MSc thesis, Lund University; NBS tools from the World Bank (2021) catalogue."].filter(Boolean).join("\n");
 }
 async function save(filename, data) {
   if (STANDALONE) {
@@ -1292,7 +1512,8 @@ async function loadDataset(collections, meta) {
     D = ingest(collections, meta);
     prepare(D); S.sel = null; D.needsFit = true;
     await analyse(true);
-    if (!meta.synthetic) setTab("prio");
+    setLayer("priority");
+    goTop();
   } catch (e) { $("#busy").hidden = true; toast(e.message || "Could not read the file."); }
 }
 async function loadSample() {
@@ -1384,9 +1605,19 @@ canvas.addEventListener("wheel", e => { hideDestTip(); setHoverDest(null);
 $("#zin").onclick = () => { S.view.scale = Math.min(20, S.view.scale * 1.3); draw(); };
 $("#zout").onclick = () => { S.view.scale = Math.max(0.2, S.view.scale / 1.3); draw(); };
 $("#zfit").onclick = () => { fit(); draw(); };
-document.querySelectorAll(".seg button").forEach(b => b.addEventListener("click", () => {
-  S.layer = b.dataset.layer; document.querySelectorAll(".seg button").forEach(x => x.setAttribute("aria-pressed", String(x === b))); renderLegend(); draw();
-}));
+function setLayer(l) {
+  S.layer = l; document.querySelectorAll(".maptools .seg button").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.layer === l))); renderLegend(); draw();
+}
+document.querySelectorAll(".maptools .seg button").forEach(b => b.addEventListener("click", () => setLayer(b.dataset.layer)));
+$("#goTop").addEventListener("click", goTop);
+$("#pane-brief").addEventListener("click", e => { if (e.target.closest("#libAbout")) { e.preventDefault(); openLibDialog(); } });
+$("#closeLib").addEventListener("click", () => $("#libDialog").close());
+$("#pane-prio").addEventListener("click", e => {
+  const p = e.target.closest("[data-preset]");
+  if (p) { const pr = PRESETS.find(x => x.id === p.dataset.preset); S.weights = { ...pr.w }; score(); return; }
+  const b = e.target.closest("[data-seg]");
+  if (b) selectSeg(D.segs[+b.dataset.seg], true);
+});
 $("#shadowsOn").addEventListener("change", e => { S.shadows = e.target.checked; draw(); });
 $("#destOn").addEventListener("change", e => { S.showDest = e.target.checked; renderLegend(); draw(); });
 $("#hour").addEventListener("input", e => { S.hour = +e.target.value; const h = Math.floor(S.hour), m = S.hour % 1 ? "30" : "00"; $("#hourLabel").textContent = `${String(h).padStart(2, "0")}:${m}`; draw(); });
@@ -1404,6 +1635,8 @@ new MutationObserver(() => { readColors(); draw(); }).observe(document.documentE
 (async () => {
   readColors();
   if (window.claude && window.claude.use) { window.claude.use("downloads").then(c => { downloadsCap = c; if (D && D.ranked) renderExport(); }).catch(() => {}); }
+  // sample NBS library (optional: the brief works without it)
+  fetch(LIBRARY_URL).then(r => r.ok ? r.json() : null).then(j => { if (!j) return; LIB = j; if (D && D.ranked) renderBrief(); }).catch(() => {});
   // first frame: sample district
   loadSample();
 })();
