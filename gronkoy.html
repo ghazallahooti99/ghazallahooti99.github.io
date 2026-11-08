@@ -576,6 +576,34 @@
       color: #4a4a4f;
     }
 
+    .booklet-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.8rem;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+    }
+
+    .booklet-download-btn:hover,
+    .booklet-download-btn:focus-visible {
+      opacity: 0.8;
+    }
+
+    .booklet-download-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+    }
+
     /* Thesis details strip */
     .credits-strip {
       border-top: 1px solid var(--border);
@@ -738,6 +766,14 @@
       <p class="project-summary-lead">
         Supporting the Everyday Mobility of Older Adults in Kadıköy, Istanbul
       </p>
+      <a href="thesis-booklet.pdf" download="Ghazal_Lahooti_MSc_Thesis_Booklet.pdf" target="_blank" rel="noopener noreferrer" class="booklet-download-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download Thesis Booklet (PDF, 60 MB)
+      </a>
     </section>
 
     <!-- Metadata Spec Strip -->
