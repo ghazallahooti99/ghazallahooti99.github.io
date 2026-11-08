@@ -174,6 +174,23 @@
       line-height: 1.4;
     }
 
+    /* Primary Hero Visual: whole image, never cropped */
+    .hero-display {
+      width: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      border-bottom: 1px solid var(--border);
+      cursor: zoom-in;
+    }
+
+    .hero-display img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+    }
+
     /* Editorial Project Narrative */
     .narrative-block {
       padding: 4.5rem 3.5rem;
@@ -884,6 +901,11 @@
       </div>
     </div>
 
+    <!-- Primary Hero Visual -->
+    <div class="hero-display" onclick="openLightbox(this)">
+      <img src="gronkoy.jpg" alt="Vision of a shaded tram street on the Green Loop in Kadıköy" />
+    </div>
+
     <!-- ==========================================
          ABSTRACT
          ========================================== -->
@@ -1267,7 +1289,7 @@
     <section class="exposition-section">
       <div class="exposition-header">
         <span>RQ3 · Design Sites, Before &amp; After</span>
-        <span>Figures 08—12</span>
+        <span>Figures 08—11</span>
       </div>
 
       <div class="gallery-grid">
@@ -1308,16 +1330,6 @@
           <div class="figure-body">
             <span class="figure-num">Fig. 11 · F-F Boulevard · Typology 2</span>
             <p>19.2 m wide, H/W 0.9. Parking is removed and the road narrowed to one lane each way. Planted strips with rain gardens and trees join the existing median trees, giving three lines of canopy.</p>
-          </div>
-        </div>
-
-        <div class="figure-card gallery-grid-full" onclick="openLightbox(this)">
-          <div class="figure-img-box">
-            <img src="gronkoy.jpg" alt="Vision of a shaded tram street on the Green Loop in Kadıköy" />
-          </div>
-          <div class="figure-caption">
-            <span>Vision of a shaded tram street on the Green Loop</span>
-            <span class="figure-num">Fig. 12</span>
           </div>
         </div>
       </div>
