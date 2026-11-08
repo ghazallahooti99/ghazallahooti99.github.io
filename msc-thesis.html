@@ -1,0 +1,1509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Context-Specific Nature-Based Framework for Heat Mitigation — M.Sc. Thesis — Ghazal Lahooti</title>
+
+  <style>
+    :root {
+      --bg: #ffffff;
+      --canvas-bg: #f5f5f7;
+      --card-bg: #ffffff;
+      --text-main: #111111;
+      --text-muted: #6e6e73;
+      --text-dim: #8e8e93;
+      --accent: #000000;
+      --border: #e5e5e7;
+      --border-subtle: #eeeeef;
+      --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --font-mono: "SF Mono", "Roboto Mono", Menlo, Consolas, monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--canvas-bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      justify-content: center;
+      padding: 2.5rem 1rem;
+    }
+
+    .project-container {
+      width: 100%;
+      max-width: 1240px;
+      min-height: 100vh;
+      background: var(--bg);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.05);
+      border: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    /* Fixed / Top Navigation */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+
+
+
+    .nav-meta {
+      color: var(--text-muted);
+      display: flex;
+      gap: 1.8rem;
+    }
+
+    .nav-counter {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Hero / Title Header */
+    .header-hero {
+      padding: 4.5rem 3.5rem 3rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .project-classification {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1.4rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .classification-bullet {
+      width: 6px;
+      height: 6px;
+      background: #10b981;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .project-name {
+      font-size: clamp(2.8rem, 6vw, 4.4rem);
+      font-weight: 600;
+      letter-spacing: -0.035em;
+      line-height: 1.05;
+      color: var(--accent);
+      margin-bottom: 1.25rem;
+    }
+
+    .project-name--long {
+      font-size: clamp(2rem, 4.2vw, 3.1rem);
+      line-height: 1.12;
+      max-width: 900px;
+    }
+
+    .project-summary-lead {
+      font-size: 1.15rem;
+      font-weight: 300;
+      color: #4a4a4f;
+      max-width: 820px;
+      line-height: 1.6;
+    }
+
+    /* Specification Data Strip */
+    .spec-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+      background: #fafafa;
+    }
+
+    .spec-cell {
+      padding: 1.5rem 2.2rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+
+    .spec-cell:last-child {
+      border-right: none;
+    }
+
+    .spec-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .spec-value {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--text-main);
+      line-height: 1.4;
+    }
+
+    /* Editorial Project Narrative */
+    .narrative-block {
+      padding: 4.5rem 3.5rem;
+      display: grid;
+      grid-template-columns: 0.85fr 1.75fr;
+      gap: 3.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .narrative-title {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      position: sticky;
+      top: 5rem;
+      font-weight: 500;
+    }
+
+    .narrative-content {
+      min-width: 0;
+      font-size: 0.96rem;
+      color: #333336;
+      line-height: 1.85;
+    }
+
+    .narrative-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .narrative-content strong {
+      color: var(--text-main);
+      font-weight: 600;
+    }
+
+    .narrative-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+
+    .narrative-tag {
+      font-family: var(--font-mono);
+      font-size: 0.66rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.75rem;
+      background: #f2f2f4;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      color: #55555a;
+    }
+
+    /* ============================================================
+       Full-Width Inter-Section Landscape Figure Cards
+       ============================================================ */
+    .section-landscape-break {
+      width: 100%;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Figures always show the whole image inside the layout: never cropped, never zoomed */
+    .landscape-frame {
+      width: 100%;
+      background: var(--bg);
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .landscape-frame img {
+      width: 100%;
+      height: auto;
+      max-height: 85vh;
+      object-fit: contain;
+      display: block;
+    }
+
+    .landscape-caption-strip {
+      padding: 1.1rem 3.5rem;
+      border-top: 1px solid var(--border);
+      background: #fafafa;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: #66666a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-align: left;
+    }
+
+    .landscape-fig-tag {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+    }
+
+    /* Drawings & Exposition Section */
+    .exposition-section {
+      padding: 4.5rem 3.5rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+    }
+
+    .exposition-header {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .gallery-grid-full {
+      grid-column: 1 / -1;
+    }
+
+    .figure-card {
+      background: #fafafa;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      cursor: zoom-in;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .figure-img-box {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: var(--bg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .gallery-grid-full .figure-img-box {
+      aspect-ratio: auto;
+    }
+
+    .figure-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .gallery-grid-full .figure-img-box img {
+      height: auto;
+      max-height: 85vh;
+    }
+
+    .figure-caption {
+      padding: 1.1rem 1.4rem;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      color: #66666a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #ffffff;
+    }
+
+    .figure-num {
+      color: var(--accent);
+      font-weight: 600;
+      white-space: nowrap;
+      margin-left: 1rem;
+    }
+
+    .figure-body .figure-num {
+      white-space: normal;
+      margin-left: 0;
+    }
+
+    /* Interactive Site Studies Slider Section */
+    .slider-gallery-section {
+      padding: 4.5rem 3.5rem 5rem;
+      border-bottom: 1px solid var(--border);
+      background: #ffffff;
+      text-align: left;
+      position: relative;
+    }
+
+    .slider-container-wrap {
+      position: relative;
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .slider-stage {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      border-radius: 2px;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+      width: 100%;
+    }
+
+    .slider-slide {
+      min-width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide-media {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      max-height: 75vh;
+      background: #fafafa;
+      overflow: hidden;
+      cursor: zoom-in;
+    }
+
+    .slide-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .slide-caption-bar {
+      padding: 1rem 1.4rem;
+      background: #ffffff;
+      border-top: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .slider-arrow-btn {
+      position: absolute;
+      top: 45%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(140, 140, 145, 0.75);
+      border: none;
+      border-radius: 2px;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: background 0.2s ease, opacity 0.2s ease;
+    }
+
+    .slider-arrow-btn:hover {
+      background: rgba(40, 40, 45, 0.95);
+    }
+
+    .slider-arrow-btn.prev {
+      left: -65px;
+    }
+
+    .slider-arrow-btn.next {
+      right: -65px;
+    }
+
+    .slider-arrow-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+      stroke-width: 2.2;
+      fill: none;
+    }
+
+    .slider-dots {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0.45rem;
+      margin-top: 1.6rem;
+    }
+
+    .slider-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #d1d1d6;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .slider-dot.active {
+      background: #007aff;
+      transform: scale(1.3);
+    }
+
+    /* Key Numbers Row */
+    .key-figures {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .key-figure {
+      padding: 2.2rem 2.2rem 2.4rem;
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      text-align: left;
+    }
+
+    .key-figure:last-child {
+      border-right: none;
+    }
+
+    .key-value {
+      font-size: 1.9rem;
+      font-weight: 600;
+      letter-spacing: -0.025em;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+
+    .key-label {
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: var(--text-muted);
+    }
+
+    /* Design-site card text */
+    .figure-body {
+      padding: 1.2rem 1.4rem 1.4rem;
+      border-top: 1px solid var(--border);
+      background: #ffffff;
+      flex: 1;
+      text-align: left;
+    }
+
+    .figure-body .figure-num {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.05em;
+      margin-bottom: 0.5rem;
+    }
+
+    .figure-body p {
+      font-size: 0.84rem;
+      line-height: 1.65;
+      color: #4a4a4f;
+    }
+
+    .booklet-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.8rem;
+      background: var(--accent);
+      color: #ffffff;
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2px;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: opacity 0.2s ease;
+    }
+
+    .booklet-download-btn:hover,
+    .booklet-download-btn:focus-visible {
+      opacity: 0.8;
+    }
+
+    .booklet-download-btn svg {
+      width: 13px;
+      height: 13px;
+      stroke: currentColor;
+    }
+
+    /* Thesis details strip */
+    .credits-strip {
+      border-top: 1px solid var(--border);
+    }
+
+    /* Academic structure: research questions, tables, references */
+    .narrative-title small {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: none;
+      color: var(--text-dim);
+    }
+
+    .rq-question {
+      border-left: 2px solid var(--accent);
+      padding-left: 1.2rem;
+      font-style: italic;
+      color: var(--text-main);
+    }
+
+    .rq-list {
+      margin: 0 0 1.5rem 1.2rem;
+    }
+
+    .rq-list li {
+      margin-bottom: 0.6rem;
+    }
+
+    .table-wrap {
+      width: 100%;
+      overflow-x: auto;
+      margin: 0.5rem 0 1.8rem;
+      border: 1px solid var(--border);
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+
+    .data-table th,
+    .data-table td {
+      padding: 0.6rem 0.8rem;
+      border-bottom: 1px solid var(--border);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .data-table th {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--text-muted);
+      background: #fafafa;
+    }
+
+    .data-table td.num,
+    .data-table th.num {
+      text-align: right;
+    }
+
+    .data-table td.num {
+      white-space: nowrap;
+    }
+
+    .data-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .data-table tr.total td {
+      font-weight: 600;
+      background: #fafafa;
+    }
+
+    .data-table tr.total td.num {
+      white-space: normal;
+    }
+
+    .data-table--wide {
+      min-width: 720px;
+    }
+
+    .table-caption {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: #66666a;
+      margin-bottom: 0.4rem;
+    }
+
+    .table-caption b {
+      color: var(--accent);
+    }
+
+    .ref-list {
+      list-style: none;
+      font-size: 0.84rem;
+      line-height: 1.6;
+    }
+
+    .ref-list li {
+      padding-left: 1.5rem;
+      text-indent: -1.5rem;
+      margin-bottom: 0.8rem;
+      overflow-wrap: anywhere;
+    }
+
+    .ref-list a {
+      color: #55555a;
+    }
+
+    .cite-block {
+      font-size: 0.84rem;
+      background: #fafafa;
+      border: 1px solid var(--border);
+      padding: 1rem 1.2rem;
+    }
+
+    /* Bottom Project Pagination */
+    .project-footer-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #fafafa;
+    }
+
+    .nav-pane {
+      padding: 3rem 3.5rem;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: background 0.2s ease;
+    }
+
+    .nav-pane:first-child {
+      border-right: 1px solid var(--border);
+    }
+
+    .nav-pane:hover {
+      background: #f0f0f2;
+    }
+
+    .nav-pane.next {
+      text-align: right;
+      align-items: flex-end;
+    }
+
+    .pane-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.4rem;
+      font-weight: 500;
+    }
+
+    .pane-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.01em;
+    }
+
+    /* Lightbox Modal */
+    .lightbox-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 15, 18, 0.94);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 2.5rem;
+      cursor: zoom-out;
+    }
+
+    .lightbox-modal.active {
+      display: flex;
+    }
+
+    .lightbox-modal img {
+      max-width: 92vw;
+      max-height: 88vh;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Responsive Adaptation */
+    @media (max-width: 940px) {
+      .slider-arrow-btn.prev { left: 0.6rem; }
+      .slider-arrow-btn.next { right: 0.6rem; }
+    }
+
+    @media (max-width: 860px) {
+      body { padding: 0; }
+      .project-container {
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+      }
+      .top-nav, .header-hero, .narrative-block, .landscape-caption-strip, .exposition-section, .slider-gallery-section, .nav-pane {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+      }
+      .spec-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .key-figures {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .key-figure:nth-child(2) { border-right: none; }
+      .key-figure:nth-child(1), .key-figure:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .key-figure { padding: 1.5rem; }
+      .key-value { font-size: 1.5rem; }
+      .spec-cell:nth-child(2) { border-right: none; }
+      .spec-cell:nth-child(1), .spec-cell:nth-child(2) { border-bottom: 1px solid var(--border); }
+      .narrative-block {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .narrative-title { position: static; }
+      .gallery-grid { grid-template-columns: 1fr; }
+      .landscape-caption-strip { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+      .project-footer-nav { grid-template-columns: 1fr; }
+      .nav-pane:first-child {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      .nav-pane.next {
+        text-align: left;
+        align-items: flex-start;
+      }
+    }
+
+    /* Back button: shared by every sub-page, keep identical */
+    .back-link {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-family: Arial, Helvetica, sans-serif; font-size: 0.72rem; letter-spacing: 0.15em;
+      text-transform: uppercase; font-weight: bold; line-height: 1;
+      color: #1b1b1b; text-decoration: none; transition: opacity 0.2s ease;
+    }
+    .back-link:hover { opacity: 0.6; color: #1b1b1b; }
+    .back-link svg { width: 14px; height: 14px; stroke: currentColor; stroke-width: 2; fill: none; flex: 0 0 14px; }
+  </style>
+</head>
+<body>
+
+  <main class="project-container">
+    
+    <!-- Top Nav Strip -->
+    <header class="top-nav">
+      <a href="index.html#projects" class="back-link">
+        <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        Back to Projects
+      </a>
+      <div class="nav-meta">
+        <span>Ghazal Lahooti</span>
+        <span class="nav-counter">01 / 10</span>
+      </div>
+    </header>
+
+    <!-- Project Title Header -->
+    <section class="header-hero">
+      <div class="project-classification">
+        <span class="classification-bullet"></span>
+        <span>M.Sc. Thesis · Sustainable Urban Design · Lund University</span>
+      </div>
+      <h1 class="project-name project-name--long">A Context-Specific Nature-Based Framework for Heat Mitigation</h1>
+      <p class="project-summary-lead">
+        Supporting the Everyday Mobility of Older Adults in Kadıköy, Istanbul
+      </p>
+      <a href="thesis-booklet.pdf" download="Ghazal_Lahooti_MSc_Thesis_Booklet.pdf" target="_blank" rel="noopener noreferrer" class="booklet-download-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Download Thesis Booklet (PDF, 60 MB)
+      </a>
+    </section>
+
+    <!-- Metadata Spec Strip -->
+    <div class="spec-strip">
+      <div class="spec-cell">
+        <span class="spec-label">Programme</span>
+        <span class="spec-value">M.Sc. Sustainable Urban Design · LTH, Lund University</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Study Area</span>
+        <span class="spec-value">Caferağa &amp; Osmanağa, Kadıköy, Istanbul</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Methods &amp; Tools</span>
+        <span class="spec-value">Google Earth Engine · QGIS · Rhino / Grasshopper · Ladybug</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Status</span>
+        <span class="spec-value">Defended · October 2026</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         ABSTRACT
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">Abstract</div>
+      <div class="narrative-content">
+        <p>
+          Nature-Based Solutions (NBS) are widely promoted to mitigate urban heat, but in practice they are often reduced to generic tree planting, with little attention to whether dense streets can hold trees or whom the cooling should serve. This thesis asks how NBS can be contextualised to mitigate urban heat while supporting the everyday mobility of an ageing population, using Kadıköy, the Istanbul district with the largest older population, as a case study.
+        </p>
+        <p>
+          Ten summers of Landsat land surface temperature, demographic data and urban morphology were used to locate priority areas. The everyday destinations of older adults were then mapped and connected into a priority walking network, the Green Loop. Ten street sections along it were surveyed and simulated for direct sun, and grouped into four typologies. A five-step filter of the World Bank's NBS catalogue produced a toolbox of seven street-scale tools, which was applied to four design sites.
+        </p>
+        <p>
+          The thesis contributes a transferable framework in which <strong>the social context decides where to intervene and the physical context decides how</strong>. It shifts the unit of prioritisation from the neighbourhood where vulnerable people live to the network of streets where they walk, wait and rest.
+        </p>
+        <div class="narrative-tags">
+          <span class="narrative-tag">Urban Heat Island</span>
+          <span class="narrative-tag">Nature-Based Solutions</span>
+          <span class="narrative-tag">Older Adults</span>
+          <span class="narrative-tag">Everyday Mobility</span>
+          <span class="narrative-tag">Outdoor Thermal Comfort</span>
+          <span class="narrative-tag">Research by Design</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Graphical abstract -->
+    <div class="section-landscape-break">
+      <div class="landscape-frame" onclick="openLightbox(this)">
+        <img src="kadikoy-green-loop-schematic.jpg" alt="Schematic of the Green Loop: everyday destinations as anchors linked by shaded routes" />
+      </div>
+      <div class="landscape-caption-strip">
+        <span>The Green Loop: everyday destinations as anchors and the shaded routes along Bahariye, Moda and Söğütlüçeşme Caddesi that connect them (schematic). Source: author.</span>
+        <span class="landscape-fig-tag">Fig. 01</span>
+      </div>
+    </div>
+
+    <!-- Key Numbers -->
+    <div class="key-figures">
+      <div class="key-figure">
+        <span class="key-value">20.9%</span>
+        <span class="key-label">of Kadıköy's residents are aged 65+ (96,252 people), the largest older population of any Istanbul district</span>
+      </div>
+      <div class="key-figure">
+        <span class="key-value">82 of 122</span>
+        <span class="key-label">everyday destinations lie within 100 m of the Green Loop, and 109 within 200 m</span>
+      </div>
+      <div class="key-figure">
+        <span class="key-value">4 of 14</span>
+        <span class="key-label">World Bank NBS families cool at pedestrian level and fit dense urban fabric</span>
+      </div>
+      <div class="key-figure">
+        <span class="key-value">2% → 35%</span>
+        <span class="key-label">share of street width given to planting and permeable surfaces across the four design sections</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         01: Problem & Research Gap
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">01 / Problem &amp; Research Gap</div>
+      <div class="narrative-content">
+        <p>
+          The Mediterranean is warming about 20% faster than the global average (MedECC, 2020), and urban heat islands intensify during heatwaves (Li &amp; Bou-Zeid, 2013). Older adults are among the most heat-vulnerable groups, and because many depend on walking to reach nearby destinations (Rosso et al., 2011), their exposure happens largely in the street: while walking, waiting and resting.
+        </p>
+        <p>
+          The cooling effect of NBS depends on mechanism, quantity and setting (Bowler et al., 2010; Coutts et al., 2016), yet “few frameworks for NBS address implementation”, and NBS need to be “adapted to site-specific societal challenges” (Wickenberg et al., 2021). Prioritisation frameworks combine heat with vulnerability, but define vulnerability by where people live (Norton et al., 2015). Istanbul's Climate Change Action Plan frames heat mitigation largely as tree planting (İBB, 2021).
+        </p>
+        <p>
+          A review of policy and research in Türkiye shows two gaps. A <strong>gap of scale</strong>: policy works at the scale of the city, district or large park, and research either models the whole city or tests single elements, leaving the street unaddressed as a unit of intervention. A <strong>gap of focus</strong>: existing work rarely asks whose exposure is being reduced, or in which spaces of everyday life it occurs. The thesis addresses both by taking the street as the unit of intervention and the everyday routes of older adults as the basis for prioritisation.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         02: Research Questions & Case
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">02 / Research Questions &amp; Case</div>
+      <div class="narrative-content">
+        <p class="rq-question">
+          How can Nature-Based Solutions be contextualised to mitigate urban heat while supporting the everyday mobility of an ageing population?
+        </p>
+        <ol class="rq-list">
+          <li><strong>RQ1.</strong> Where should urban cooling be prioritised when patterns of urban heat are considered alongside the everyday destinations and walking routes of older adults?</li>
+          <li><strong>RQ2.</strong> How do local spatial and environmental conditions influence the selection and adaptation of NBS?</li>
+          <li><strong>RQ3.</strong> How can context-specific NBS be integrated into a connected cooling network that supports everyday mobility?</li>
+        </ol>
+        <p>
+          <strong>Case.</strong> Kadıköy, on the Anatolian side of Istanbul, combines the city's largest older population, a diverse urban fabric and a dense historic centre where everyday destinations concentrate and walking is the main way to get around. The aim is not a universal catalogue of interventions, but a process that can be transferred to other districts, cities and heat-vulnerable groups.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         03: Methodology
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">03 / Methodology</div>
+      <div class="narrative-content">
+        <p>
+          A multi-scalar, research-by-design methodology that combines spatial and environmental analysis, demographic data, field observation, an exploratory interview and design exploration, and moves across five scales, from district to site. The first three stages use the social context to decide <em>where</em>; the last two use the physical context to decide <em>how</em>.
+        </p>
+        <p>
+          <strong>1. Locate priority areas (district).</strong> Landsat 8/9 surface temperature for June–August 2016–2025 was processed in Google Earth Engine into a ten-year median and classified by percentile. Hotspots were read against land use, urban form and the share of residents aged 65+, and thirteen urban morphologies were identified. Output: selection of Caferağa and Osmanağa.
+        </p>
+        <p>
+          <strong>2. Map everyday destinations (neighbourhood).</strong> An exploratory interview with Medipol University students who had studied older adults' use of public space defined the destination types; 124 destinations were then mapped from OpenStreetMap in QGIS.
+        </p>
+        <p>
+          <strong>3. Identify the priority network.</strong> Destination clusters became anchors and the streets linking them priority routes; distance to the network was measured in QGIS. Output: the Green Loop.
+        </p>
+        <p>
+          <strong>4. Contextualise NBS (street).</strong> Ten sections along the loop were surveyed for building height, street width, enclosure (H/W), orientation, street function, planting capacity and existing vegetation, and direct sun on pedestrian space was simulated in Ladybug for 23 July 2025, a representative extreme-heat day. The World Bank catalogue was filtered in five steps. Output: four typologies and seven tools.
+        </p>
+        <p>
+          <strong>5. Integrate into design (site).</strong> The tools were applied to the most sun-exposed section of each typology, and before-and-after sections compared the allocation of street width.
+        </p>
+      </div>
+    </section>
+
+    <div class="section-landscape-break">
+      <div class="landscape-frame" onclick="openLightbox(this)">
+        <img src="gronkoy-method.jpg" alt="Five-stage research framework" />
+      </div>
+      <div class="landscape-caption-strip">
+        <span>Research framework: the social context decides where to intervene, the physical context decides how.</span>
+        <span class="landscape-fig-tag">Fig. 02</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         04: Results · RQ1, step 1: district screening
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">04 / Results<small>RQ1 · Where to prioritise cooling</small><small>Step 1 · District: surface heat and urban morphologies</small></div>
+      <div class="narrative-content">
+        <p>
+          <strong>Heat follows urban form, not land use.</strong> The ten-year median LST map (Fig. 03) shows that surface heat in Kadıköy is associated less with particular land uses than with recurring urban morphologies. Thirteen morphologies were identified through visual interpretation of the LST maps overlaid with satellite imagery and OpenStreetMap building footprints, and a sample of each was drawn as a figure-ground fingerprint at the same scale (Fig. 04), each combining heat drivers in a different way.
+        </p>
+        <p>
+          <strong>The hottest places are not where older adults walk.</strong> The most intense heat sits on large single-use sites (transport corridors, the port, brownfield land, sports and commercial complexes, campuses), which rarely form part of older adults' everyday walking. Informal dense and high-rise residential fabric is hot but houses comparatively few older adults. The planned medium-rise south-east houses the largest older population but is cooler, with private gardens and more continuous canopy. These morphologies were excluded.
+        </p>
+      </div>
+    </section>
+
+    <section class="exposition-section">
+      <div class="exposition-header">
+        <span>Step 1 · District Screening</span>
+        <span>Figures 03—04</span>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="figure-card gallery-grid-full" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="kadikoy-lst-morphologies.jpg" alt="Summer land surface temperature across Kadıköy, with the thirteen numbered morphology sample locations" />
+          </div>
+          <div class="figure-caption">
+            <span>Summer land surface temperature across Kadıköy, with the locations of the thirteen morphology samples (Landsat 8 and 9, Google Earth Engine, QGIS)</span>
+            <span class="figure-num">Fig. 03</span>
+          </div>
+        </div>
+
+        <div class="figure-card gallery-grid-full" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-morphologies.jpg" alt="Thirteen urban morphologies of Kadıköy" />
+          </div>
+          <div class="figure-caption">
+            <span>Thirteen urban morphologies of Kadıköy, drawn as figure-ground fingerprints at the same scale; numbers match Fig. 03</span>
+            <span class="figure-num">Fig. 04</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         04: Results · RQ1, step 2: site selection
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">04 / Results<small>RQ1 · Where to prioritise cooling</small><small>Step 2 · Site: Caferağa and Osmanağa</small></div>
+      <div class="narrative-content">
+        <p>
+          <strong>The site was chosen from the morphology analysis.</strong> What remained after the exclusions was the historic compact fabric and traditional commercial streets of Caferağa and Osmanağa. They combine three conditions:
+        </p>
+        <ol class="rq-list">
+          <li><strong>Destinations.</strong> As Kadıköy's commercial and transport centre, they concentrate markets, shops, services, cafés and places of worship, with the main ferry, tram, metro and bus connections. They were selected for the destinations they contain, which serve older adults from the surrounding neighbourhoods as well, not for their resident population.</li>
+          <li><strong>Walking.</strong> Their organically grown, pedestrian-scaled street network keeps walking central to everyday movement, although most streets are now shared with vehicles.</li>
+          <li><strong>Heat and constraint.</strong> They show elevated surface heat with extensive sealed surfaces and little vegetation, while narrow streets, heritage and underground utilities limit generic tree planting. This makes them both a priority for cooling and a demanding test case.</li>
+        </ol>
+        <p>
+          The photographs below show the frequently walked streets of the site, surveyed in February 2026 (deciduous trees without leaves).
+        </p>
+      </div>
+    </section>
+
+    <!-- Site Survey Slider -->
+    <section class="slider-gallery-section">
+      <div class="exposition-header">
+        <span>Site · Frequently Walked Streets, February 2026</span>
+        <span id="sliderCounter">01 / 04</span>
+      </div>
+
+      <div class="slider-container-wrap">
+        <button class="slider-arrow-btn prev" id="sliderPrevBtn" aria-label="Previous image">
+          <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+        <button class="slider-arrow-btn next" id="sliderNextBtn" aria-label="Next image">
+          <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"></polyline></svg>
+        </button>
+
+        <div class="slider-stage">
+          <div class="slider-track" id="sliderTrack">
+            <div class="slider-slide">
+              <div class="slide-media" onclick="openLightbox(this)">
+                <img src="gronkoy-site-1.jpg" alt="Section A-A, pedestrian–tram corridor, Kadıköy" />
+              </div>
+              <div class="slide-caption-bar">Section A-A, pedestrian–tram corridor. Site survey, February 2026; pedestrian space highlighted. Photograph: author.</div>
+            </div>
+
+            <div class="slider-slide">
+              <div class="slide-media" onclick="openLightbox(this)">
+                <img src="gronkoy-site-2.jpg" alt="Section C-C, mixed tram street, Kadıköy" />
+              </div>
+              <div class="slide-caption-bar">Section C-C, mixed tram street. Site survey, February 2026; pedestrian space highlighted. Photograph: author.</div>
+            </div>
+
+            <div class="slider-slide">
+              <div class="slide-media" onclick="openLightbox(this)">
+                <img src="gronkoy-site-3.jpg" alt="Section E-E, parking-dominated street, Kadıköy" />
+              </div>
+              <div class="slide-caption-bar">Section E-E, parking-dominated street. Site survey, February 2026; pedestrian space highlighted. Photograph: author.</div>
+            </div>
+
+            <div class="slider-slide">
+              <div class="slide-media" onclick="openLightbox(this)">
+                <img src="gronkoy-site-4.jpg" alt="Section F-F, boulevard, Kadıköy" />
+              </div>
+              <div class="slide-caption-bar">Section F-F, boulevard. Site survey, February 2026; pedestrian space highlighted. Photograph: author.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="slider-dots" id="sliderDots"></div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         04: Results · RQ1, step 3: destinations and the Green Loop
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">04 / Results<small>RQ1 · Where to prioritise cooling</small><small>Step 3 · Network: everyday destinations and the Green Loop</small></div>
+      <div class="narrative-content">
+        <p>
+          <strong>From where older adults live to where they go.</strong> Within the site, 124 everyday destinations were mapped (Fig. 05): pharmacies, markets, bakeries, healthcare facilities, traditional teahouses, mosques and parks. They are not evenly spread: they cluster around the commercial core and along a few main streets leading south towards Moda.
+        </p>
+        <p>
+          <strong>A small network serves most trips.</strong> These clusters became anchors, and the streets linking them, Bahariye, Moda and Söğütlüçeşme Caddesi, became the Green Loop (Fig. 06). It passes within 100 m of two-thirds of the 122 non-park destinations, a walk of about two minutes at an older adult's pace (Table 1). Cooling should therefore be prioritised where elevated heat coincides with these destinations and routes, not where surface heat peaks.
+        </p>
+        <p class="table-caption"><b>Table 1.</b> Everyday destinations by distance to the Green Loop.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Destination type</th><th class="num">Total</th><th class="num">Within 100 m</th><th class="num">Within 200 m</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Pharmacies</td><td class="num">39</td><td class="num">24 (62%)</td><td class="num">36 (92%)</td></tr>
+              <tr><td>Markets</td><td class="num">35</td><td class="num">25 (71%)</td><td class="num">32 (91%)</td></tr>
+              <tr><td>Bakeries</td><td class="num">19</td><td class="num">14 (74%)</td><td class="num">18 (95%)</td></tr>
+              <tr><td>Healthcare facilities</td><td class="num">15</td><td class="num">13 (87%)</td><td class="num">14 (93%)</td></tr>
+              <tr><td>Traditional teahouses</td><td class="num">8</td><td class="num">4 (50%)</td><td class="num">7 (88%)</td></tr>
+              <tr><td>Mosques</td><td class="num">6</td><td class="num">2 (33%)</td><td class="num">2 (33%)</td></tr>
+              <tr class="total"><td>All destinations</td><td class="num">122</td><td class="num">82 (67%)</td><td class="num">109 (89%)</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section class="exposition-section">
+      <div class="exposition-header">
+        <span>Step 3 · Destinations to Network</span>
+        <span>Figures 05—06</span>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-destinations.jpg" alt="Everyday destinations of older adults in Caferağa and Osmanağa" />
+          </div>
+          <div class="figure-caption">
+            <span>124 everyday destinations in Caferağa and Osmanağa (OpenStreetMap, QGIS)</span>
+            <span class="figure-num">Fig. 05</span>
+          </div>
+        </div>
+
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-green-loop.jpg" alt="The Green Loop connecting everyday destinations" />
+          </div>
+          <div class="figure-caption">
+            <span>The Green Loop along Bahariye, Moda and Söğütlüçeşme Caddesi, connecting the destination clusters</span>
+            <span class="figure-num">Fig. 06</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         04: Results · RQ2
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">04 / Results<small>RQ2 · How local conditions shape NBS</small></div>
+      <div class="narrative-content">
+        <p>
+          <strong>Enclosure alone does not predict exposure.</strong> Section A-A is enclosed (H/W 1.7), yet it was among the most sun-exposed because its north–south orientation admits the midday sun. The very narrow east–west D-D (H/W 2.3) stayed largely shaded. Orientation and enclosure have to be read together, and the self-shaded sections D-D and J-J were not prioritised for intervention.
+        </p>
+        <p>
+          <strong>Four typologies make the differences operational</strong> (Table 2). In enclosed tram streets, tram infrastructure rules out most in-ground planting; in wide open streets, comfort depends on completing the canopy; in car-shared streets, parking is the main reserve for planting; in pedestrian streets, narrow widths and market activity call for overhead and vertical greening.
+        </p>
+        <p class="table-caption"><b>Table 2.</b> The four street typologies along the Green Loop and their design response. Sun exposure of pedestrian space on 23 July 2025.</p>
+        <div class="table-wrap">
+          <table class="data-table data-table--wide">
+            <thead>
+              <tr><th>Typology</th><th>Sections · sun exposure</th><th>H/W</th><th>Main condition</th><th>Design response</th><th>Design site</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><strong>1</strong> Enclosed tram streets</td><td>A-A high · C-C medium–high · D-D low</td><td>1.5–2.3</td><td>Tram tracks, overhead lines and narrow pavements limit in-ground planting</td><td>Trees in planter boxes; tree with bench where the ground allows; vegetated pergolas at tram stops; climbing plants</td><td>A-A, C-C</td></tr>
+              <tr><td><strong>2</strong> Wide open streets</td><td>F-F high · B-B medium</td><td>0.45–0.94</td><td>Little building shade; comfort depends on canopy continuity</td><td>Trees and rain gardens in former parking lanes; benches under trees; climbing plants</td><td>F-F</td></tr>
+              <tr><td><strong>3</strong> Enclosed car-shared streets</td><td>E-E high · G-G high</td><td>1.3–1.8</td><td>Edges occupied by parking; no vegetation; extensive asphalt</td><td>Parking reallocated to planted strips with trees and benches; climbing plants; permeable surfaces</td><td>E-E</td></tr>
+              <tr><td><strong>4</strong> Pedestrian streets and squares</td><td>H-H high · I-I high · J-J low</td><td>0.3–1.5</td><td>Intensive pedestrian use; little room for trees; squares open to the sun</td><td>Pergolas along frontages; trees in planter boxes or in the ground in squares; climbing plants; permeable surfaces</td><td>Guidance only</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          <strong>General catalogues need filtering.</strong> Only four of the World Bank's fourteen NBS families cool through processes that act at pedestrian level and fit dense urban fabric (Table 3). From them, seven street-scale tools were derived: four directly from the catalogue, and three (tree in planter box, tree with bench, vegetated pergola) adapted to the constraints of the study area. Shade is the primary goal, because mean radiant temperature dominates daytime heat stress for pedestrians.
+        </p>
+        <p class="table-caption"><b>Table 3.</b> Five-step selection of NBS families from the World Bank (2021) catalogue.</p>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead>
+              <tr><th>Step</th><th>Criterion</th><th class="num">Families retained</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>1 · Function</td><td>Regulates heat</td><td class="num">10 of 14</td></tr>
+              <tr><td>2 · Process</td><td>Cools through shade and/or evapotranspiration</td><td class="num">8 of 10</td></tr>
+              <tr><td>3 · Scale and area</td><td>Neighbourhood scale, small area</td><td class="num">7 of 8</td></tr>
+              <tr><td>4 · Urban density</td><td>Suitable for high density</td><td class="num">3 of 7</td></tr>
+              <tr class="total"><td>5 · Benefit</td><td>Building Solutions, Open Green Spaces, Green Corridors (primary) + Bioretention Areas (supporting)</td><td class="num">4 families → 7 tools</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-landscape-break">
+      <div class="landscape-frame" onclick="openLightbox(this)">
+        <img src="gronkoy-toolbox.jpg" alt="The seven tools of the NBS toolbox in section and plan" />
+      </div>
+      <div class="landscape-caption-strip">
+        <span>The NBS toolbox: seven street-scale tools derived from the World Bank's Catalogue of Nature-Based Solutions, shown in section and plan.</span>
+        <span class="landscape-fig-tag">Fig. 07</span>
+      </div>
+    </div>
+
+    <!-- ==========================================
+         04: Results · RQ3
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">04 / Results<small>RQ3 · A connected cooling network</small></div>
+      <div class="narrative-content">
+        <p>
+          <strong>Four actions set an order of priority.</strong> <strong>Anchor</strong> provides shade first where older adults wait and rest at key destinations. <strong>Cool</strong> improves the immediate surroundings of each anchor. <strong>Connect</strong> links the anchors with continuous shaded routes. <strong>Expand</strong> extends the network into residential side streets over time.
+        </p>
+        <p>
+          <strong>The network is built from repeated, condition-specific responses</strong> rather than a single uniform intervention. Each design site tests one typology, and its response transfers to the other sections of the same typology and, later, to the side streets. Where trees cannot be planted, climbing plants, pergolas and planter boxes take their place, so cooling is not abandoned in the narrow streets where older adults often walk. Across the four sections, the share of street width given to planting and permeable surfaces rises from 2% to 35%.
+        </p>
+      </div>
+    </section>
+
+    <section class="exposition-section">
+      <div class="exposition-header">
+        <span>RQ3 · Design Sites, Before &amp; After</span>
+        <span>Figures 08—12</span>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-section-aa.jpg" alt="Section A-A before and after intervention" />
+          </div>
+          <div class="figure-body">
+            <span class="figure-num">Fig. 08 · A-A Pedestrian–Tram Corridor · Typology 1</span>
+            <p>12.5 m wide, H/W 1.7. Pavements split into 1.8 m walking zones and 2.7 m planted zones. Trees in planter boxes sit over the tram infrastructure, with one in-ground tree and bench and climbing plants on both façades.</p>
+          </div>
+        </div>
+
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-section-cc.jpg" alt="Section C-C before and after intervention" />
+          </div>
+          <div class="figure-body">
+            <span class="figure-num">Fig. 09 · C-C Mixed Tram Street · Typology 1</span>
+            <p>10 m wide, H/W 1.5. The traffic lane is narrowed to 2.4 m so that one pavement widens to 2.6 m for planter-box trees. A vegetated pergola shades the tram stop where older adults wait.</p>
+          </div>
+        </div>
+
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-section-ee.jpg" alt="Section E-E before and after intervention" />
+          </div>
+          <div class="figure-body">
+            <span class="figure-num">Fig. 10 · E-E Parking-Dominated Street · Typology 3</span>
+            <p>13.5 m wide, H/W 1.3. On-street parking becomes two 2.7 m planted strips with trees, benches and permeable surfaces, and a 3.3 m carriageway is kept for access.</p>
+          </div>
+        </div>
+
+        <div class="figure-card" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy-section-ff.jpg" alt="Section F-F before and after intervention" />
+          </div>
+          <div class="figure-body">
+            <span class="figure-num">Fig. 11 · F-F Boulevard · Typology 2</span>
+            <p>19.2 m wide, H/W 0.9. Parking is removed and the road narrowed to one lane each way. Planted strips with rain gardens and trees join the existing median trees, giving three lines of canopy.</p>
+          </div>
+        </div>
+
+        <div class="figure-card gallery-grid-full" onclick="openLightbox(this)">
+          <div class="figure-img-box">
+            <img src="gronkoy.jpg" alt="Vision of a shaded tram street on the Green Loop in Kadıköy" />
+          </div>
+          <div class="figure-caption">
+            <span>Vision of a shaded tram street on the Green Loop</span>
+            <span class="figure-num">Fig. 12</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         05: Discussion & Contribution
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">05 / Discussion &amp; Contribution</div>
+      <div class="narrative-content">
+        <p>
+          <strong>Relation to the literature.</strong> The solar analysis confirms that deep, narrow streets self-shade (Ali-Toudert &amp; Mayer, 2006; Johansson, 2006) and that added tree shade matters most where streets are open and exposed (Coutts et al., 2016). It qualifies the finding that east–west streets in Istanbul are the most heat-stressed (Sarı et al., 2025): orientation predicts exposure only together with enclosure. The design process also showed that existing assets count: the already shaded surroundings of the Caferağa Mosque were given lower priority, so the loop does not need continuous new intervention.
+        </p>
+        <p>
+          <strong>Contribution.</strong> First, the framework extends heat-vulnerability prioritisation (Norton et al., 2015) from where vulnerable people live to where they walk, wait and rest. This shift is supported by evidence from Barcelona that proximity to cool places does not guarantee older adults can reach them (Meza et al., 2026). Second, it links the selection of NBS to the measurable conditions of each street, offering an alternative to the generic tree planting that dominates current policy in Istanbul. The catalogue analysis shows why a context-specific toolbox, rather than a general catalogue, is needed.
+        </p>
+        <p>
+          <strong>Transferability.</strong> The framework transfers as a process, not as a set of designs: screen surface heat with free satellite data, separate hotspots in lived-in fabric from those on single-use sites, map the destinations of the group in question, connect them into a network, classify its streets and select NBS by cooling process and fit. The social lens can change: schools and playgrounds for children, transport stops and workplaces for outdoor workers, accessible routes and resting points for people with disabilities.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         06: Limitations & Future Research
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">06 / Limitations &amp; Future Research</div>
+      <div class="narrative-content">
+        <p>
+          <strong>Limitations.</strong> The cooling performance of the designs was not simulated; expected effects rest on mechanisms and evidence from the literature. Land surface temperature describes surfaces rather than what pedestrians feel, and the sun analysis covers one representative day rather than the whole summer. Destination types came from an exploratory interview rather than from older residents themselves. Anthropogenic heat from traffic, and the maintenance and irrigation demand of the planting, were outside the scope.
+        </p>
+        <p>
+          <strong>Future research.</strong>
+        </p>
+        <ol class="rq-list">
+          <li><strong>Performance.</strong> The cooling performance of the designs should be tested through microclimate simulation or field measurement, using indices such as PET or UTCI.</li>
+          <li><strong>Lived experience.</strong> Older adults themselves should be involved in identifying their routes, resting places and experiences of heat, and the mapped destinations verified through participatory mapping and accompanied walks.</li>
+          <li><strong>Transfer.</strong> Other districts of Istanbul, and other dense Mediterranean cities with ageing populations and historic street networks, could follow the same sequence, with the social lens changed to other heat-vulnerable groups.</li>
+          <li><strong>Viability.</strong> The maintenance and irrigation demand of the proposed planting, on which the long-term viability of the toolbox depends during increasingly dry summers, remains to be assessed.</li>
+        </ol>
+        <p>
+          I am currently developing the screening stages of this framework into <a href="urbansim.html">UrbanSim</a>, a heat-screening tool for planners.
+        </p>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         References & Citation
+         ========================================== -->
+    <section class="narrative-block">
+      <div class="narrative-title">Selected References</div>
+      <div class="narrative-content">
+        <ul class="ref-list">
+          <li>Ali-Toudert, F., &amp; Mayer, H. (2006). Numerical study on the effects of aspect ratio and orientation of an urban street canyon on outdoor thermal comfort in hot and dry climate. <em>Building and Environment</em>, 41(2), 94–108. <a href="https://doi.org/10.1016/j.buildenv.2005.01.013" target="_blank" rel="noopener noreferrer">doi:10.1016/j.buildenv.2005.01.013</a></li>
+          <li>Bowler, D. E., Buyung-Ali, L., Knight, T. M., &amp; Pullin, A. S. (2010). Urban greening to cool towns and cities: A systematic review of the empirical evidence. <em>Landscape and Urban Planning</em>, 97(3), 147–155. <a href="https://doi.org/10.1016/j.landurbplan.2010.05.006" target="_blank" rel="noopener noreferrer">doi:10.1016/j.landurbplan.2010.05.006</a></li>
+          <li>Coutts, A. M., White, E. C., Tapper, N. J., Beringer, J., &amp; Livesley, S. J. (2016). Temperature and human thermal comfort effects of street trees across three contrasting street canyon environments. <em>Theoretical and Applied Climatology</em>, 124(1–2), 55–68. <a href="https://doi.org/10.1007/s00704-015-1409-y" target="_blank" rel="noopener noreferrer">doi:10.1007/s00704-015-1409-y</a></li>
+          <li>İstanbul Büyükşehir Belediyesi [İBB]. (2021). <em>İstanbul iklim değişikliği eylem planı</em> [Istanbul climate change action plan]. İstanbul Büyükşehir Belediyesi.</li>
+          <li>Johansson, E. (2006). Influence of urban geometry on outdoor thermal comfort in a hot dry climate: A study in Fez, Morocco. <em>Building and Environment</em>, 41(10), 1326–1338. <a href="https://doi.org/10.1016/j.buildenv.2005.05.022" target="_blank" rel="noopener noreferrer">doi:10.1016/j.buildenv.2005.05.022</a></li>
+          <li>Li, D., &amp; Bou-Zeid, E. (2013). Synergistic interactions between urban heat islands and heat waves: The impact in cities is larger than the sum of its parts. <em>Journal of Applied Meteorology and Climatology</em>, 52(9), 2051–2064. <a href="https://doi.org/10.1175/JAMC-D-13-02.1" target="_blank" rel="noopener noreferrer">doi:10.1175/JAMC-D-13-02.1</a></li>
+          <li>MedECC. (2020). <em>Climate and environmental change in the Mediterranean Basin – Current situation and risks for the future.</em> First Mediterranean Assessment Report (W. Cramer, J. Guiot, &amp; K. Marini, Eds.). Union for the Mediterranean, Plan Bleu, UNEP/MAP.</li>
+          <li>Meza, S., Arellano, B., &amp; Roca, J. (2026). Beyond proximity: Uncovering accessibility inequities in Barcelona's climate shelters network for the summer of 2023. <em>Journal of Urban Mobility</em>, 9, 100175. <a href="https://doi.org/10.1016/j.urbmob.2025.100175" target="_blank" rel="noopener noreferrer">doi:10.1016/j.urbmob.2025.100175</a></li>
+          <li>Norton, B. A., Coutts, A. M., Livesley, S. J., Harris, R. J., Hunter, A. M., &amp; Williams, N. S. G. (2015). Planning for cooler cities: A framework to prioritise green infrastructure to mitigate high temperatures in urban landscapes. <em>Landscape and Urban Planning</em>, 134, 127–138. <a href="https://doi.org/10.1016/j.landurbplan.2014.10.018" target="_blank" rel="noopener noreferrer">doi:10.1016/j.landurbplan.2014.10.018</a></li>
+          <li>Rosso, A. L., Auchincloss, A. H., &amp; Michael, Y. L. (2011). The urban built environment and mobility in older adults: A comprehensive review. <em>Journal of Aging Research</em>, 2011, 816106. <a href="https://doi.org/10.4061/2011/816106" target="_blank" rel="noopener noreferrer">doi:10.4061/2011/816106</a></li>
+          <li>Sarı, E. N., Nouri, A. S., Ekşi, M., &amp; Matzarakis, A. (2025). Assessing thermo-physiological effects of different tree species within the inner regions of the urban canyon; confronting in-situ extreme heat stress in Istanbul during the El-Niño summer of 2023. <em>International Journal of Biometeorology</em>, 69(7), 1663–1686. <a href="https://doi.org/10.1007/s00484-025-02922-7" target="_blank" rel="noopener noreferrer">doi:10.1007/s00484-025-02922-7</a></li>
+          <li>Wickenberg, B., McCormick, K., &amp; Alkan Olsson, J. (2021). Advancing the implementation of nature-based solutions in cities: A review of frameworks. <em>Environmental Science &amp; Policy</em>, 125, 44–53. <a href="https://doi.org/10.1016/j.envsci.2021.08.016" target="_blank" rel="noopener noreferrer">doi:10.1016/j.envsci.2021.08.016</a></li>
+          <li>World Bank. (2021). <em>A catalogue of nature-based solutions for urban resilience.</em> World Bank Group.</li>
+        </ul>
+        <p class="table-caption" style="margin-top: 2rem;"><b>Cite this thesis</b></p>
+        <p class="cite-block">
+          Lahooti, G. (2026). <em>A Context-Specific Nature-Based Framework for Heat Mitigation: Supporting the Everyday Mobility of Older Adults in Kadıköy, Istanbul</em> [Master's thesis, Lund University].
+        </p>
+      </div>
+    </section>
+
+    <!-- Thesis Details -->
+    <div class="spec-strip credits-strip">
+      <div class="spec-cell">
+        <span class="spec-label">Course</span>
+        <span class="spec-value">ASBM01 Degree Project in Sustainable Urban Design, Department of Architecture and Built Environment, LTH</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Supervisor</span>
+        <span class="spec-value">Teresa Arana Aristi</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Examiner</span>
+        <span class="spec-value">Andrew Karvonen</span>
+      </div>
+      <div class="spec-cell">
+        <span class="spec-label">Jury</span>
+        <span class="spec-value">Jenny B. Osuldsen · Ida Sandström</span>
+      </div>
+    </div>
+
+    <!-- Project Pagination Footer -->
+    <nav class="project-footer-nav">
+      <a href="damavand-mountain-refuge.html" class="nav-pane prev">
+        <span class="pane-eyebrow">← Previous / 10</span>
+        <span class="pane-title">Damavand Mountain Refuge</span>
+      </a>
+      <a href="urbansim.html" class="nav-pane next">
+        <span class="pane-eyebrow">Next / 02 →</span>
+        <span class="pane-title">UrbanSim</span>
+      </a>
+    </nav>
+  </main>
+
+  <!-- Image Lightbox Modal -->
+  <div class="lightbox-modal" id="lightboxModal" onclick="closeLightbox()">
+    <img id="modalImg" src="" alt="Full view" />
+  </div>
+
+  <script>
+    /* Lightbox Logic */
+    const modal = document.getElementById('lightboxModal');
+    const modalImg = document.getElementById('modalImg');
+
+    function openLightbox(element) {
+      const img = element.querySelector('img');
+      if (!img) return;
+      modalImg.src = img.src;
+      modal.classList.add('active');
+    }
+
+    function closeLightbox() {
+      modal.classList.remove('active');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+
+    /* Slider Gallery Logic */
+    const track = document.getElementById('sliderTrack');
+    const slides = document.querySelectorAll('.slider-slide');
+    const prevBtn = document.getElementById('sliderPrevBtn');
+    const nextBtn = document.getElementById('sliderNextBtn');
+    const dotsContainer = document.getElementById('sliderDots');
+    const counterDisplay = document.getElementById('sliderCounter');
+
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    // Create pagination dots
+    slides.forEach((_, index) => {
+      const dot = document.createElement('button');
+      dot.classList.add('slider-dot');
+      dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+      if (index === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => goToSlide(index));
+      dotsContainer.appendChild(dot);
+    });
+
+    const dots = document.querySelectorAll('.slider-dot');
+
+    function updateSlider() {
+      track.style.transform = `translateX(-${currentIndex * 100}%)`;
+      dots.forEach((dot, index) => {
+        dot.classList.toggle('active', index === currentIndex);
+      });
+      counterDisplay.textContent = `0${currentIndex + 1} / 0${totalSlides}`;
+    }
+
+    function goToSlide(index) {
+      currentIndex = index;
+      updateSlider();
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % totalSlides;
+      updateSlider();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+      updateSlider();
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') prevSlide();
+      if (e.key === 'ArrowRight') nextSlide();
+    });
+  </script>
+</body>
+</html>
