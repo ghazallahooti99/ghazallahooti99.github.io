@@ -168,29 +168,6 @@
       line-height: 1.4;
     }
 
-    /* Primary Hero Visual */
-    .hero-display {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: #eaeaea;
-      overflow: hidden;
-      border-bottom: 1px solid var(--border);
-      cursor: zoom-in;
-      position: relative;
-    }
-
-    .hero-display img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .hero-display:hover img {
-      transform: scale(1.02);
-    }
-
     /* Editorial Project Narrative */
     .narrative-block {
       padding: 4.5rem 3.5rem;
@@ -412,32 +389,229 @@
       color: var(--accent);
       font-weight: 600;
       letter-spacing: 0.08em;
+      white-space: nowrap;
+      margin-left: 1.5rem;
     }
 
-    /* Explanatory Diagrams */
-    .diagram-frame {
-      padding: 2.8rem 3.5rem 2.4rem;
-      overflow-x: auto;
+    /* Problem & Solution: statement heading and connected numbered steps */
+    .section-statement {
+      font-size: clamp(1.35rem, 2.4vw, 1.75rem);
+      font-weight: 600;
+      letter-spacing: -0.015em;
+      line-height: 1.3;
+      color: var(--text-main);
+      margin-bottom: 2rem;
+    }
+
+    .step-list {
+      list-style: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 1.8rem;
+    }
+
+    .step-list li {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr);
+      gap: 1rem;
+      padding: 1.4rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-num {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      color: var(--text-dim);
+      line-height: 1.6;
+    }
+
+    .step-head {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 0.3rem 0.7rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-verb {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .step-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-main);
+      line-height: 1.45;
+    }
+
+    .narrative-content .step-list p {
+      margin: 0;
+      font-size: 0.92rem;
+      line-height: 1.75;
+    }
+
+    .step-list .step-note {
+      margin-top: 0.5rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .status {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1;
+      padding: 0.3rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid #1f2b2e;
+      white-space: nowrap;
+      align-self: center;
+    }
+
+    .status--mvp { background: #1f2b2e; color: #ffffff; }
+    .status--dev { border-style: dashed; color: #1f2b2e; background: transparent; }
+
+    .step-list .step-future .step-title,
+    .step-list .step-future p { color: #6e6e73; }
+
+    .source-note {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+    }
+
+    /* Fig. 01: UrbanSim decision logic, horizontal on desktop and vertical on mobile */
+    .flow-figure {
+      padding: 3.2rem 3.5rem 2.6rem;
       background: #ffffff;
     }
 
-    .diagram-frame svg {
-      display: block;
-      width: 100%;
-      height: auto;
-      min-width: 760px;
+    .flow {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      column-gap: 2.75rem;
     }
 
-    .dg text { font-family: var(--font-sans); font-weight: 400; fill: #1f2b2e; }
-    .dg .mono { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; fill: #6e6e73; }
-    .dg .h { font-size: 15px; font-weight: 600; }
-    .dg .b { font-size: 13px; fill: #5f5f64; }
-    .dg .s { font-size: 12px; fill: #6e6e73; }
-    .dg .w { fill: #ffffff; }
-    .dg .warm { fill: #c4532b; }
+    .flow-stage {
+      position: relative;
+      border-top: 2px solid #1f2b2e;
+      padding-top: 1.2rem;
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: #5f5f64;
+    }
+
+    /* connector to the next stage, drawn along the top rule */
+    .flow-stage:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: -8px;
+      right: -2.75rem;
+      width: 2.75rem;
+      height: 14px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 14'%3E%3Cpath d='M5 7H38' stroke='%231f2b2e' stroke-width='1.4'/%3E%3Cpath d='M33 2.5L39 7L33 11.5' fill='none' stroke='%231f2b2e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 100% 100% no-repeat;
+    }
+
+    .flow-stage.flow-link--dashed::after {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 14'%3E%3Cpath d='M5 7H38' stroke='%231f2b2e' stroke-width='1.4' stroke-dasharray='3 3'/%3E%3Cpath d='M33 2.5L39 7L33 11.5' fill='none' stroke='%231f2b2e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    }
+
+    .flow-stage--challenge { border-top-color: #c4532b; }
+    .flow-stage--future { border-top-style: dashed; }
+    .flow-stage--future .flow-q { color: #6e6e73; }
+    .flow-stage--outcome { background: #f6f6f4; padding: 1.2rem 1rem 1.1rem; }
+
+    .flow-icon {
+      display: block;
+      width: 28px;
+      height: 28px;
+      fill: none;
+      stroke: #1f2b2e;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      margin-bottom: 0.8rem;
+    }
+
+    .flow-stage--challenge .flow-icon { stroke: #c4532b; }
+
+    .flow-eyebrow {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.64rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #6e6e73;
+      margin-bottom: 0.35rem;
+    }
+
+    .flow-stage--challenge .flow-eyebrow { color: #c4532b; }
+
+    .flow-q {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      line-height: 1.35;
+      color: #1f2b2e;
+      margin-bottom: 0.75rem;
+    }
+
+
+    .flow-inputs {
+      list-style: none;
+      color: #4a4a4f;
+    }
+
+
+    .flow-stage .status { margin-top: 0.9rem; }
+
+    .flow-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem 1.6rem;
+      margin-top: 2.4rem;
+      padding-top: 1.2rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .flow-legend span { display: inline-flex; align-items: center; gap: 0.6rem; }
+    .flow-legend .rule { display: inline-block; width: 28px; border-top: 2px solid #1f2b2e; }
+    .flow-legend .rule--dashed { border-top-style: dashed; }
+    .flow-legend .rule--warm { border-top-color: #c4532b; }
+
+    @media (max-width: 1000px) {
+      .flow {
+        grid-template-columns: minmax(0, 1fr);
+        row-gap: 2.6rem;
+        max-width: 520px;
+      }
+
+      .flow-stage:not(:last-child)::after {
+        top: auto;
+        right: auto;
+        bottom: -2.6rem;
+        left: 0;
+        width: 14px;
+        height: 2.6rem;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 40'%3E%3Cpath d='M7 6V34' stroke='%231f2b2e' stroke-width='1.4'/%3E%3Cpath d='M2.5 29L7 35L11.5 29' fill='none' stroke='%231f2b2e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      }
+
+      .flow-stage.flow-link--dashed::after {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 40'%3E%3Cpath d='M7 6V34' stroke='%231f2b2e' stroke-width='1.4' stroke-dasharray='3 3'/%3E%3Cpath d='M2.5 29L7 35L11.5 29' fill='none' stroke='%231f2b2e' stroke-width='1.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      }
+    }
 
     @media (max-width: 860px) {
-      .diagram-frame { padding: 1.6rem 1.5rem; }
+      .flow-figure { padding: 2.2rem 1.5rem 2rem; }
+      .step-list li { grid-template-columns: 2.4rem minmax(0, 1fr); gap: 0.6rem; }
     }
 
     /* Interactive Simulation Terminal & App Holder */
@@ -886,7 +1060,7 @@
       </div>
       <h1 class="project-name">UrbanSim</h1>
       <p class="project-summary-lead">
-        UrbanSim helps planners decide where cooling should start and which nature-based solutions fit each street, before anything is drawn. UrbanSim proposes nature-based solutions from evidence and transparent rules; physics-based tools evaluate them.
+        UrbanSim helps planners decide where cooling should start and which nature-based solutions fit each street, before anything is drawn. UrbanSim proposes nature-based solutions from evidence and transparent rules.
       </p>
     </section>
 
@@ -910,20 +1084,85 @@
       </div>
     </div>
 
-    <!-- Primary Hero Visual -->
-    <div class="hero-display" onclick="openLightbox(this)">
-      <img src="urbansim-problem-solution.jpg" alt="Problem and solution. Problem: planners must place NBS before a design exists; heat is rarely mapped, simulation comes late and catalogues ignore place. Solution: UrbanSim, transparent evidence-informed NBS screening in three steps: where to cool first, which NBS fit the street, and evaluation on the real site with physics-based simulation." />
-    </div>
+    <!-- Fig. 01: decision logic, from the urban problem through the workflow to the outcome -->
+    <figure class="section-landscape-break" aria-labelledby="flow-caption">
+      <div class="flow-figure">
+        <ol class="flow">
+          <li class="flow-stage flow-stage--challenge">
+            <svg class="flow-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
+            <span class="flow-eyebrow">Urban climate challenge</span>
+            <ul class="flow-inputs">
+              <li>Urban heat</li>
+              <li>Walking exposure</li>
+              <li>Vulnerable populations</li>
+            </ul>
+          </li>
+          <li class="flow-stage">
+            <svg class="flow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+            <span class="flow-eyebrow">01 · Prioritise</span>
+            <span class="flow-q">Where is intervention most needed?</span>
+            <span class="status status--mvp">In the MVP</span>
+          </li>
+          <li class="flow-stage flow-link--dashed">
+            <svg class="flow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 21h20M4 21V7h5v14M15 21V10h5v11"/><path d="M12 21v-5"/><circle cx="12" cy="13" r="2.6"/></svg>
+            <span class="flow-eyebrow">02 · Match</span>
+            <span class="flow-q">Which nature-based solutions fit the site?</span>
+            <span class="status status--mvp">In the MVP</span>
+          </li>
+          <li class="flow-stage flow-stage--future flow-link--dashed">
+            <svg class="flow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5z"/><path d="M13 4h5.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H13z"/><path d="M6.5 8h2M6.5 11h2M15.5 8h2M15.5 11h2"/></svg>
+            <span class="flow-eyebrow">03 · Learn · Future development</span>
+            <span class="flow-q">What can we learn from implemented projects?</span>
+            <span class="status status--dev">In development</span>
+          </li>
+          <li class="flow-stage flow-stage--outcome">
+            <svg class="flow-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 13.5l2 2 4-4.5"/></svg>
+            <span class="flow-eyebrow">Outcome</span>
+            <span class="flow-q">Transparent, context-specific recommendations for early-stage climate adaptation.</span>
+          </li>
+        </ol>
+        <div class="flow-legend">
+          <span><i class="rule"></i>Runs in the current MVP</span>
+          <span><i class="rule rule--dashed"></i>In development</span>
+          <span><i class="rule rule--warm"></i>The urban problem</span>
+        </div>
+      </div>
+      <figcaption class="landscape-caption-strip">
+        <span id="flow-caption">How UrbanSim works: from the urban heat challenge, through prioritising streets and matching nature-based solutions, to transparent recommendations. UrbanSim screens options; it does not predict cooling performance or run microclimate simulations.</span>
+        <span class="landscape-fig-tag">Fig. 01</span>
+      </figcaption>
+    </figure>
 
     <!-- SECTION 01: Problem -->
     <section class="narrative-block">
       <div class="narrative-title">01 / The Problem</div>
       <div class="narrative-content">
-        <p>
-          Planners are asked to use nature-based solutions (NBS) to cool cities, but lack a quick way to see where to start and what fits a given street. Simulation tools test a design once it exists, and NBS catalogues list measures without reference to place.
-        </p>
-        <p>
-          In Sweden, heat is where the gap is widest: only 10–15% of municipalities show heat risks or measures on a plan map, against more than 60% for cloudburst flooding (<a href="https://www.boverket.se/globalassets/publikationer/dokument/2025/klimatanpassningslaget-i-oversiktsplaner.pdf" target="_blank" rel="noopener noreferrer">Boverket, 2025</a>).
+        <h2 class="section-statement">Cities need to know where to act and what actually works.</h2>
+        <ol class="step-list">
+          <li>
+            <span class="step-num">01</span>
+            <div>
+              <div class="step-head"><span class="step-title">Rising urban heat</span></div>
+              <p>Extreme urban heat threatens public health and makes everyday walking increasingly difficult, particularly for vulnerable populations such as older adults.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div>
+              <div class="step-head"><span class="step-title">Where should cities intervene?</span></div>
+              <p>Heat exposure alone does not reveal where cooling interventions are most needed. Cities must consider how environmental exposure intersects with everyday walking routes and essential destinations to identify priority locations.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">03</span>
+            <div>
+              <div class="step-head"><span class="step-title">Which solutions actually fit?</span></div>
+              <p>Nature-based solutions are not one-size-fits-all. Their suitability depends on local climate, street geometry, available space, and existing infrastructure. General recommendations do not always translate into site-specific design decisions.</p>
+            </div>
+          </li>
+        </ol>
+        <p class="source-note">
+          In Sweden, the gap is widest for heat: only 10–15% of municipalities show heat risks or measures on a plan map, against more than 60% for cloudburst flooding (<a href="https://www.boverket.se/globalassets/publikationer/dokument/2025/klimatanpassningslaget-i-oversiktsplaner.pdf" target="_blank" rel="noopener noreferrer">Boverket, 2025</a>).
         </p>
       </div>
     </section>
@@ -950,78 +1189,44 @@
       </div>
     </div>
 
-    <!-- SECTION 02: How it works -->
+    <!-- SECTION 02: Solution -->
     <section class="narrative-block">
-      <div class="narrative-title">02 / How It Works</div>
+      <div class="narrative-title">02 / The Solution</div>
       <div class="narrative-content">
+        <h2 class="section-statement">UrbanSim connects climate priorities with context-specific nature-based solutions.</h2>
+        <ol class="step-list">
+          <li>
+            <span class="step-num">01</span>
+            <div>
+              <div class="step-head"><span class="step-verb">Prioritise</span><span class="step-title">Where to act?</span><span class="status status--mvp">In the MVP</span></div>
+              <p>Combine solar exposure, surface heat, and proximity to everyday destinations to identify streets where cooling interventions should be prioritised.</p>
+              <p class="step-note">The priority score is transparent and adjustable: each factor's weight can be changed in the MVP.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-num">02</span>
+            <div>
+              <div class="step-head"><span class="step-verb">Match</span><span class="step-title">What fits?</span><span class="status status--mvp">In the MVP</span></div>
+              <p>Screen nature-based solutions against local street characteristics, including width, enclosure, and street typology, using transparent suitability rules.</p>
+            </div>
+          </li>
+          <li class="step-future">
+            <span class="step-num">03</span>
+            <div>
+              <div class="step-head"><span class="step-verb">Learn</span><span class="step-title">What has worked elsewhere?</span><span class="status status--dev">In development</span></div>
+              <p>Connect potential interventions to documented built projects, their performance evidence, and relevant site conditions to support more informed design decisions.</p>
+              <p class="step-note">The evidence-based precedent library is under development. The MVP includes an illustrative sample library that is not yet verified.</p>
+            </div>
+          </li>
+        </ol>
         <p>
-          UrbanSim follows four questions, in the order a planner asks them. It builds on the method of my <a href="msc-thesis.html">MSc thesis in Kadıköy</a>: the social context decides where to act, the physical context decides how. The MVP runs on the thesis area, Caferağa and Moda: streets from OpenStreetMap, building heights from GlobalBuildingAtlas and surface heat from Landsat.
+          The method builds on my <a href="msc-thesis.html">MSc thesis in Kadıköy</a>: the social context decides where to act, the physical context decides how. The MVP runs on the thesis area, Caferağa and Moda, using streets from OpenStreetMap, building heights from GlobalBuildingAtlas and surface heat from Landsat.
         </p>
         <p>
-          Every suggestion comes from written rules with a cited source and an evidence grade, not from a black-box model, and no temperature reduction is shown unless it can be sourced.
+          UrbanSim is a rule-based decision-support prototype. It does not predict cooling performance or run microclimate simulations; it shortlists options so that detailed, physics-based evaluation can focus where it matters.
         </p>
       </div>
     </section>
-
-    <div class="section-landscape-break">
-      <div class="diagram-frame">
-        <svg class="dg" viewBox="0 0 1200 260" role="img" aria-labelledby="dg1-t dg1-d">
-          <title id="dg1-t">How UrbanSim works, in four steps</title>
-          <desc id="dg1-d">Four steps. 1 Diagnose, in the MVP: sun on pavements, everyday destinations and surface heat rank streets by priority. 2 Find analogues, next: a library of implemented NBS returns three to five precedent projects with a similar heat profile, climate and street form. 3 Localise: street fit against seven NBS tools is in the MVP; swapping planting for local species with similar traits is next. 4 Compare, next: one standard impact record per NBS gives ranked options with effect ranges and evidence grades.</desc>
-          <defs>
-            <marker id="dg1-a" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M1,1 L9,5 L1,9" fill="none" stroke="#1f2b2e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></marker>
-          </defs>
-          <g stroke="#1f2b2e" stroke-width="1.4" marker-end="url(#dg1-a)">
-            <line x1="236" y1="40" x2="304" y2="40"/><line x1="526" y1="40" x2="594" y2="40"/><line x1="796" y1="40" x2="884" y2="40"/>
-          </g>
-          <g>
-            <circle cx="54" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="54" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">1</text>
-            <text class="h" x="78" y="46" style="font-size:17px">Diagnose</text>
-            <text class="b" x="40" y="84" style="font-style:italic">Where does heat meet everyday life?</text>
-            <text class="s" x="40" y="114">Sun on pavements, 09–18 h</text>
-            <text class="s" x="40" y="134">Everyday destinations within 100 m</text>
-            <text class="s" x="40" y="154">Surface heat from Landsat</text>
-            <text class="s" x="40" y="174">→ streets ranked by priority</text>
-            <rect x="40" y="206" width="90" height="26" rx="13" fill="#1f2b2e"/><text class="w" x="85.0" y="223" text-anchor="middle" style="font-size:11.5px;font-weight:600">In the MVP</text>
-          </g>
-          <g>
-            <circle cx="344" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="344" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">2</text>
-            <text class="h" x="368" y="46" style="font-size:17px">Find analogues</text>
-            <text class="b" x="330" y="84" style="font-style:italic">Who solved a similar problem?</text>
-            <text class="s" x="330" y="114">Library of implemented NBS</text>
-            <text class="s" x="330" y="134">matched on heat profile,</text>
-            <text class="s" x="330" y="154">climate zone and street form</text>
-            <text class="s" x="330" y="174">→ 3–5 precedent projects</text>
-            <rect x="330" y="206" width="50" height="26" rx="13" fill="none" stroke="#1f2b2e" stroke-dasharray="4 3"/><text x="355.0" y="223" text-anchor="middle" style="font-size:11.5px;font-weight:600">Next</text>
-          </g>
-          <g>
-            <circle cx="634" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="634" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">3</text>
-            <text class="h" x="658" y="46" style="font-size:17px">Localise</text>
-            <text class="b" x="620" y="84" style="font-style:italic">Does it fit this street?</text>
-            <text class="s" x="620" y="114">Width, enclosure, tram and parking</text>
-            <text class="s" x="620" y="134">checked against 7 NBS tools</text>
-            <text class="s" x="620" y="154">Planting swapped for local</text>
-            <text class="s" x="620" y="174">species with similar traits</text>
-            <rect x="620" y="206" width="129" height="26" rx="13" fill="#1f2b2e"/><text class="w" x="684.5" y="223" text-anchor="middle" style="font-size:11.5px;font-weight:600">In the MVP · fit</text>
-            <rect x="757" y="206" width="116" height="26" rx="13" fill="none" stroke="#1f2b2e" stroke-dasharray="4 3"/><text x="815.0" y="223" text-anchor="middle" style="font-size:11.5px;font-weight:600">Next · species</text>
-          </g>
-          <g>
-            <circle cx="924" cy="40" r="14" fill="#1f2b2e"/><text class="w" x="924" y="45" text-anchor="middle" style="font-size:13px;font-weight:600">4</text>
-            <text class="h" x="948" y="46" style="font-size:17px">Compare</text>
-            <text class="b" x="910" y="84" style="font-style:italic">Which option works best here?</text>
-            <text class="s" x="910" y="114">One standard impact record</text>
-            <text class="s" x="910" y="134">per NBS, effects in °C</text>
-            <text class="s" x="910" y="154">Ranges, graded by evidence</text>
-            <text class="s" x="910" y="174">→ ranked, traceable options</text>
-            <rect x="910" y="206" width="50" height="26" rx="13" fill="none" stroke="#1f2b2e" stroke-dasharray="4 3"/><text x="935.0" y="223" text-anchor="middle" style="font-size:11.5px;font-weight:600">Next</text>
-          </g>
-        </svg>
-      </div>
-      <div class="landscape-caption-strip">
-        <span>The four steps of UrbanSim. The MVP covers diagnosis and street fit; the NBS evidence library unlocks the rest.</span>
-        <span class="landscape-fig-tag">Fig. 01</span>
-      </div>
-    </div>
 
     <section class="simulator-app-section">
       <div class="simulator-header">
@@ -1063,9 +1268,9 @@
       <div class="narrative-title">03 / Next</div>
       <div class="narrative-content">
         <p>
-          <strong>Test with planners</strong> in Skåne municipalities, on their own districts.<br>
-          <strong>Build the NBS evidence library:</strong> implemented projects, their site conditions and measured performance, graded by evidence and building on my work in <a href="aim-nbs.html">AIM-NBS</a>. This unlocks steps 2 and 4.<br>
-          <strong>Extend to Nordic conditions and cloudburst flooding,</strong> the focus of the industrial PhD I am preparing.
+          <strong>Build the NBS evidence library:</strong> implemented projects, their site conditions and measured performance, graded by evidence and building on my work in <a href="aim-nbs.html">AIM-NBS</a>. This unlocks the Learn step.<br>
+          <strong>Integrate site constraints:</strong> existing green infrastructure and technical constraints, and a site-specific comparison of design alternatives.<br>
+          <strong>Extend to Nordic conditions and cloudburst flooding,</strong> from heat mitigation to stormwater management, the focus of the industrial PhD I am preparing.
         </p>
       </div>
     </section>

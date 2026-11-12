@@ -1154,7 +1154,7 @@ function renderPrio() {
   pane.querySelectorAll("[data-preset]").forEach(b => b.setAttribute("aria-pressed", String(!!ap && b.dataset.preset === ap.id)));
   $("#prioHead").innerHTML = `
     <h2>Where should cooling start?</h2>
-    <p>${segs.length} street segments in ${esc(D.name)} are ranked by how much their pavements sit in sun on ${fmtDate(S.date)}, how many everyday destinations lie within 100 m, and how hot the surface is. ${nHigh} are high priority; ${nShaded} are already self-shaded. UrbanSim proposes nature-based solutions from evidence and transparent rules; physics-based tools evaluate them.</p>
+    <p>${segs.length} street segments in ${esc(D.name)} are ranked by how much their pavements sit in sun on ${fmtDate(S.date)}, how many everyday destinations lie within 100 m, and how hot the surface is. ${nHigh} are high priority; ${nShaded} are already self-shaded. UrbanSim proposes nature-based solutions from evidence and transparent rules.</p>
     <p class="muted">Step 2 (new): click a street to see sample NBS options matched to its conditions. The library is illustrative and being verified.</p>`;
   $("#prioHow").innerHTML = `
     <h3>How the score works</h3>
